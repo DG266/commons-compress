@@ -36,6 +36,6 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag commons-compress
+      run: docker build . --file Dockerfile --tag dg266/commons-compress
     - name: Docker push
       run: docker push ${{secrets.DOCKER_USER}}/commons-compress:latest
