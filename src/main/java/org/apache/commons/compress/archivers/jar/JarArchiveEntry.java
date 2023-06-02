@@ -71,7 +71,7 @@ public class JarArchiveEntry extends ZipArchiveEntry {
          * Certificate[] java.util.jar.JarEntry.getCertificates()
          * also returns null or the list of certificates (but not copied)
          */
-        return null;
+        return new Certificate[0];
     }
 
     /**

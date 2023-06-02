@@ -17,13 +17,18 @@
  */
 package org.apache.commons.compress.archivers.sevenz;
 
+import org.apache.commons.compress.archivers.Lister;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Usage: archive-name [list]
  */
 public class CLI {
+
+    private final static Logger LOGGER = Logger.getLogger(Lister.class.getName());
 
     private enum Mode {
         LIST("Analysing") {
@@ -45,21 +50,21 @@ public class CLI {
 
             @Override
             public void takeAction(final SevenZFile archive, final SevenZArchiveEntry entry) {
-                System.out.print(entry.getName());
+                LOGGER.info(entry.getName());
                 if (entry.isDirectory()) {
-                    System.out.print(" dir");
+                    LOGGER.info(" dir");
                 } else {
-                    System.out.print(" " + entry.getCompressedSize() + "/" + entry.getSize());
+                    LOGGER.info(" " + entry.getCompressedSize() + "/" + entry.getSize());
                 }
                 if (entry.getHasLastModifiedDate()) {
-                    System.out.print(" " + entry.getLastModifiedDate());
+                    LOGGER.info(" " + entry.getLastModifiedDate());
                 } else {
-                    System.out.print(" no last modified date");
+                    LOGGER.info(" no last modified date");
                 }
                 if (!entry.isDirectory()) {
-                    System.out.println(" " + getContentMethods(entry));
+                    LOGGER.info(" " + getContentMethods(entry));
                 } else {
-                    System.out.println();
+                    LOGGER.info("");
                 }
             }
         };
@@ -90,10 +95,10 @@ public class CLI {
             return;
         }
         final Mode mode = grabMode(args);
-        System.out.println(mode.getMessage() + " " + args[0]);
+        LOGGER.info(mode.getMessage() + " " + args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
-            System.err.println(f + " doesn't exist or is a directory");
+            LOGGER.info(f + " doesn't exist or is a directory");
         }
         try (final SevenZFile archive = new SevenZFile(f)) {
             SevenZArchiveEntry ae;
@@ -104,7 +109,7 @@ public class CLI {
     }
 
     private static void usage() {
-        System.out.println("Parameters: archive-name [list]");
+        LOGGER.info("Parameters: archive-name [list]");
     }
 
 }
