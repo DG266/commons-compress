@@ -51,21 +51,21 @@ public class CLI {
 
             @Override
             public void takeAction(final SevenZFile archive, final SevenZArchiveEntry entry) {
-                LOGGER.info(entry.getName());
+                System.out.print(entry.getName());
                 if (entry.isDirectory()) {
-                    LOGGER.info(" dir");
+                    System.out.print(" dir");
                 } else {
-                    LOGGER.info(" " + entry.getCompressedSize() + "/" + entry.getSize());
+                    System.out.print(" " + entry.getCompressedSize() + "/" + entry.getSize());
                 }
                 if (entry.getHasLastModifiedDate()) {
-                    LOGGER.info(" " + entry.getLastModifiedDate());
+                    System.out.print(" " + entry.getLastModifiedDate());
                 } else {
-                    LOGGER.info(" no last modified date");
+                    System.out.print(" no last modified date");
                 }
                 if (!entry.isDirectory()) {
-                    LOGGER.info(" " + getContentMethods(entry));
+                    System.out.print(" " + getContentMethods(entry));
                 } else {
-                    LOGGER.info("");
+                    System.out.print("");
                 }
             }
         };
@@ -96,10 +96,10 @@ public class CLI {
             return;
         }
         final Mode mode = grabMode(args);
-        LOGGER.log(LEVEL, mode.getMessage(), args[0]);
+        System.out.println(mode.getMessage() + " "  + args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
-            LOGGER.log(LEVEL, FILE_EXCEPTION, f);
+            System.err.println(FILE_EXCEPTION + f);
         }
         try (final SevenZFile archive = new SevenZFile(f)) {
             SevenZArchiveEntry ae;
@@ -110,7 +110,7 @@ public class CLI {
     }
 
     private static void usage() {
-        LOGGER.info("Parameters: archive-name [list]");
+        System.out.println("Parameters: archive-name [list]");
     }
 
 }

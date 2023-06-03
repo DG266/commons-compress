@@ -104,6 +104,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
     }
 
+    private static final String POS_STRING = "su_tPos";
     private static final int EOF = 0;
 
     private static final int START_BLOCK_STATE = 1;
@@ -872,7 +873,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             this.su_chPrev = this.su_ch2;
             final int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
             this.su_ch2 = su_ch2Shadow;
-            checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
             this.su_tPos = this.data.tt[this.su_tPos];
             this.su_i2++;
             this.currentState = NO_RAND_PART_B_STATE;
@@ -891,7 +892,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             return setupNoRandPartA();
         }
         if (++this.su_count >= 4) {
-            checkBounds(this.su_tPos, this.data.ll8.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.ll8.length, POS_STRING);
             this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
             this.su_tPos = this.data.tt[this.su_tPos];
             this.su_j2 = 0;
@@ -917,7 +918,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         if (this.su_i2 <= this.last) {
             this.su_chPrev = this.su_ch2;
             int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
-            checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
             this.su_tPos = this.data.tt[this.su_tPos];
             if (this.su_rNToGo == 0) {
                 this.su_rNToGo = Rand.rNums(this.su_rTPos) - 1;
@@ -949,7 +950,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             return setupRandPartA();
         }
         this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-        checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+        checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
         this.su_tPos = this.data.tt[this.su_tPos];
         if (this.su_rNToGo == 0) {
             this.su_rNToGo = Rand.rNums(this.su_rTPos) - 1;

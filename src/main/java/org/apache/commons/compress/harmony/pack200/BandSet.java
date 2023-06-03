@@ -176,7 +176,7 @@ public abstract class BandSet {
         }
 
     }
-
+    private static final String TEXT_EXCEPTION = "POPULATION";
     // Minimum size of band for each effort level where we consider alternative codecs
     // Note: these values have been tuned - please test carefully if changing them
     private static final int[] effortThresholds = {0, 0, 1000, 500, 100, 100, 100, 100, 100, 0};
@@ -231,7 +231,7 @@ public abstract class BandSet {
         }
 
         // Consider a population codec (but can't be nested)
-        if (effort > 3 && !name.equals("POPULATION")) {
+        if (effort > 3 && !name.equals(TEXT_EXCEPTION)) {
             final int numDistinctValues = bandData.numDistinctValues();
             final float distinctValuesAsProportion = (float) numDistinctValues / (float) band.length;
 
@@ -546,8 +546,8 @@ public abstract class BandSet {
         final int[] unfavouredBand = unfavoured.toArray();
 
         // Analyse the three bands to get the best codec
-        final BandAnalysisResults favouredResults = analyseBand("POPULATION", favouredBand, defaultCodec);
-        final BandAnalysisResults unfavouredResults = analyseBand("POPULATION", unfavouredBand, defaultCodec);
+        final BandAnalysisResults favouredResults = analyseBand(TEXT_EXCEPTION, favouredBand, defaultCodec);
+        final BandAnalysisResults unfavouredResults = analyseBand(TEXT_EXCEPTION, unfavouredBand, defaultCodec);
 
         int tdefL = 0;
         int l = 0;
@@ -558,7 +558,7 @@ public abstract class BandSet {
             tdefL = 1;
             tokensEncoded = Codec.BYTE1.encode(tokens);
         } else {
-            final BandAnalysisResults tokenResults = analyseBand("POPULATION", tokens, defaultCodec);
+            final BandAnalysisResults tokenResults = analyseBand(TEXT_EXCEPTION, tokens, defaultCodec);
             tokenCodec = tokenResults.betterCodec;
             tokensEncoded = tokenResults.encodedBand;
             if (tokenCodec == null) {
@@ -611,6 +611,8 @@ public abstract class BandSet {
                         break;
                     case 252:
                         tdefL = 11;
+                        break;
+                    default:
                         break;
                     }
                 }

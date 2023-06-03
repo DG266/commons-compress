@@ -156,6 +156,9 @@ public class ZipFile implements Closeable {
             return getCompressedCount();
         }
     }
+
+    private static final String HEADER_EXCEPTION_1 = "local file header for ";
+    private static final String HEADER_EXCEPTION_2 = " starts after central directory.";
     private static final int HASH_SIZE = 509;
     static final int NIBLET_MASK = 0x0f;
     static final int BYTE_SHIFT = 8;
@@ -1413,14 +1416,14 @@ public class ZipFile implements Closeable {
         }
         if (isSplitZipArchive) {
             if (ze.getDiskNumberStart() > centralDirectoryStartDiskNumber) {
-                throw new IOException("local file header for " + ze.getName() + " starts on a later disk than central directory");
+                throw new IOException(HEADER_EXCEPTION_1 + ze.getName() + " starts on a later disk than central directory");
             }
             if (ze.getDiskNumberStart() == centralDirectoryStartDiskNumber
                 && ze.getLocalHeaderOffset() > centralDirectoryStartRelativeOffset) {
-                throw new IOException("local file header for " + ze.getName() + " starts after central directory");
+                throw new IOException(HEADER_EXCEPTION_1 + ze.getName() + HEADER_EXCEPTION_2);
             }
         } else if (ze.getLocalHeaderOffset() > centralDirectoryStartOffset) {
-            throw new IOException("local file header for " + ze.getName() + " starts after central directory");
+            throw new IOException(HEADER_EXCEPTION_1 + ze.getName() + HEADER_EXCEPTION_2);
         }
     }
 

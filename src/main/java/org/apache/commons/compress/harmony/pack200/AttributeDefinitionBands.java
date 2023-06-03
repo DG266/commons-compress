@@ -46,6 +46,8 @@ public class AttributeDefinitionBands extends BandSet {
         }
 
     }
+
+    private static final String TEXT_EXCEPTION = "Wrote ";
     public static final int CONTEXT_CLASS = 0;
     public static final int CONTEXT_CODE = 3;
     public static final int CONTEXT_FIELD = 1;
@@ -142,6 +144,8 @@ public class AttributeDefinitionBands extends BandSet {
                 break;
             case CONTEXT_CODE:
                 codeAttributeLayouts.add(definition);
+            default:
+                    break;
             }
         });
     }
@@ -215,17 +219,17 @@ public class AttributeDefinitionBands extends BandSet {
 
         byte[] encodedBand = encodeBandInt("attributeDefinitionHeader", attributeDefinitionHeader, Codec.BYTE1);
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from attributeDefinitionHeader["
+        PackingUtils.log(TEXT_EXCEPTION + encodedBand.length + " bytes from attributeDefinitionHeader["
             + attributeDefinitionHeader.length + "]");
 
         encodedBand = encodeBandInt("attributeDefinitionName", attributeDefinitionName, Codec.UNSIGNED5);
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from attributeDefinitionName["
+        PackingUtils.log(TEXT_EXCEPTION + encodedBand.length + " bytes from attributeDefinitionName["
             + attributeDefinitionName.length + "]");
 
         encodedBand = encodeBandInt("attributeDefinitionLayout", attributeDefinitionLayout, Codec.UNSIGNED5);
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from attributeDefinitionLayout["
+        PackingUtils.log(TEXT_EXCEPTION + encodedBand.length + " bytes from attributeDefinitionLayout["
             + attributeDefinitionLayout.length + "]");
     }
 }

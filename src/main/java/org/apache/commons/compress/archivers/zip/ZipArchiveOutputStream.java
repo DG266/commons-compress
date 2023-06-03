@@ -196,6 +196,8 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
 
     private static final int CFH_FILENAME_OFFSET = 46;
 
+    private static final String STREAM_FINISHED = "Stream has already been finished";
+
     /**
      * Compression method for deflated entries.
      */
@@ -717,7 +719,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
     public ArchiveEntry createArchiveEntry(final File inputFile, final String entryName)
         throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
         return new ZipArchiveEntry(inputFile, entryName);
     }
@@ -743,7 +745,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
     public ArchiveEntry createArchiveEntry(final Path inputPath, final String entryName, final LinkOption... options)
         throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
         return new ZipArchiveEntry(inputPath, entryName);
     }
@@ -1278,7 +1280,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
 
     private void preClose() throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
 
         if (entry == null) {
@@ -1315,7 +1317,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
      */
     private void putArchiveEntry(final ZipArchiveEntry archiveEntry, final boolean phased) throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
 
         if (entry != null) {

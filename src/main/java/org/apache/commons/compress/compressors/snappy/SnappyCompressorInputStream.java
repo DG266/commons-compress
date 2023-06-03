@@ -44,6 +44,7 @@ public class SnappyCompressorInputStream extends AbstractLZ77CompressorInputStre
         NO_BLOCK, IN_LITERAL, IN_BACK_REFERENCE
     }
 
+    private static final String OFFSET_EXCEPTION = "Illegal block with bad offset found";
     /** Mask used to determine the type of "tag" is being processed */
     private static final int TAG_MASK = 0x03;
 
@@ -142,7 +143,7 @@ public class SnappyCompressorInputStream extends AbstractLZ77CompressorInputStre
             try {
                 startBackReference(offset, length);
             } catch (final IllegalArgumentException ex) {
-                throw new IOException("Illegal block with bad offset found", ex);
+                throw new IOException(OFFSET_EXCEPTION, ex);
             }
             state = State.IN_BACK_REFERENCE;
             break;
@@ -168,7 +169,7 @@ public class SnappyCompressorInputStream extends AbstractLZ77CompressorInputStre
             try {
                 startBackReference(offset, length);
             } catch (final IllegalArgumentException ex) {
-                throw new IOException("Illegal block with bad offset found", ex);
+                throw new IOException(OFFSET_EXCEPTION, ex);
             }
             state = State.IN_BACK_REFERENCE;
             break;
@@ -193,7 +194,7 @@ public class SnappyCompressorInputStream extends AbstractLZ77CompressorInputStre
             try {
                 startBackReference(offset, length);
             } catch (final IllegalArgumentException ex) {
-                throw new IOException("Illegal block with bad offset found", ex);
+                throw new IOException(OFFSET_EXCEPTION, ex);
             }
             state = State.IN_BACK_REFERENCE;
             break;
