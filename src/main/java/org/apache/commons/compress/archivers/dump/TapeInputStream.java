@@ -36,6 +36,7 @@ import org.apache.commons.compress.utils.IOUtils;
  */
 class TapeInputStream extends FilterInputStream {
     private static final int RECORD_SIZE = DumpArchiveConstants.TP_SIZE;
+    private static final String RECORD_SIZE_EXCEPTION = "All reads must be multiple of record size (" + + RECORD_SIZE + ") bytes. ";
     private byte[] blockBuffer = new byte[DumpArchiveConstants.TP_SIZE];
     private int currBlkIdx = -1;
     private int blockSize = DumpArchiveConstants.TP_SIZE;
@@ -116,8 +117,7 @@ class TapeInputStream extends FilterInputStream {
     @Override
     public int read() throws IOException {
         throw new IllegalArgumentException(
-            "All reads must be multiple of record size (" + RECORD_SIZE +
-            " bytes.");
+                RECORD_SIZE_EXCEPTION);
     }
 
     /**
@@ -135,8 +135,7 @@ class TapeInputStream extends FilterInputStream {
         }
         if ((len % RECORD_SIZE) != 0) {
             throw new IllegalArgumentException(
-                "All reads must be multiple of record size (" + RECORD_SIZE +
-                " bytes.");
+                    RECORD_SIZE_EXCEPTION);
         }
 
         int bytes = 0;
@@ -336,8 +335,7 @@ class TapeInputStream extends FilterInputStream {
     public long skip(final long len) throws IOException {
         if ((len % RECORD_SIZE) != 0) {
             throw new IllegalArgumentException(
-                "All reads must be multiple of record size (" + RECORD_SIZE +
-                " bytes.");
+                    RECORD_SIZE_EXCEPTION);
         }
 
         long bytes = 0;
