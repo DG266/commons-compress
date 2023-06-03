@@ -29,6 +29,8 @@ public class CLI {
     private static final Logger LOGGER = Logger.getLogger(CLI.class.getName());
     private static final Level LEVEL = Level.SEVERE;
 
+    private static final String FILE_EXCEPTION = "This file doesn't exist or is a directory: ";
+
     private enum Mode {
         LIST("Analysing") {
             private String getContentMethods(final SevenZArchiveEntry entry) {
@@ -97,7 +99,7 @@ public class CLI {
         LOGGER.log(LEVEL, mode.getMessage(), args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
-            LOGGER.log(LEVEL, "This file doesn't exist or is a directory");
+            LOGGER.log(LEVEL, FILE_EXCEPTION, f);
         }
         try (final SevenZFile archive = new SevenZFile(f)) {
             SevenZArchiveEntry ae;
