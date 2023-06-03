@@ -45,6 +45,8 @@ public final class Lister {
     private static final ArchiveStreamFactory FACTORY = ArchiveStreamFactory.DEFAULT;
     private static final Logger LOGGER = Logger.getLogger(Lister.class.getName());
 
+    private static final Level LEVEL = Level.SEVERE;
+
     private static final String LOGGER_TEXT = "Created ";
 
     private static final String LOGGER_ANALYZER = "Analysing ";
@@ -65,12 +67,12 @@ public final class Lister {
 
     private static void list7z(final File f) throws IOException {
         try (SevenZFile z = new SevenZFile(f)) {
-            LOGGER.log(Level.parse(LOGGER_TEXT), z.toString());
+            LOGGER.log(LEVEL, LOGGER_TEXT, z);
             ArchiveEntry ae;
             while ((ae = z.getNextEntry()) != null) {
                 final String name = ae.getName() == null ? z.getDefaultName() + " (entry name was null)"
                     : ae.getName();
-                LOGGER.info("name");
+                LOGGER.info(name);
             }
         }
     }
@@ -78,7 +80,7 @@ public final class Lister {
     private static void listStream(final File f, final String[] args) throws ArchiveException, IOException {
         try (final InputStream fis = new BufferedInputStream(Files.newInputStream(f.toPath()));
                 final ArchiveInputStream ais = createArchiveInputStream(args, fis)) {
-            LOGGER.log(Level.parse(LOGGER_TEXT), ais.toString());
+            LOGGER.log(LEVEL, LOGGER_TEXT, ais);
             ArchiveEntry ae;
             while ((ae = ais.getNextEntry()) != null) {
                 LOGGER.info(ae.getName());
@@ -88,14 +90,14 @@ public final class Lister {
 
     private static void listZipUsingTarFile(final File f) throws IOException {
         try (TarFile t = new TarFile(f)) {
-            LOGGER.log(Level.parse(LOGGER_TEXT), t.toString());
+            LOGGER.log(LEVEL, LOGGER_TEXT, t);
             t.getEntries().forEach(en -> LOGGER.info(en.getName()));
         }
     }
 
     private static void listZipUsingZipFile(final File f) throws IOException {
         try (ZipFile z = new ZipFile(f)) {
-            LOGGER.log(Level.parse(LOGGER_TEXT), z.toString());
+            LOGGER.log(LEVEL, LOGGER_TEXT, z);
             for (final Enumeration<ZipArchiveEntry> en = z.getEntries(); en.hasMoreElements(); ) {
                 LOGGER.info(en.nextElement().getName());
             }
@@ -120,7 +122,7 @@ public final class Lister {
             usage();
             return;
         }
-        LOGGER.log(Level.parse(LOGGER_ANALYZER), args[0].toString());
+        LOGGER.log(LEVEL, LOGGER_ANALYZER, args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
             System.err.println(f + " doesn't exist or is a directory");

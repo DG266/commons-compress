@@ -74,7 +74,6 @@ class AES256SHA256Decoder extends AbstractCoder {
      */
     static byte[] utf16Decode(final char[] chars) {
         if (chars == null) {
-            //return new byte[0];
             return null;
         }
         final ByteBuffer encoded = UTF_16LE.encode(CharBuffer.wrap(chars));

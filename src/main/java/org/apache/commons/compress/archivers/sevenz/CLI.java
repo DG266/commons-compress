@@ -17,18 +17,17 @@
  */
 package org.apache.commons.compress.archivers.sevenz;
 
-import org.apache.commons.compress.archivers.Lister;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-
+import java.util.logging.Level;
 /**
  * Usage: archive-name [list]
  */
 public class CLI {
 
-    private final static Logger LOGGER = Logger.getLogger(Lister.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CLI.class.getName());
+    private static final Level LEVEL = Level.SEVERE;
 
     private enum Mode {
         LIST("Analysing") {
@@ -95,10 +94,10 @@ public class CLI {
             return;
         }
         final Mode mode = grabMode(args);
-        LOGGER.info(mode.getMessage() + " " + args[0]);
+        LOGGER.log(LEVEL, mode.getMessage(), args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
-            LOGGER.info(f + " doesn't exist or is a directory");
+            LOGGER.log(LEVEL, "This file doesn't exist or is a directory");
         }
         try (final SevenZFile archive = new SevenZFile(f)) {
             SevenZArchiveEntry ae;
