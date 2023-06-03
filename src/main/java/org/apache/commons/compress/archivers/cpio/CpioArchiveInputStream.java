@@ -83,6 +83,9 @@ public class CpioArchiveInputStream extends ArchiveInputStream implements
      * @param length length of data
      * @return whether the buffer seems to contain CPIO data
      */
+
+    private static final String LENGHT_EXCEPTION = "Found illegal entry with negative length";
+    private static final String NAME_LENGHT_EXCEPTION = "Found illegal entry with negative name length";
     public static boolean matches(final byte[] signature, final int length) {
         if (length < 6) {
             return false;
@@ -453,7 +456,7 @@ public class CpioArchiveInputStream extends ArchiveInputStream implements
         ret.setTime(readAsciiLong(8, 16));
         ret.setSize(readAsciiLong(8, 16));
         if (ret.getSize() < 0) {
-            throw new IOException("Found illegal entry with negative length");
+            throw new IOException(LENGHT_EXCEPTION);
         }
         ret.setDeviceMaj(readAsciiLong(8, 16));
         ret.setDeviceMin(readAsciiLong(8, 16));
@@ -461,7 +464,7 @@ public class CpioArchiveInputStream extends ArchiveInputStream implements
         ret.setRemoteDeviceMin(readAsciiLong(8, 16));
         final long namesize = readAsciiLong(8, 16);
         if (namesize < 0) {
-            throw new IOException("Found illegal entry with negative name length");
+            throw new IOException(NAME_LENGHT_EXCEPTION);
         }
         ret.setChksum(readAsciiLong(8, 16));
         final String name = readCString((int) namesize);
@@ -492,11 +495,11 @@ public class CpioArchiveInputStream extends ArchiveInputStream implements
         ret.setTime(readAsciiLong(11, 8));
         final long namesize = readAsciiLong(6, 8);
         if (namesize < 0) {
-            throw new IOException("Found illegal entry with negative name length");
+            throw new IOException(NAME_LENGHT_EXCEPTION);
         }
         ret.setSize(readAsciiLong(11, 8));
         if (ret.getSize() < 0) {
-            throw new IOException("Found illegal entry with negative length");
+            throw new IOException(LENGHT_EXCEPTION);
         }
         final String name = readCString((int) namesize);
         ret.setName(name);
@@ -526,11 +529,11 @@ public class CpioArchiveInputStream extends ArchiveInputStream implements
         ret.setTime(readBinaryLong(4, swapHalfWord));
         final long namesize = readBinaryLong(2, swapHalfWord);
         if (namesize < 0) {
-            throw new IOException("Found illegal entry with negative name length");
+            throw new IOException(NAME_LENGHT_EXCEPTION);
         }
         ret.setSize(readBinaryLong(4, swapHalfWord));
         if (ret.getSize() < 0) {
-            throw new IOException("Found illegal entry with negative length");
+            throw new IOException(LENGHT_EXCEPTION);
         }
         final String name = readCString((int) namesize);
         ret.setName(name);
