@@ -35,6 +35,7 @@ import org.objectweb.asm.ClassReader;
  */
 public class FileBands extends BandSet {
 
+    private static final String LOG_TEXT = "Wrote ";
     private final CPUTF8[] fileName;
     private int[] file_name;
     private final int[] file_modtime;
@@ -143,27 +144,27 @@ public class FileBands extends BandSet {
         PackingUtils.log("Writing file bands...");
         byte[] encodedBand = encodeBandInt("file_name", file_name, Codec.UNSIGNED5);
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from file_name[" + file_name.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from file_name[" + file_name.length + "]");
 
         encodedBand = encodeFlags("file_size", file_size, Codec.UNSIGNED5, Codec.UNSIGNED5,
             segmentHeader.have_file_size_hi());
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from file_size[" + file_size.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from file_size[" + file_size.length + "]");
 
         if (segmentHeader.have_file_modtime()) {
             encodedBand = encodeBandInt("file_modtime", file_modtime, Codec.DELTA5);
             out.write(encodedBand);
-            PackingUtils.log("Wrote " + encodedBand.length + " bytes from file_modtime[" + file_modtime.length + "]");
+            PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from file_modtime[" + file_modtime.length + "]");
         }
         if (segmentHeader.have_file_options()) {
             encodedBand = encodeBandInt("file_options", file_options, Codec.UNSIGNED5);
             out.write(encodedBand);
-            PackingUtils.log("Wrote " + encodedBand.length + " bytes from file_options[" + file_options.length + "]");
+            PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from file_options[" + file_options.length + "]");
         }
 
         encodedBand = encodeBandInt("file_bits", flatten(file_bits), Codec.BYTE1);
         out.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from file_bits[" + file_bits.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from file_bits[" + file_bits.length + "]");
     }
 
 }

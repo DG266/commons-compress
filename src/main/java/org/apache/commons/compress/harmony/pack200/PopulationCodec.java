@@ -26,6 +26,7 @@ import java.util.Arrays;
  */
 public class PopulationCodec extends Codec {
 
+    private static final String PACK_EXCEPTION = "Population encoding does not work unless the number of elements are known";
     private final Codec favouredCodec;
     private Codec tokenCodec;
     private final Codec unfavouredCodec;
@@ -49,12 +50,12 @@ public class PopulationCodec extends Codec {
 
     @Override
     public int decode(final InputStream in) throws IOException, Pack200Exception {
-        throw new Pack200Exception("Population encoding does not work unless the number of elements are known");
+        throw new Pack200Exception(PACK_EXCEPTION);
     }
 
     @Override
     public int decode(final InputStream in, final long last) throws IOException, Pack200Exception {
-        throw new Pack200Exception("Population encoding does not work unless the number of elements are known");
+        throw new Pack200Exception(PACK_EXCEPTION);
     }
 
     @Override
@@ -124,12 +125,12 @@ public class PopulationCodec extends Codec {
 
     @Override
     public byte[] encode(final int value) throws Pack200Exception {
-        throw new Pack200Exception("Population encoding does not work unless the number of elements are known");
+        throw new Pack200Exception(PACK_EXCEPTION);
     }
 
     @Override
     public byte[] encode(final int value, final int last) throws Pack200Exception {
-        throw new Pack200Exception("Population encoding does not work unless the number of elements are known");
+        throw new Pack200Exception(PACK_EXCEPTION);
     }
 
     public byte[] encode(final int[] favoured, final int[] tokens, final int[] unfavoured) throws Pack200Exception {

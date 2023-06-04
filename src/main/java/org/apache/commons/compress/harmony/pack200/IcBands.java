@@ -72,6 +72,7 @@ public class IcBands extends BandSet {
         }
 
     }
+    private static final String LOG_TEXT = "Wrote ";
     private final Set<IcTuple> innerClasses = new TreeSet<>();
     private final CpBands cpBands;
     private int bit16Count = 0;
@@ -174,19 +175,19 @@ public class IcBands extends BandSet {
         }
         byte[] encodedBand = encodeBandInt("ic_this_class", ic_this_class, Codec.UDELTA5);
         outputStream.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from ic_this_class[" + ic_this_class.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from ic_this_class[" + ic_this_class.length + "]");
 
         encodedBand = encodeBandInt("ic_flags", ic_flags, Codec.UNSIGNED5);
         outputStream.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from ic_flags[" + ic_flags.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from ic_flags[" + ic_flags.length + "]");
 
         encodedBand = encodeBandInt("ic_outer_class", ic_outer_class, Codec.DELTA5);
         outputStream.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from ic_outer_class[" + ic_outer_class.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from ic_outer_class[" + ic_outer_class.length + "]");
 
         encodedBand = encodeBandInt("ic_name", ic_name, Codec.DELTA5);
         outputStream.write(encodedBand);
-        PackingUtils.log("Wrote " + encodedBand.length + " bytes from ic_name[" + ic_name.length + "]");
+        PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from ic_name[" + ic_name.length + "]");
     }
 
 }

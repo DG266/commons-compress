@@ -106,6 +106,9 @@ public class ClassBands extends BandSet {
 		return count;
 	}
 
+	private static final String BANDS_TEXT = "Synthetic";
+	private static final String DEFINITION_EXCEPTION = "No suitable definition for ";
+	private static final String LOG_TEXT = "Wrote ";
 	private final CpBands cpBands;
 	private final AttributeDefinitionBands attrBands;
 	private final CPClass[] class_this;
@@ -320,6 +323,8 @@ public class ClassBands extends BandSet {
 				tempMethodFlags.add(Long.valueOf(flag.intValue() | (1 << 22)));
 			}
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -342,7 +347,7 @@ public class ClassBands extends BandSet {
 		class_flags[index] = flags;
 		if (!anySyntheticClasses && ((flags & (1 << 12)) != 0)
 				&& segment.getCurrentClassReader().hasSyntheticAttributes()) {
-			cpBands.addCPUtf8("Synthetic");
+			cpBands.addCPUtf8(BANDS_TEXT);
 			anySyntheticClasses = true;
 		}
 //		if ((flags & Opcodes.ACC_DEPRECATED) != 0) { // ASM uses (1<<17) flag for deprecated
@@ -366,7 +371,7 @@ public class ClassBands extends BandSet {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No suitable definition for " + attributeName);
+		throw new IllegalArgumentException(DEFINITION_EXCEPTION + attributeName);
 	}
 
 	public void addCode() {
@@ -388,7 +393,7 @@ public class ClassBands extends BandSet {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No suitable definition for " + attributeName);
+		throw new IllegalArgumentException(DEFINITION_EXCEPTION + attributeName);
 	}
 
 	public void addEnclosingMethod(final String owner, final String name, final String desc) {
@@ -414,7 +419,7 @@ public class ClassBands extends BandSet {
 		}
 		if (!anySyntheticFields && ((flags & (1 << 12)) != 0)
 				&& segment.getCurrentClassReader().hasSyntheticAttributes()) {
-			cpBands.addCPUtf8("Synthetic");
+			cpBands.addCPUtf8(BANDS_TEXT);
 			anySyntheticFields = true;
 		}
 		tempFieldFlags.add(Long.valueOf(flags));
@@ -431,7 +436,7 @@ public class ClassBands extends BandSet {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No suitable definition for " + attributeName);
+		throw new IllegalArgumentException(DEFINITION_EXCEPTION + attributeName);
 	}
 
 	public void addHandler(final Label start, final Label end, final Label handler, final String type) {
@@ -517,7 +522,7 @@ public class ClassBands extends BandSet {
 		numMethodArgs = countArgs(desc);
 		if (!anySyntheticMethods && ((flags & (1 << 12)) != 0)
 				&& segment.getCurrentClassReader().hasSyntheticAttributes()) {
-			cpBands.addCPUtf8("Synthetic");
+			cpBands.addCPUtf8(BANDS_TEXT);
 			anySyntheticMethods = true;
 		}
 	}
@@ -533,7 +538,7 @@ public class ClassBands extends BandSet {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No suitable definition for " + attributeName);
+		throw new IllegalArgumentException(DEFINITION_EXCEPTION + attributeName);
 	}
 
 	public void addParameterAnnotation(final int parameter, final String desc, final boolean visible,
@@ -911,15 +916,15 @@ public class ClassBands extends BandSet {
 
 		byte[] encodedBand = encodeBandInt("class_this", getInts(class_this), Codec.DELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_this[" + class_this.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_this[" + class_this.length + "]");
 
 		encodedBand = encodeBandInt("class_super", getInts(class_super), Codec.DELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_super[" + class_super.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_super[" + class_super.length + "]");
 
 		encodedBand = encodeBandInt("class_interface_count", class_interface_count, Codec.DELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_interface_count["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_interface_count["
 				+ class_interface_count.length + "]");
 
 		final int totalInterfaces = sum(class_interface_count);
@@ -936,17 +941,17 @@ public class ClassBands extends BandSet {
 
 		encodedBand = encodeBandInt("class_interface", classInterface, Codec.DELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_interface[" + classInterface.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_interface[" + classInterface.length + "]");
 
 		encodedBand = encodeBandInt("class_field_count", class_field_count, Codec.DELTA5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from class_field_count[" + class_field_count.length + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from class_field_count[" + class_field_count.length + "]");
 
 		encodedBand = encodeBandInt("class_method_count", class_method_count, Codec.DELTA5);
 		out.write(encodedBand);
 		PackingUtils.log(
-				"Wrote " + encodedBand.length + " bytes from class_method_count[" + class_method_count.length + "]");
+				LOG_TEXT + encodedBand.length + " bytes from class_method_count[" + class_method_count.length + "]");
 
 		final int totalFields = sum(class_field_count);
 		final int[] fieldDescr = new int[totalFields];
@@ -961,7 +966,7 @@ public class ClassBands extends BandSet {
 
 		encodedBand = encodeBandInt("field_descr", fieldDescr, Codec.DELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from field_descr[" + fieldDescr.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from field_descr[" + fieldDescr.length + "]");
 
 		writeFieldAttributeBands(out);
 
@@ -978,7 +983,7 @@ public class ClassBands extends BandSet {
 
 		encodedBand = encodeBandInt("method_descr", methodDescr, Codec.MDELTA5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from method_descr[" + methodDescr.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from method_descr[" + methodDescr.length + "]");
 
 		writeMethodAttributeBands(out);
 		writeClassAttributeBands(out);
@@ -1170,7 +1175,7 @@ public class ClassBands extends BandSet {
 		byte[] encodedBand = encodeFlags("class_flags", class_flags, Codec.UNSIGNED5, Codec.UNSIGNED5,
 				segmentHeader.have_class_flags_hi());
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_flags[" + class_flags.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_flags[" + class_flags.length + "]");
 
 		// These bands are not needed, but could be used to reduce the size of
 		// the archive if there are enough different non-standard attributes
@@ -1183,67 +1188,67 @@ public class ClassBands extends BandSet {
 		encodedBand = encodeBandInt("class_attr_calls", class_attr_calls, Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from class_attr_calls[" + class_attr_calls.length + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from class_attr_calls[" + class_attr_calls.length + "]");
 
 		encodedBand = encodeBandInt("classSourceFile", cpEntryOrNullListToArray(classSourceFile), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from classSourceFile[" + classSourceFile.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from classSourceFile[" + classSourceFile.size() + "]");
 
 		encodedBand = encodeBandInt("class_enclosing_method_RC", cpEntryListToArray(classEnclosingMethodClass),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_enclosing_method_RC["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_enclosing_method_RC["
 				+ classEnclosingMethodClass.size() + "]");
 
 		encodedBand = encodeBandInt("class_EnclosingMethod_RDN", cpEntryOrNullListToArray(classEnclosingMethodDesc),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_EnclosingMethod_RDN["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_EnclosingMethod_RDN["
 				+ classEnclosingMethodDesc.size() + "]");
 
 		encodedBand = encodeBandInt("class_Signature_RS", cpEntryListToArray(classSignature), Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from class_Signature_RS[" + classSignature.size() + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from class_Signature_RS[" + classSignature.size() + "]");
 
 		class_RVA_bands.pack(out);
 		class_RIA_bands.pack(out);
 
 		encodedBand = encodeBandInt("class_InnerClasses_N", class_InnerClasses_N, Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_InnerClasses_N["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_InnerClasses_N["
 				+ class_InnerClasses_N.length + "]");
 
 		encodedBand = encodeBandInt("class_InnerClasses_RC", getInts(class_InnerClasses_RC), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_InnerClasses_RC["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_InnerClasses_RC["
 				+ class_InnerClasses_RC.length + "]");
 
 		encodedBand = encodeBandInt("class_InnerClasses_F", class_InnerClasses_F, Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_InnerClasses_F["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_InnerClasses_F["
 				+ class_InnerClasses_F.length + "]");
 
 		encodedBand = encodeBandInt("class_InnerClasses_outer_RCN", cpEntryOrNullListToArray(classInnerClassesOuterRCN),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_InnerClasses_outer_RCN["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_InnerClasses_outer_RCN["
 				+ classInnerClassesOuterRCN.size() + "]");
 
 		encodedBand = encodeBandInt("class_InnerClasses_name_RUN", cpEntryOrNullListToArray(classInnerClassesNameRUN),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from class_InnerClasses_name_RUN["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from class_InnerClasses_name_RUN["
 				+ classInnerClassesNameRUN.size() + "]");
 
 		encodedBand = encodeBandInt("classFileVersionMinor", classFileVersionMinor.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from classFileVersionMinor["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from classFileVersionMinor["
 				+ classFileVersionMinor.size() + "]");
 
 		encodedBand = encodeBandInt("classFileVersionMajor", classFileVersionMajor.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from classFileVersionMajor["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from classFileVersionMajor["
 				+ classFileVersionMajor.size() + "]");
 
 		for (final NewAttributeBands classAttributeBand : classAttributeBands) {
@@ -1255,99 +1260,99 @@ public class ClassBands extends BandSet {
 		byte[] encodedBand = encodeFlags("codeFlags", longListToArray(codeFlags), Codec.UNSIGNED5, Codec.UNSIGNED5,
 				segmentHeader.have_code_flags_hi());
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from codeFlags[" + codeFlags.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from codeFlags[" + codeFlags.size() + "]");
 
 		// *code_attr_count :UNSIGNED5 [COUNT(1<<16,...)]
 		// *code_attr_indexes :UNSIGNED5 [SUM(*code_attr_count)]
 		encodedBand = encodeBandInt("code_attr_calls", code_attr_calls, Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_attr_calls[" + code_attr_calls.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_attr_calls[" + code_attr_calls.length + "]");
 
 		encodedBand = encodeBandInt("code_LineNumberTable_N", codeLineNumberTableN.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LineNumberTable_N["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LineNumberTable_N["
 				+ codeLineNumberTableN.size() + "]");
 
 		encodedBand = encodeBandInt("code_LineNumberTable_bci_P", integerListToArray(codeLineNumberTableBciP),
 				Codec.BCI5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LineNumberTable_bci_P["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LineNumberTable_bci_P["
 				+ codeLineNumberTableBciP.size() + "]");
 
 		encodedBand = encodeBandInt("code_LineNumberTable_line", codeLineNumberTableLine.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LineNumberTable_line["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LineNumberTable_line["
 				+ codeLineNumberTableLine.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_N", codeLocalVariableTableN.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_N["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_N["
 				+ codeLocalVariableTableN.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_bci_P", integerListToArray(codeLocalVariableTableBciP),
 				Codec.BCI5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_bci_P["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_bci_P["
 				+ codeLocalVariableTableBciP.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_span_O", integerListToArray(codeLocalVariableTableSpanO),
 				Codec.BRANCH5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_span_O["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_span_O["
 				+ codeLocalVariableTableSpanO.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_name_RU", cpEntryListToArray(codeLocalVariableTableNameRU),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_name_RU["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_name_RU["
 				+ codeLocalVariableTableNameRU.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_type_RS", cpEntryListToArray(codeLocalVariableTableTypeRS),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_type_RS["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_type_RS["
 				+ codeLocalVariableTableTypeRS.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTable_slot", codeLocalVariableTableSlot.toArray(),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTable_slot["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTable_slot["
 				+ codeLocalVariableTableSlot.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_N", codeLocalVariableTypeTableN.toArray(),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_N["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_N["
 				+ codeLocalVariableTypeTableN.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_bci_P",
 				integerListToArray(codeLocalVariableTypeTableBciP), Codec.BCI5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_bci_P["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_bci_P["
 				+ codeLocalVariableTypeTableBciP.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_span_O",
 				integerListToArray(codeLocalVariableTypeTableSpanO), Codec.BRANCH5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_span_O["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_span_O["
 				+ codeLocalVariableTypeTableSpanO.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_name_RU",
 				cpEntryListToArray(codeLocalVariableTypeTableNameRU), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_name_RU["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_name_RU["
 				+ codeLocalVariableTypeTableNameRU.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_type_RS",
 				cpEntryListToArray(codeLocalVariableTypeTableTypeRS), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_type_RS["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_type_RS["
 				+ codeLocalVariableTypeTableTypeRS.size() + "]");
 
 		encodedBand = encodeBandInt("code_LocalVariableTypeTable_slot", codeLocalVariableTypeTableSlot.toArray(),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from code_LocalVariableTypeTable_slot["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from code_LocalVariableTypeTable_slot["
 				+ codeLocalVariableTypeTableSlot.size() + "]");
 
 		for (final NewAttributeBands bands : codeAttributeBands) {
@@ -1358,40 +1363,40 @@ public class ClassBands extends BandSet {
 	private void writeCodeBands(final OutputStream out) throws IOException, Pack200Exception {
 		byte[] encodedBand = encodeBandInt("codeHeaders", codeHeaders, Codec.BYTE1);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from codeHeaders[" + codeHeaders.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from codeHeaders[" + codeHeaders.length + "]");
 
 		encodedBand = encodeBandInt("codeMaxStack", codeMaxStack.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from codeMaxStack[" + codeMaxStack.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from codeMaxStack[" + codeMaxStack.size() + "]");
 
 		encodedBand = encodeBandInt("codeMaxLocals", codeMaxLocals.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from codeMaxLocals[" + codeMaxLocals.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from codeMaxLocals[" + codeMaxLocals.size() + "]");
 
 		encodedBand = encodeBandInt("codeHandlerCount", codeHandlerCount.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from codeHandlerCount[" + codeHandlerCount.size() + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from codeHandlerCount[" + codeHandlerCount.size() + "]");
 
 		encodedBand = encodeBandInt("codeHandlerStartP", integerListToArray(codeHandlerStartP), Codec.BCI5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from codeHandlerStartP[" + codeHandlerStartP.size() + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from codeHandlerStartP[" + codeHandlerStartP.size() + "]");
 
 		encodedBand = encodeBandInt("codeHandlerEndPO", integerListToArray(codeHandlerEndPO), Codec.BRANCH5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from codeHandlerEndPO[" + codeHandlerEndPO.size() + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from codeHandlerEndPO[" + codeHandlerEndPO.size() + "]");
 
 		encodedBand = encodeBandInt("codeHandlerCatchPO", integerListToArray(codeHandlerCatchPO), Codec.BRANCH5);
 		out.write(encodedBand);
 		PackingUtils.log(
-				"Wrote " + encodedBand.length + " bytes from codeHandlerCatchPO[" + codeHandlerCatchPO.size() + "]");
+				LOG_TEXT + encodedBand.length + " bytes from codeHandlerCatchPO[" + codeHandlerCatchPO.size() + "]");
 
 		encodedBand = encodeBandInt("codeHandlerClass", cpEntryOrNullListToArray(codeHandlerClass), Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from codeHandlerClass[" + codeHandlerClass.size() + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from codeHandlerClass[" + codeHandlerClass.size() + "]");
 
 		writeCodeAttributeBands(out);
 	}
@@ -1400,23 +1405,23 @@ public class ClassBands extends BandSet {
 		byte[] encodedBand = encodeFlags("field_flags", field_flags, Codec.UNSIGNED5, Codec.UNSIGNED5,
 				segmentHeader.have_field_flags_hi());
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from field_flags[" + field_flags.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from field_flags[" + field_flags.length + "]");
 
 		// *field_attr_count :UNSIGNED5 [COUNT(1<<16,...)]
 		// *field_attr_indexes :UNSIGNED5 [SUM(*field_attr_count)]
 		encodedBand = encodeBandInt("field_attr_calls", field_attr_calls, Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from field_attr_calls[" + field_attr_calls.length + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from field_attr_calls[" + field_attr_calls.length + "]");
 
 		encodedBand = encodeBandInt("fieldConstantValueKQ", cpEntryListToArray(fieldConstantValueKQ), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from fieldConstantValueKQ["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from fieldConstantValueKQ["
 				+ fieldConstantValueKQ.size() + "]");
 
 		encodedBand = encodeBandInt("fieldSignature", cpEntryListToArray(fieldSignature), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from fieldSignature[" + fieldSignature.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from fieldSignature[" + fieldSignature.size() + "]");
 
 		field_RVA_bands.pack(out);
 		field_RIA_bands.pack(out);
@@ -1429,29 +1434,29 @@ public class ClassBands extends BandSet {
 		byte[] encodedBand = encodeFlags("method_flags", method_flags, Codec.UNSIGNED5, Codec.UNSIGNED5,
 				segmentHeader.have_method_flags_hi());
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from method_flags[" + method_flags.length + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from method_flags[" + method_flags.length + "]");
 
 		// *method_attr_count :UNSIGNED5 [COUNT(1<<16,...)]
 		// *method_attr_indexes :UNSIGNED5 [SUM(*method_attr_count)]
 		encodedBand = encodeBandInt("method_attr_calls", method_attr_calls, Codec.UNSIGNED5);
 		out.write(encodedBand);
 		PackingUtils
-				.log("Wrote " + encodedBand.length + " bytes from method_attr_calls[" + method_attr_calls.length + "]");
+				.log(LOG_TEXT + encodedBand.length + " bytes from method_attr_calls[" + method_attr_calls.length + "]");
 
 		encodedBand = encodeBandInt("methodExceptionNumber", methodExceptionNumber.toArray(), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from methodExceptionNumber["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from methodExceptionNumber["
 				+ methodExceptionNumber.size() + "]");
 
 		encodedBand = encodeBandInt("methodExceptionClasses", cpEntryListToArray(methodExceptionClasses),
 				Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from methodExceptionClasses["
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from methodExceptionClasses["
 				+ methodExceptionClasses.size() + "]");
 
 		encodedBand = encodeBandInt("methodSignature", cpEntryListToArray(methodSignature), Codec.UNSIGNED5);
 		out.write(encodedBand);
-		PackingUtils.log("Wrote " + encodedBand.length + " bytes from methodSignature[" + methodSignature.size() + "]");
+		PackingUtils.log(LOG_TEXT + encodedBand.length + " bytes from methodSignature[" + methodSignature.size() + "]");
 
 		method_RVA_bands.pack(out);
 		method_RIA_bands.pack(out);
