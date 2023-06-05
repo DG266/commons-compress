@@ -733,10 +733,8 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
     }
 
     private void initBlock() {
-        // blockNo++;
         this.crc.initializeCRC();
         this.last = -1;
-        // ch = 0;
 
         final boolean[] inUse = this.data.inUse;
         for (int i = 256; --i >= 0;) {
@@ -949,7 +947,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
     }
 
     private void sendMTFValues2(final int nGroups, final int nSelectors) {
-        // assert (nGroups < 8) : nGroups;
 
         final Data dataShadow = this.data;
         final byte[] pos = dataShadow.sendMTFValues2_pos;
@@ -993,9 +990,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
                 }
             }
 
-            // assert (maxLen <= 20) : maxLen;
-            // assert (minLen >= 1) : minLen;
-
             hbAssignCodes(code[t], len[t], minLen, maxLen, alphaSize);
         }
     }
@@ -1027,7 +1021,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
             if (inUse16[i]) {
                 final int i16 = i * 16;
                 for (int j = 0; j < 16; j++) {
-                    // inlined: bsW(1, inUse[i16 + j] ? 1 : 0);
                     while (bsLiveShadow >= 8) {
                         outShadow.write(bsBuffShadow >> 24); // write 8-bit
                         bsBuffShadow <<= 8;
@@ -1058,7 +1051,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
 
         for (int i = 0; i < nSelectors; i++) {
             for (int j = 0, hj = selectorMtf[i] & 0xff; j < hj; j++) {
-                // inlined: bsW(1, 1);
                 while (bsLiveShadow >= 8) {
                     outShadow.write(bsBuffShadow >> 24);
                     bsBuffShadow <<= 8;
@@ -1068,13 +1060,11 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
                 bsLiveShadow++;
             }
 
-            // inlined: bsW(1, 0);
             while (bsLiveShadow >= 8) {
                 outShadow.write(bsBuffShadow >> 24);
                 bsBuffShadow <<= 8;
                 bsLiveShadow -= 8;
             }
-            // bsBuffShadow |= 0 << (32 - bsLiveShadow - 1);
             bsLiveShadow++;
         }
 
@@ -1094,7 +1084,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
             final byte[] len_t = len[t];
             int curr = len_t[0] & 0xff;
 
-            // inlined: bsW(5, curr);
             while (bsLiveShadow >= 8) {
                 outShadow.write(bsBuffShadow >> 24); // write 8-bit
                 bsBuffShadow <<= 8;
@@ -1106,7 +1095,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
             for (int i = 0; i < alphaSize; i++) {
                 final int lti = len_t[i] & 0xff;
                 while (curr < lti) {
-                    // inlined: bsW(2, 2);
                     while (bsLiveShadow >= 8) {
                         outShadow.write(bsBuffShadow >> 24); // write 8-bit
                         bsBuffShadow <<= 8;
@@ -1119,7 +1107,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
                 }
 
                 while (curr > lti) {
-                    // inlined: bsW(2, 3);
                     while (bsLiveShadow >= 8) {
                         outShadow.write(bsBuffShadow >> 24); // write 8-bit
                         bsBuffShadow <<= 8;
@@ -1131,13 +1118,11 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
                     curr--; /* 11 */
                 }
 
-                // inlined: bsW(1, 0);
                 while (bsLiveShadow >= 8) {
                     outShadow.write(bsBuffShadow >> 24); // write 8-bit
                     bsBuffShadow <<= 8;
                     bsLiveShadow -= 8;
                 }
-                // bsBuffShadow |= 0 << (32 - bsLiveShadow - 1);
                 bsLiveShadow++;
             }
         }
@@ -1169,10 +1154,6 @@ public class BZip2CompressorOutputStream extends CompressorOutputStream
             while (gs <= ge) {
                 final int sfmap_i = sfmap[gs];
 
-                //
-                // inlined: bsW(len_selCtr[sfmap_i] & 0xff,
-                // code_selCtr[sfmap_i]);
-                //
                 while (bsLiveShadow >= 8) {
                     outShadow.write(bsBuffShadow >> 24);
                     bsBuffShadow <<= 8;

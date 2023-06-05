@@ -620,7 +620,6 @@ public class SevenZFile implements Closeable {
         if (folderIndex < 0) {
             deferredBlockStreams.clear();
             // TODO: previously it'd return an empty stream?
-            // new BoundedInputStream(new ByteArrayInputStream(ByteUtils.EMPTY_BYTE_ARRAY), 0);
             return;
         }
         final SevenZArchiveEntry file = archive.files[entryIndex];
@@ -1318,7 +1317,6 @@ public class SevenZFile implements Closeable {
 
         if (nid == NID.kAdditionalStreamsInfo) {
             throw new IOException("Additional streams unsupported");
-            //nid = getUnsignedByte(header);
         }
 
         if (nid == NID.kMainStreamsInfo) {
@@ -1604,7 +1602,6 @@ public class SevenZFile implements Closeable {
 
         if (nid == NID.kAdditionalStreamsInfo) {
             throw new IOException("Additional streams unsupported");
-            //nid = getUnsignedByte(header);
         }
 
         if (nid == NID.kMainStreamsInfo) {

@@ -273,7 +273,6 @@ class BlockSort {
             }
         }
 
-        // assert (data.origPtr != -1) : data.origPtr;
     }
 
     /*
@@ -759,15 +758,6 @@ class BlockSort {
                     final int v = fmap[i];
                     final int vd = v + d;
                     int j = i;
-
-                    // for (int a;
-                    // (j > mj) && mainGtU((a = fmap[j - h]) + d, vd,
-                    // block, quadrant, lastShadow);
-                    // j -= h) {
-                    // fmap[j] = a;
-                    // }
-                    //
-                    // unrolled version:
 
                     // start inline mainGTU
                     boolean onceRunned = false;

@@ -1152,12 +1152,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
         Zip64ExtendedInformationExtraField z64 = extra instanceof Zip64ExtendedInformationExtraField
             ? (Zip64ExtendedInformationExtraField) extra : null;
         if (z64 == null) {
-            /*
-              System.err.println("Adding z64 for " + ze.getName()
-              + ", method: " + ze.getMethod()
-              + " (" + (ze.getMethod() == STORED) + ")"
-              + ", channel: " + (channel != null));
-            */
+
             z64 = new Zip64ExtendedInformationExtraField();
         }
 
@@ -1177,10 +1172,6 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
                                       final Zip64Mode effectiveMode)
         throws ZipException {
         if (entry.entry.getMethod() == DEFLATED) {
-            /* It turns out def.getBytesRead() returns wrong values if
-             * the size exceeds 4 GB on Java < Java7
-            entry.entry.setSize(def.getBytesRead());
-            */
             entry.entry.setSize(entry.bytesRead);
             entry.entry.setCompressedSize(bytesWritten);
             entry.entry.setCrc(crc);
