@@ -20,24 +20,37 @@ package org.apache.commons.compress.microbenchmark;
 
 import org.apache.commons.compress.utils.ArchiveUtils;
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.concurrent.TimeUnit;
 
 public class ArchiveUtilsBenchmark {
 
-    @Benchmark
-    @BenchmarkMode(Mode.All)
-    @Fork(value = 1, warmups = 0)
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void sanitizeBench(Blackhole blackhole) throws Exception {
-        final String input = "012345678901234567890123456789012345678901234567890123456789"
+    @State(Scope.Benchmark)
+    public static class SanitizeState {
+        final String shortString = "012345678901234567890123456789012345678901234567890123456789";
+
+        final String unprintableCharString = "\b12345678901234567890123456789012345678901234567890123456789";
+
+        final String longString = "012345678901234567890123456789012345678901234567890123456789"
                 + "012345678901234567890123456789012345678901234567890123456789"
                 + "012345678901234567890123456789012345678901234567890123456789"
                 + "012345678901234567890123456789012345678901234567890123456789"
                 + "012345678901234567890123456789012345678901234567890123456789";
-        String result = ArchiveUtils.sanitize(input);
-        blackhole.consume(result);
+
+        @Param({shortString, unprintableCharString, longString})
+        String toSanitize;
+
+        public SanitizeState() {
+            // empty constructor
+        }
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.Throughput)
+    @Fork(value = 1, warmups = 1)
+    @OutputTimeUnit(TimeUnit.SECONDS)
+    public String sanitizeBench(SanitizeState ss) {
+        return ArchiveUtils.sanitize(ss.toSanitize);
     }
 
 }
