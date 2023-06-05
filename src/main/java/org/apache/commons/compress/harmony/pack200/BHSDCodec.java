@@ -251,33 +251,12 @@ public final class BHSDCodec extends Codec {
                 z = z - (z >>> s);
             }
         }
-        // This algorithm does the same thing, but is probably slower. Leaving
-        // in for now for readability
-        // if (isSigned()) {
-        // long u = z;
-        // long twoPowS = (long)Math.pow(2, s);
-        // double twoPowSMinusOne = twoPowS-1;
-        // if (u % twoPowS < twoPowSMinusOne) {
-        // if (cardinality < Math.pow(2, 32)) {
-        // z = (long) (u - (Math.floor(u/ twoPowS)));
-        // } else {
-        // z = cast32((long) (u - (Math.floor(u/ twoPowS))));
-        // }
-        // } else {
-        // z = (long) (-Math.floor(u/ twoPowS) - 1);
-        // }
-        // }
+        // There is another algorithm that does the same thing, but is probably slower. Removed to improve readability
         if (isDelta()) {
             z += last;
         }
         return (int) z;
     }
-
-    // private long cast32(long u) {
-    // u = (long) ((long) ((u + Math.pow(2, 31)) % Math.pow(2, 32)) -
-    // Math.pow(2, 31));
-    // return u;
-    // }
 
     @Override
     public int[] decodeInts(final int n, final InputStream in) throws IOException, Pack200Exception {

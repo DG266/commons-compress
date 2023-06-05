@@ -31,7 +31,7 @@ import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-//import org.apache.commons.compress.harmony.kernel.vm.VM;
+
 
 /**
  * This class retrieves strings from a resource bundle and returns them, formatting them with MessageFormat when
@@ -206,7 +206,7 @@ public class Messages {
     static public ResourceBundle setLocale(final Locale locale, final String resource) {
         try {
             // VM.bootCallerClassLoader() returns null
-            final ClassLoader loader = null;// VM.bootCallerClassLoader();
+            final ClassLoader loader = null;
             return (ResourceBundle) AccessController.doPrivileged((PrivilegedAction<Object>) () -> ResourceBundle
                 .getBundle(resource, locale, loader != null ? loader : ClassLoader.getSystemClassLoader()));
         } catch (final MissingResourceException e) {

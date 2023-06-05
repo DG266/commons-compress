@@ -182,11 +182,9 @@ public class IcTuple {
         final String[] nameComponents = innerBreakAtDollar(C);
         if (nameComponents.length == 0) {
             // Unable to predict outer class
-            // throw new Error("Unable to predict outer class name: " + C);
         }
         if (nameComponents.length == 1) {
             // Unable to predict simple class name
-            // throw new Error("Unable to predict inner class name: " + C);
         }
         if (nameComponents.length < 2) {
             // If we get here, we hope cachedSimpleClassName

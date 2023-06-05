@@ -194,13 +194,6 @@ public class BcBands extends BandSet {
         out.write(encodedBand);
         PackingUtils.log(TEXT_EXCEPTION + encodedBand.length + " bytes from bcInitRef[" + bcInitRef.size() + "]");
 
-        // out.write(encodeBandInt(cpEntryintegerListToArray(bcEscRef),
-        // Codec.UNSIGNED5));
-        // out.write(encodeBandInt(integerListToArray(bcEscRefSize),
-        // Codec.UNSIGNED5));
-        // out.write(encodeBandInt(integerListToArray(bcEscSize),
-        // Codec.UNSIGNED5));
-        // out.write(encodeBandInt(integerListToArray(bcEscByte), Codec.BYTE1));
     }
 
     public void setCurrentClass(final String name, final String superName) {
@@ -267,9 +260,6 @@ public class BcBands extends BandSet {
         if (owner.equals(currentClass)) {
             opcode += 24; // change to getstatic_this, putstatic_this etc.
             bcThisField.add(cpField);
-//        } else if (owner.equals(superClass)) {
-//            opcode += 38; // change to getstatic_super etc.
-//            bcSuperField.add(cpField);
         } else {
             if (aload_0) {
                 opcode -= 7;
