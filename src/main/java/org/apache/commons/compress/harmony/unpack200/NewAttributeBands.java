@@ -283,6 +283,8 @@ public class NewAttributeBands extends BandSet {
             case 'V':
                 length = 0;
                 break;
+            default:
+                break;
             }
             return length;
         }
@@ -818,6 +820,8 @@ public class NewAttributeBands extends BandSet {
                 string.append((char) stream.read());
             }
             return new Reference(string.toString());
+        default:
+            break;
         }
         return null;
     }

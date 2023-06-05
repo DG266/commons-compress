@@ -43,6 +43,9 @@ import org.apache.commons.compress.utils.ExactMath;
  */
 public abstract class BandSet {
 
+    private static final String PACK_EXCEPTION_1 = "Something has gone wrong during parsing references, index = ";
+    private static final String PACK_EXCEPTION_2 = ", array size = ";
+
     protected Segment segment;
 
     protected SegmentHeader header;
@@ -238,8 +241,8 @@ public abstract class BandSet {
         for (int i1 = 0; i1 < count; i1++) {
             final int index = indices[i1];
             if (index < 0 || index >= reference.length) {
-                throw new Pack200Exception("Something has gone wrong during parsing references, index = " + index
-                    + ", array size = " + reference.length);
+                throw new Pack200Exception(PACK_EXCEPTION_1 + index
+                    + PACK_EXCEPTION_2 + reference.length);
             }
             result[i1] = segment.getCpBands().cpIntegerValue(index);
         }
@@ -254,8 +257,8 @@ public abstract class BandSet {
         for (int i1 = 0; i1 < count; i1++) {
             final int index = indices[i1];
             if (index < 0 || index >= reference.length) {
-                throw new Pack200Exception("Something has gone wrong during parsing references, index = " + index
-                    + ", array size = " + reference.length);
+                throw new Pack200Exception(PACK_EXCEPTION_1 + index
+                    + PACK_EXCEPTION_2 + reference.length);
             }
             result[i1] = segment.getCpBands().cpLongValue(index);
         }
@@ -453,8 +456,8 @@ public abstract class BandSet {
         for (int i1 = 0; i1 < sum; i1++) {
             final int index = indices[i1];
             if (index < 0 || index >= reference.length) {
-                throw new Pack200Exception("Something has gone wrong during parsing references, index = " + index
-                    + ", array size = " + reference.length);
+                throw new Pack200Exception(PACK_EXCEPTION_1 + index
+                    + PACK_EXCEPTION_2 + reference.length);
             }
             result1[i1] = reference[index];
         }

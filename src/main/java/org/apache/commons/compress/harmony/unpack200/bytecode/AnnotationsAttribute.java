@@ -145,6 +145,8 @@ public abstract class AnnotationsAttribute extends Attribute {
                 return length;
             case '@':
                 return (1 + ((Annotation) value).getLength());
+            default:
+                break;
             }
             return 0;
         }

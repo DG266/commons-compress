@@ -1007,6 +1007,8 @@ public class ClassBands extends BandSet {
                 case '@':
                     atCount++;
                     break;
+                default:
+                    break;
                 }
             }
             mbg[i].caseI_KI = parseCPIntReferences(contextName + "_" + rxa + "_caseI_KI", in, Codec.UNSIGNED5, ICount);
