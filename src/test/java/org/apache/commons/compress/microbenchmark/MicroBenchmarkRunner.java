@@ -18,8 +18,17 @@
  */
 package org.apache.commons.compress.microbenchmark;
 
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+
 public class MicroBenchmarkRunner {
-    public static void main(String[] args) throws Exception{
-        org.openjdk.jmh.Main.main(args);
+    public static void main(String[] args) throws Exception {
+        //org.openjdk.jmh.Main.main(args);
+
+        Options opt = new OptionsBuilder()
+                .include("Benchmark")
+                .build();
+        new Runner(opt).run();
     }
 }
