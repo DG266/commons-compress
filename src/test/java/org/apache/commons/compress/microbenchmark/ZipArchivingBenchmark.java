@@ -64,7 +64,7 @@ public class ZipArchivingBenchmark {
     @BenchmarkMode(Mode.Throughput)
     @Fork(value = 1, warmups = 1)
     @OutputTimeUnit(TimeUnit.SECONDS)
-    public byte[] archiveFile(ArchiveState as) throws IOException, ArchiveException {
+    public byte[] archiveFileBench(ArchiveState as) throws IOException, ArchiveException {
         ArchiveStreamFactory factory = as.factory;
         Collection<File> filesToArchive = as.filesToArchive;
 
