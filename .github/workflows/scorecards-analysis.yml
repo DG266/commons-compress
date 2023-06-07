@@ -20,7 +20,7 @@ on:
   schedule:
     - cron: "30 1 * * 6"    # Weekly on Saturdays
   push:
-    branches: [ "master", "microbenchmark"]
+    branches: [ "master" ] # Only the default branch master is supported! See also: https://github.com/ossf/scorecard-action
 
 permissions: read-all
 
