@@ -39,7 +39,7 @@ public class ZipArchivingBenchmark {
     public static class ArchiveState {
         public ArchiveStreamFactory factory = new ArchiveStreamFactory();
         public Collection<File> filesToArchive;
-        @Param({"COMPRESS-348.7z", "COMPRESS-592.7z"})
+        @Param({"./src/test/resources/COMPRESS-348.7z", "./src/test/resources/COMPRESS-592.7z"})
         public String filePath;
         @Param({"1", "10", "100", "1000"})
         public int numOfFiles;
@@ -47,6 +47,7 @@ public class ZipArchivingBenchmark {
         @Setup(Level.Trial)
         public void doSetup() {
             File myFile = new File(filePath);
+            System.out.println(myFile.getAbsolutePath());
             filesToArchive = new LinkedList<>();
             for(int i = 0; i < numOfFiles; i++) {
                 filesToArchive.add(myFile);

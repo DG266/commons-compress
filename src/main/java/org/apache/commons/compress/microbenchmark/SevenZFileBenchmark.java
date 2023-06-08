@@ -18,16 +18,12 @@
  */
 package org.apache.commons.compress.microbenchmark;
 
-import org.apache.commons.compress.AbstractTestCase;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class SevenZFileBenchmark {
@@ -35,7 +31,11 @@ public class SevenZFileBenchmark {
     @State(Scope.Benchmark)
     public static class FileState {
 
-        @Param({"COMPRESS-592.7z", "COMPRESS-592_half.7z", "COMPRESS-348.7z"})
+        @Param({
+                "./src/test/resources/COMPRESS-592.7z",
+                "./src/test/resources/COMPRESS-592_half.7z",
+                "./src/test/resources/COMPRESS-348.7z"
+        })
         String path;
         SevenZFile file;
 
@@ -45,27 +45,13 @@ public class SevenZFileBenchmark {
 
         @Setup(Level.Trial)
         public void doSetup() throws IOException {
-            // System.out.println("*** READING THE FILE ***");
-            file = new SevenZFile(getFile(path));
+            file = new SevenZFile(new File(path));
         }
 
         @TearDown(Level.Trial)
         public void doTearDown() throws IOException {
             // System.out.println("*** CLOSING THE FILE ***");
             file.close();
-        }
-        public static File getFile(final String path) throws IOException {
-            final URL url = AbstractTestCase.class.getClassLoader().getResource(path);
-            if (url == null) {
-                throw new FileNotFoundException("couldn't find " + path);
-            }
-            URI uri = null;
-            try {
-                uri = url.toURI();
-            } catch (final java.net.URISyntaxException ex) {
-                throw new IOException(ex);
-            }
-            return new File(uri);
         }
     }
 
@@ -102,7 +88,7 @@ public class SevenZFileBenchmark {
     @OutputTimeUnit(TimeUnit.SECONDS)
     public void readSevenZipFileWithGetFileBench(FileState fs) throws IOException {
         // You have to open the file AND read the entries (obviously this should take more time)
-        try (SevenZFile sevenZFile = new SevenZFile(FileState.getFile(fs.path))) {
+        try (SevenZFile sevenZFile = new SevenZFile(new File(fs.path))) {
             SevenZArchiveEntry entry = sevenZFile.getNextEntry();
             while (entry != null) {
                 if (entry.hasStream()) {
