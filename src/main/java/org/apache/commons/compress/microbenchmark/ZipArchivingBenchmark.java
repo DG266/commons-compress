@@ -47,7 +47,6 @@ public class ZipArchivingBenchmark {
         @Setup(Level.Trial)
         public void doSetup() {
             File myFile = new File(filePath);
-            System.out.println(myFile.getAbsolutePath());
             filesToArchive = new LinkedList<>();
             for(int i = 0; i < numOfFiles; i++) {
                 filesToArchive.add(myFile);
