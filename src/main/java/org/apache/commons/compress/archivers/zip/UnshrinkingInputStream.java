@@ -44,7 +44,7 @@ class UnshrinkingInputStream extends LZWInputStream {
         setClearCode(DEFAULT_CODE_SIZE);
         initializeTables(MAX_CODE_SIZE);
         isUsed = new boolean[getPrefixesLength()];
-        for (int i = 0; i < (1 << 8); i++) {
+        for (int i = 0; i < (1 << 8); ++i) {
             isUsed[i] = true;
         }
         setTableSize(getClearCode() + 1);
@@ -111,12 +111,12 @@ class UnshrinkingInputStream extends LZWInputStream {
 
     private void partialClear() {
         final boolean[] isParent = new boolean[MAX_TABLE_SIZE];
-        for (int i = 0; i < isUsed.length; i++) {
+        for (int i = 0; i < isUsed.length; ++i) {
             if (isUsed[i] && getPrefix(i) != UNUSED_PREFIX) {
                 isParent[getPrefix(i)] = true;
             }
         }
-        for (int i = getClearCode() + 1; i < isParent.length; i++) {
+        for (int i = getClearCode() + 1; i < isParent.length; ++i) {
             if (!isParent[i]) {
                 isUsed[i] = false;
                 setPrefix(i, UNUSED_PREFIX);

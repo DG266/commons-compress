@@ -157,8 +157,8 @@ public class BZip2CompressorInputStream extends CompressorInputStream
                                              final int[] base, final int[] perm, final char[] length,
                                              final int minLen, final int maxLen, final int alphaSize)
         throws IOException {
-        for (int i = minLen, pp = 0; i <= maxLen; i++) {
-            for (int j = 0; j < alphaSize; j++) {
+        for (int i = minLen, pp = 0; i <= maxLen; ++i) {
+            for (int j = 0; j < alphaSize; ++j) {
                 if (length[j] == i) {
                     perm[pp++] = j;
                 }
@@ -170,7 +170,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             limit[i] = 0;
         }
 
-        for (int i = 0; i < alphaSize; i++) {
+        for (int i = 0; i < alphaSize; ++i) {
             final int l = length[i];
             checkBounds(l, MAX_ALPHA_SIZE, "length");
             base[l + 1]++;
@@ -181,7 +181,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             base[i] = b;
         }
 
-        for (int i = minLen, vec = 0, b = base[i]; i <= maxLen; i++) {
+        for (int i = minLen, vec = 0, b = base[i]; i <= maxLen; ++i) {
             final int nb = base[i + 1];
             vec += nb - b;
             b = nb;
@@ -189,7 +189,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             vec <<= 1;
         }
 
-        for (int i = minLen + 1; i <= maxLen; i++) {
+        for (int i = minLen + 1; i <= maxLen; ++i) {
             base[i] = ((limit[i - 1] + 1) << 1) - base[i];
         }
     }
@@ -334,7 +334,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         final int[][] base = dataShadow.base;
         final int[][] perm = dataShadow.perm;
 
-        for (int t = 0; t < nGroups; t++) {
+        for (int t = 0; t < nGroups; ++t) {
             int minLen = 32;
             int maxLen = 0;
             final char[] len_t = len[t];
@@ -491,17 +491,22 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
                 yy[0] = tmp;
 
-                if (groupPos == 0) {
-                    groupPos = G_SIZE - 1;
-                    checkBounds(++groupNo, MAX_SELECTORS, "groupNo");
-                    zt = selector[groupNo] & 0xff;
-                    checkBounds(zt, N_GROUPS, "zt");
-                    base_zt = base[zt];
-                    limit_zt = limit[zt];
-                    perm_zt = perm[zt];
-                    minLens_zt = minLens[zt];
-                } else {
-                    groupPos--;
+                switch(groupPos) {
+                    case 0: {
+                        groupPos = G_SIZE - 1;
+                        checkBounds(++groupNo, MAX_SELECTORS, "groupNo");
+                        zt = selector[groupNo] & 0xff;
+                        checkBounds(zt, N_GROUPS, "zt");
+                        base_zt = base[zt];
+                        limit_zt = limit[zt];
+                        perm_zt = perm[zt];
+                        minLens_zt = minLens[zt];
+                        break;
+                    }
+                    default: {
+                        groupPos--;
+                        break;
+                    }
                 }
 
                 int zn = minLens_zt;
