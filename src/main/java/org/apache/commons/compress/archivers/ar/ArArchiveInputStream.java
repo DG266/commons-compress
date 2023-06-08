@@ -285,9 +285,7 @@ public class ArArchiveInputStream extends ArchiveInputStream {
                     return null;
                 }
                 default: break;
-
             }
-
             if (read < metaData.length) {
                 throw new IOException("Truncated ar archive");
             }

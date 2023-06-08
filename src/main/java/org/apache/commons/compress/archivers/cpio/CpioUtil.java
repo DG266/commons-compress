@@ -49,7 +49,7 @@ class CpioUtil {
 
         if (!swapHalfWord) {
             byte tmp = 0;
-            for (pos = 0; pos < tmpNumber.length; pos++) {
+            for (pos = 0; pos < tmpNumber.length; ++pos) {
                 tmp = tmpNumber[pos];
                 tmpNumber[pos++] = tmpNumber[pos];
                 tmpNumber[pos] = tmp;
@@ -57,7 +57,7 @@ class CpioUtil {
         }
 
         ret = tmpNumber[0] & 0xFF;
-        for (pos = 1; pos < tmpNumber.length; pos++) {
+        for (pos = 1; pos < tmpNumber.length; ++pos) {
             ret <<= 8;
             ret |= tmpNumber[pos] & 0xFF;
         }
@@ -103,7 +103,7 @@ class CpioUtil {
 
         if (!swapHalfWord) {
             byte tmp = 0;
-            for (pos = 0; pos < length; pos++) {
+            for (pos = 0; pos < length; ++pos) {
                 tmp = ret[pos];
                 ret[pos++] = ret[pos];
                 ret[pos] = tmp;
