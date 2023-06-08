@@ -224,7 +224,7 @@ public class SevenZFile implements Closeable {
             return false;
         }
 
-        for (int i = 0; i < sevenZSignature.length; i++) {
+        for (int i = 0; i < sevenZSignature.length; ++i) {
             if (signature[i] != sevenZSignature[i]) {
                 return false;
             }
@@ -236,7 +236,7 @@ public class SevenZFile implements Closeable {
         final long firstByte = getUnsignedByte(in);
         int mask = 0x80;
         long value = 0;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; ++i) {
             if ((firstByte & mask) == 0) {
                 return value | (firstByte & mask - 1) << 8 * i;
             }

@@ -47,11 +47,11 @@ class AES256SHA256Decoder extends AbstractCoder {
             throw new IllegalStateException("SHA-256 is unsupported by your Java implementation", noSuchAlgorithmException);
         }
         final byte[] extra = new byte[8];
-        for (long j = 0; j < (1L << numCyclesPower); j++) {
+        for (long j = 0; j < (1L << numCyclesPower); ++j) {
             digest.update(salt);
             digest.update(password);
             digest.update(extra);
-            for (int k = 0; k < extra.length; k++) {
+            for (int k = 0; k < extra.length; ++k) {
                 ++extra[k];
                 if (extra[k] != 0) {
                     break;
@@ -130,13 +130,17 @@ class AES256SHA256Decoder extends AbstractCoder {
                     throw new PasswordRequiredException(archiveName);
                 }
                 final byte[] aesKeyBytes;
-                if (numCyclesPower == 0x3f) {
-                    aesKeyBytes = new byte[32];
-                    System.arraycopy(salt, 0, aesKeyBytes, 0, saltSize);
-                    System.arraycopy(passwordBytes, 0, aesKeyBytes, saltSize,
-                                     Math.min(passwordBytes.length, aesKeyBytes.length - saltSize));
-                } else {
-                    aesKeyBytes = sha256Password(passwordBytes, numCyclesPower, salt);
+                switch (numCyclesPower) {
+                    case 0x3f: {
+                        aesKeyBytes = new byte[32];
+                        System.arraycopy(salt, 0, aesKeyBytes, 0, saltSize);
+                        System.arraycopy(passwordBytes, 0, aesKeyBytes, saltSize,
+                                Math.min(passwordBytes.length, aesKeyBytes.length - saltSize));
+                        break;
+                    }
+                    default: {
+                        aesKeyBytes = sha256Password(passwordBytes, numCyclesPower, salt);
+                    }
                 }
 
                 final SecretKey aesKey = AES256Options.newSecretKeySpec(aesKeyBytes);

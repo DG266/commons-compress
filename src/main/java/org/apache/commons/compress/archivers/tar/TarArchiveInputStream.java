@@ -688,16 +688,20 @@ public class TarArchiveInputStream extends ArchiveInputStream {
             totalRead = inputStream.read(buf, offset, numToRead);
         }
 
-        if (totalRead == -1) {
-            if (numToRead > 0) {
-                throw new IOException("Truncated TAR archive");
+        switch (totalRead){
+            case -1:{
+                if (numToRead > 0) {
+                    throw new IOException("Truncated TAR archive");
+                }
+                setAtEOF(true);
+                break;
             }
-            setAtEOF(true);
-        } else {
-            count(totalRead);
-            entryOffset += totalRead;
+            default: {
+                count(totalRead);
+                entryOffset += totalRead;
+                break;
+            }
         }
-
         return totalRead;
     }
 

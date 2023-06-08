@@ -80,14 +80,19 @@ public class TarFile implements Closeable {
                 totalRead = readArchive(pos, buf);
             }
 
-            if (totalRead == -1) {
-                if (buf.array().length > 0) {
-                    throw new IOException("Truncated TAR archive");
+            switch (totalRead){
+                case -1: {
+                    if (buf.array().length > 0) {
+                        throw new IOException("Truncated TAR archive");
+                    }
+                    setAtEOF(true);
+                    break;
                 }
-                setAtEOF(true);
-            } else {
-                entryOffset += totalRead;
-                buf.flip();
+                default: {
+                    entryOffset += totalRead;
+                    buf.flip();
+                    break;
+                }
             }
             return totalRead;
         }
