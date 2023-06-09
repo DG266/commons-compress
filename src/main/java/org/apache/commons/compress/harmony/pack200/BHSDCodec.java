@@ -159,10 +159,15 @@ public final class BHSDCodec extends Codec {
         this.s = s;
         this.d = d;
         this.l = 256 - h;
-        if (h == 1) {
-            cardinality = b * 255 + 1;
-        } else {
-            cardinality = (long) ((long) (l * (1 - Math.pow(h, b)) / (1 - h)) + Math.pow(h, b));
+        switch (h) {
+            case 1: {
+                cardinality = b * 255 + 1;
+                break;
+            }
+            default: {
+                cardinality = (long) ((long) (l * (1 - Math.pow(h, b)) / (1 - h)) + Math.pow(h, b));
+                break;
+            }
         }
         smallest = calculateSmallest();
         largest = calculateLargest();
@@ -262,7 +267,7 @@ public final class BHSDCodec extends Codec {
     public int[] decodeInts(final int n, final InputStream in) throws IOException, Pack200Exception {
         final int[] band = super.decodeInts(n, in);
         if (isDelta()) {
-            for (int i = 0; i < band.length; i++) {
+            for (int i = 0; i < band.length; ++i) {
                 while (band[i] > largest) {
                     band[i] -= cardinality;
                 }
@@ -279,7 +284,7 @@ public final class BHSDCodec extends Codec {
         throws IOException, Pack200Exception {
         final int[] band = super.decodeInts(n, in, firstValue);
         if (isDelta()) {
-            for (int i = 0; i < band.length; i++) {
+            for (int i = 0; i < band.length; ++i) {
                 while (band[i] > largest) {
                     band[i] -= cardinality;
                 }
@@ -329,7 +334,7 @@ public final class BHSDCodec extends Codec {
         }
 
         final List<Byte> byteList = new ArrayList<>();
-        for (int n = 0; n < b; n++) {
+        for (int n = 0; n < b; ++n) {
             long byteN;
             if (z < l) {
                 byteN = z;
@@ -347,7 +352,7 @@ public final class BHSDCodec extends Codec {
             z /= h;
         }
         final byte[] bytes = new byte[byteList.size()];
-        for (int i = 0; i < bytes.length; i++) {
+        for (int i = 0; i < bytes.length; ++i) {
             bytes[i] = byteList.get(i).byteValue();
         }
         return bytes;
