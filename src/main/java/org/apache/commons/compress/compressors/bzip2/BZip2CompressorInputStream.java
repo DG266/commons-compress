@@ -651,7 +651,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
         int nInUseShadow = 0;
 
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < 256; ++i) {
             if (inUse[i]) {
                 seqToUnseq[nInUseShadow++] = (byte) i;
             }
@@ -753,17 +753,17 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         int inUse16 = 0;
 
         /* Receive the mapping table */
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; ++i) {
             if (bsGetBit(bin)) {
                 inUse16 |= 1 << i;
             }
         }
 
         Arrays.fill(inUse, false);
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; ++i) {
             if ((inUse16 & (1 << i)) != 0) {
                 final int i16 = i << 4;
-                for (int j = 0; j < 16; j++) {
+                for (int j = 0; j < 16; ++j) {
                     if (bsGetBit(bin)) {
                         inUse[i16 + j] = true;
                     }
@@ -786,7 +786,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         // See https://gnu.wildebeest.org/blog/mjw/2019/08/02/bzip2-and-the-cve-that-wasnt/
         // and https://sourceware.org/ml/bzip2-devel/2019-q3/msg00007.html
 
-        for (int i = 0; i < selectors; i++) {
+        for (int i = 0; i < selectors; ++i) {
             int j = 0;
             while (bsGetBit(bin)) {
                 j++;
@@ -802,7 +802,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             pos[v] = (byte) v;
         }
 
-        for (int i = 0; i < nSelectors; i++) {
+        for (int i = 0; i < nSelectors; ++i) {
             int v = selectorMtf[i] & 0xff;
             checkBounds(v, N_GROUPS, "selectorMtf");
             final byte tmp = pos[v];
@@ -818,10 +818,10 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         final char[][] len = dataShadow.temp_charArray2d;
 
         /* Now the coding tables */
-        for (int t = 0; t < nGroups; t++) {
+        for (int t = 0; t < nGroups; ++t) {
             int curr = bsR(bin, 5);
             final char[] len_t = len[t];
-            for (int i = 0; i < alphaSize; i++) {
+            for (int i = 0; i < alphaSize; ++i) {
                 while (bsGetBit(bin)) {
                     curr += bsGetBit(bin) ? -1 : 1;
                 }
@@ -845,12 +845,12 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         cftab[0] = 0;
         System.arraycopy(this.data.unzftab, 0, cftab, 1, 256);
 
-        for (int i = 1, c = cftab[0]; i <= 256; i++) {
+        for (int i = 1, c = cftab[0]; i <= 256; ++i) {
             c += cftab[i];
             cftab[i] = c;
         }
 
-        for (int i = 0, lastShadow = this.last; i <= lastShadow; i++) {
+        for (int i = 0, lastShadow = this.last; i <= lastShadow; ++i) {
             final int tmp = cftab[ll8[i] & 0xff]++;
             checkBounds(tmp, ttLen, "tt index");
             tt[tmp] = i;
