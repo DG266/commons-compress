@@ -32,14 +32,14 @@ public class GzipDecompressionBenchmark {
         @Param({"./src/test/resources/lorem-ipsum.txt.gz"})
         public String filePath;
 
-        public byte[] data;
+        public byte[] dataToDecompress;
 
         @Param({"1024", "4096", "8192"})
         public int bufferSize;
 
         @Setup(Level.Trial)
         public void doSetup() throws IOException {
-            data = Files.readAllBytes(new File(filePath).toPath());
+            dataToDecompress = Files.readAllBytes(new File(filePath).toPath());
         }
 
         @TearDown(Level.Trial)
@@ -56,7 +56,7 @@ public class GzipDecompressionBenchmark {
     public byte[] uncompressFileBench(DecompressionState ds) throws IOException {
         byte[] result;
 
-        try(ByteArrayInputStream in = new ByteArrayInputStream(ds.data);
+        try(ByteArrayInputStream in = new ByteArrayInputStream(ds.dataToDecompress);
             GzipCompressorInputStream gzIn = new GzipCompressorInputStream(in);
             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             final byte[] buffer = new byte[ds.bufferSize];

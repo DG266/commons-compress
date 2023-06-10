@@ -33,14 +33,14 @@ public class GzipCompressionBenchmark {
         @Param({"./src/test/resources/bla.tar", "./src/test/resources/COMPRESS-592.7z"})
         public String filePath;
 
-        public byte[] data;
+        public byte[] dataToCompress;
 
         @Param({"1024", "4096", "8192"})
         public int bufferSize;
 
         @Setup(Level.Trial)
         public void doSetup() throws IOException {
-            data = Files.readAllBytes(new File(filePath).toPath());
+            dataToCompress = Files.readAllBytes(new File(filePath).toPath());
         }
 
         @TearDown(Level.Trial)
@@ -96,7 +96,7 @@ public class GzipCompressionBenchmark {
         // beloved disk.
         //
         // Maybe this is the best way to "stress" the compression code.
-        try(ByteArrayInputStream in = new ByteArrayInputStream(cs.data);
+        try(ByteArrayInputStream in = new ByteArrayInputStream(cs.dataToCompress);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             GzipCompressorOutputStream gzOut = new GzipCompressorOutputStream(out)) {
             final byte[] buffer = new byte[cs.bufferSize];
