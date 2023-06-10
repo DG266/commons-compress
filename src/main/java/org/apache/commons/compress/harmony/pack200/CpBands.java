@@ -298,11 +298,11 @@ public class CpBands extends BandSet {
                 final List<String> classes = new ArrayList<>();
                 final char[] chars = signature.toCharArray();
                 final StringBuilder signatureString = new StringBuilder();
-                for (int i = 0; i < chars.length; i++) {
+                for (int i = 0; i < chars.length; ++i) {
                     signatureString.append(chars[i]);
                     if (chars[i] == 'L') {
                         final StringBuilder className = new StringBuilder();
-                        for (int j = i + 1; j < chars.length; j++) {
+                        for (int j = i + 1; j < chars.length; ++j) {
                             final char c = chars[j];
                             if (!Character.isLetter(c) && !Character.isDigit(c) && (c != '/') && (c != '$')
                                 && (c != '_')) {
@@ -558,12 +558,12 @@ public class CpBands extends BandSet {
         final String first = ((CPUTF8) cpUtf8Array[1]).getUnderlyingString();
         cpUtf8Suffix[0] = first.length();
         addCharacters(chars, first.toCharArray());
-        for (int i = 2; i < cpUtf8Array.length; i++) {
+        for (int i = 2; i < cpUtf8Array.length; ++i) {
             final char[] previous = ((CPUTF8) cpUtf8Array[i - 1]).getUnderlyingString().toCharArray();
             String currentStr = ((CPUTF8) cpUtf8Array[i]).getUnderlyingString();
             final char[] current = currentStr.toCharArray();
             int prefix = 0;
-            for (int j = 0; j < previous.length; j++) {
+            for (int j = 0; j < previous.length; ++j) {
                 if (previous[j] != current[j]) {
                     break;
                 }
@@ -586,7 +586,7 @@ public class CpBands extends BandSet {
         final int[] cpUtf8BigSuffix = new int[bigSuffix.size()];
         final int[][] cpUtf8BigChars = new int[bigSuffix.size()][];
         Arrays.setAll(cpUtf8Chars, i -> chars.get(i).charValue());
-        for (int i = 0; i < cpUtf8BigSuffix.length; i++) {
+        for (int i = 0; i < cpUtf8BigSuffix.length; ++i) {
             final int numBigChars = bigSuffix.get(i).intValue();
             cpUtf8BigSuffix[i] = numBigChars;
             cpUtf8BigChars[i] = new int[numBigChars];
@@ -609,7 +609,7 @@ public class CpBands extends BandSet {
         out.write(encodedBand);
         PackingUtils.log(WROTE_LOG_TEXT + encodedBand.length + " bytes from cpUtf8BigSuffix[" + cpUtf8BigSuffix.length + "]");
 
-        for (int i = 0; i < cpUtf8BigChars.length; i++) {
+        for (int i = 0; i < cpUtf8BigChars.length; ++i) {
             encodedBand = encodeBandInt("cpUtf8BigChars " + i, cpUtf8BigChars[i], Codec.DELTA5);
             out.write(encodedBand);
             PackingUtils.log(WROTE_LOG_TEXT + encodedBand.length + " bytes from cpUtf8BigChars" + i + "["

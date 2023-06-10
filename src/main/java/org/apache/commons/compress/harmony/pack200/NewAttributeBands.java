@@ -365,7 +365,7 @@ public class NewAttributeBands extends BandSet {
         public void addAttributeToBand(final NewAttribute attribute, final InputStream inputStream) {
             countElement.addAttributeToBand(attribute, inputStream);
             final int count = countElement.latestValue();
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; ++i) {
                 for (final AttributeLayoutElement layoutElement : layoutElements) {
                     layoutElement.addAttributeToBand(attribute, inputStream);
                 }
@@ -647,7 +647,7 @@ public class NewAttributeBands extends BandSet {
 
     private int readInteger(final int i, final InputStream inputStream) {
         int result = 0;
-        for (int j = 0; j < i; j++) {
+        for (int j = 0; j < i; ++j) {
             try {
                 result = result << 8 | inputStream.read();
             } catch (final IOException e) {
@@ -655,11 +655,15 @@ public class NewAttributeBands extends BandSet {
             }
         }
         // use casting to preserve sign
-        if (i == 1) {
-            result = (byte) result;
-        }
-        if (i == 2) {
-            result = (short) result;
+        switch (i) {
+            case 1: {
+                result = (byte) result;
+                break;
+            }
+            case 2: {
+                result = (short) result;
+                break;
+            }
         }
         return result;
     }
@@ -667,11 +671,16 @@ public class NewAttributeBands extends BandSet {
     private AttributeLayoutElement readNextAttributeElement(final StringReader reader) throws IOException {
         reader.mark(1);
         final int next = reader.read();
-        if (next == -1) {
-            return null;
-        }
-        if (next == '[') {
-            return new Callable(readBody(getStreamUpToMatchingBracket(reader)));
+        switch (next) {
+            case -1: {
+                return null;
+            }
+            case '[': {
+                return new Callable(readBody(getStreamUpToMatchingBracket(reader)));
+            }
+            default: {
+                break;
+            }
         }
         reader.reset();
         return readNextLayoutElement(reader);
@@ -847,11 +856,18 @@ public class NewAttributeBands extends BandSet {
             	break;
             }
 			final char c = (char) read;
-            if (c == ']') {
-                foundBracket++;
-            }
-            if (c == '[') {
-                foundBracket--;
+            switch (c) {
+                case ']': {
+                    foundBracket++;
+                    break;
+                }
+                case '[':  {
+                    foundBracket--;
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
             if (!(foundBracket == 0)) {
                 sb.append(c);
