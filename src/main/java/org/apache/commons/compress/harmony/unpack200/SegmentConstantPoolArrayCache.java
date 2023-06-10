@@ -56,7 +56,7 @@ public class SegmentConstantPoolArrayCache {
          * "Zero" -&gt; 0 "Foo" -&gt; 1, 3 "Two" -&gt; 2 which is then cached.
          */
         protected void cacheIndexes() {
-            for (int index = 0; index < primaryArray.length; index++) {
+            for (int index = 0; index < primaryArray.length; ++index) {
                 final String key = primaryArray[index];
                 primaryTable.computeIfAbsent(key, k -> new ArrayList<>());
                 primaryTable.get(key).add(Integer.valueOf(index));

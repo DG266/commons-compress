@@ -175,7 +175,7 @@ public class ByteCode extends ClassFileEntry {
         if (nested.length > 0) {
             // Update the bytecode rewrite array so that it points
             // to the elements of the nested array.
-            for (int index = 0; index < nested.length; index++) {
+            for (int index = 0; index < nested.length; ++index) {
                 final int argLength = getNestedPosition(index)[1];
                 switch (argLength) {
 
@@ -305,7 +305,7 @@ public class ByteCode extends ClassFileEntry {
                 + byteCodeForm.operandLength());
         }
 
-        for (int index = 0; index < byteCodeFormLength; index++) {
+        for (int index = 0; index < byteCodeFormLength; ++index) {
             rewrite[index + firstOperandIndex] = operands[index] & 0xFF;
         }
     }
