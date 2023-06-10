@@ -27,7 +27,7 @@ public class MicroBenchmarkRunner {
         //org.openjdk.jmh.Main.main(args);
 
         Options opt = new OptionsBuilder()
-                .include("Archiving")
+                .include("Benchmark")
                 .build();
         new Runner(opt).run();
     }
