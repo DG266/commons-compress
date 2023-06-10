@@ -310,6 +310,7 @@ public class BcBands extends BandSet {
             bcCodes.add(opcode);
             bcByte.add(operand & 0xFF);
             byteCodeOffset += 2;
+            break;
         default:
             break;
         }

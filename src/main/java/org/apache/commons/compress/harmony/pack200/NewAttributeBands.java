@@ -664,6 +664,9 @@ public class NewAttributeBands extends BandSet {
                 result = (short) result;
                 break;
             }
+            default: {
+                break;
+            }
         }
         return result;
     }

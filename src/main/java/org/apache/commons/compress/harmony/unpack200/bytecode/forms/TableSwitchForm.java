@@ -79,7 +79,7 @@ public class TableSwitchForm extends SwitchForm {
         newRewrite[rewriteIndex++] = byteCode.getOpcode();
 
         // padding
-        for (int index = 0; index < padLength; index++) {
+        for (int index = 0; index < padLength; ++index) {
             newRewrite[rewriteIndex++] = 0;
         }
 
@@ -102,7 +102,7 @@ public class TableSwitchForm extends SwitchForm {
 
         // jump offsets
         // The case_pcs will get overwritten by fixUpByteCodeTargets
-        for (int index = 0; index < caseCount; index++) {
+        for (int index = 0; index < caseCount; ++index) {
             // offset
             newRewrite[rewriteIndex++] = -1;
             newRewrite[rewriteIndex++] = -1;

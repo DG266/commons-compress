@@ -164,7 +164,7 @@ public class MultiReadOnlySeekableByteChannel implements SeekableByteChannel {
 
         long pos = newPosition;
 
-        for (int i = 0; i < channels.size(); i++) {
+        for (int i = 0; i < channels.size(); ++i) {
             final SeekableByteChannel currentChannel = channels.get(i);
             final long size = currentChannel.size();
 
@@ -205,7 +205,7 @@ public class MultiReadOnlySeekableByteChannel implements SeekableByteChannel {
             throw new ClosedChannelException();
         }
         long globalPosition = relativeOffset;
-        for (int i = 0; i < channelNumber; i++) {
+        for (int i = 0; i < channelNumber; ++i) {
             globalPosition += channels.get(i).size();
         }
 

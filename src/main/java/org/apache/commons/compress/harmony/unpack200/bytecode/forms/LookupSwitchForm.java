@@ -75,7 +75,7 @@ public class LookupSwitchForm extends SwitchForm {
         newRewrite[rewriteIndex++] = byteCode.getOpcode();
 
         // padding
-        for (int index = 0; index < padLength; index++) {
+        for (int index = 0; index < padLength; ++index) {
             newRewrite[rewriteIndex++] = 0;
         }
 
