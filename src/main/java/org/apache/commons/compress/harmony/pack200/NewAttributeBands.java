@@ -894,7 +894,7 @@ public class NewAttributeBands extends BandSet {
      * @param tokens - the attribute layout as a List of AttributeElements
      */
     private void resolveCalls() {
-        for (int i = 0; i < attributeLayoutElements.size(); i++) {
+        for (int i = 0; i < attributeLayoutElements.size(); ++i) {
             final AttributeLayoutElement element = attributeLayoutElements.get(i);
             if (element instanceof Callable) {
                 final Callable callable = (Callable) element;
@@ -926,7 +926,7 @@ public class NewAttributeBands extends BandSet {
             if (index == 0) { // Calls the parent callable
                 call.setCallable(currentCallable);
             } else if (index > 0) { // Forwards call
-                for (int k = i + 1; k < attributeLayoutElements.size(); k++) {
+                for (int k = i + 1; k < attributeLayoutElements.size(); ++k) {
                     final AttributeLayoutElement el = attributeLayoutElements.get(k);
                     if (el instanceof Callable) {
                         index--;

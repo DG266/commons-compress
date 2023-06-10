@@ -72,7 +72,7 @@ public class IcBands extends BandSet {
 
         final List<IcTuple> relevantCandidates = outerClassToTuples.get(className);
         if (relevantCandidates != null) {
-            for (int index = 0; index < relevantCandidates.size(); index++) {
+            for (int index = 0; index < relevantCandidates.size(); ++index) {
                 final IcTuple tuple = relevantCandidates.get(index);
                 relevantTuplesContains.add(tuple);
                 relevantTuples.add(tuple);
@@ -85,7 +85,7 @@ public class IcBands extends BandSet {
         // add it to ic_relevant. Repeat until no more
         // changes to ic_relevant.
 
-        for (int eIndex = 0; eIndex < entries.size(); eIndex++) {
+        for (int eIndex = 0; eIndex < entries.size(); ++eIndex) {
             final ConstantPoolEntry entry = (ConstantPoolEntry) entries.get(eIndex);
             if (entry instanceof CPClass) {
                 final CPClass clazz = (CPClass) entry;
@@ -108,7 +108,7 @@ public class IcBands extends BandSet {
         while (tuplesToScan.size() > 0) {
 
             tuplesToAdd.clear();
-            for (int index = 0; index < tuplesToScan.size(); index++) {
+            for (int index = 0; index < tuplesToScan.size(); ++index) {
                 final IcTuple aRelevantTuple = tuplesToScan.get(index);
                 final IcTuple relevant = thisClassToTuple.get(aRelevantTuple.outerClassString());
                 if (relevant != null && !aRelevantTuple.outerIsAnonymous()) {
@@ -117,7 +117,7 @@ public class IcBands extends BandSet {
             }
 
             tuplesToScan.clear();
-            for (int index = 0; index < tuplesToAdd.size(); index++) {
+            for (int index = 0; index < tuplesToAdd.size(); ++index) {
                 final IcTuple tuple = tuplesToAdd.get(index);
                 if (relevantTuplesContains.add(tuple)) {
                     relevantTuples.add(tuple);
@@ -154,7 +154,7 @@ public class IcBands extends BandSet {
         final int outerClasses = SegmentUtils.countBit16(icFlags);
         final int[] icOuterClassInts = decodeBandInt("ic_outer_class", in, Codec.DELTA5, outerClasses);
         final String[] icOuterClass = new String[outerClasses];
-        for (int i = 0; i < icOuterClass.length; i++) {
+        for (int i = 0; i < icOuterClass.length; ++i) {
             if (icOuterClassInts[i] == 0) {
                 icOuterClass[i] = null;
             } else {
@@ -163,7 +163,7 @@ public class IcBands extends BandSet {
         }
         final int[] icNameInts = decodeBandInt("ic_name", in, Codec.DELTA5, outerClasses);
         final String[] icName = new String[outerClasses];
-        for (int i = 0; i < icName.length; i++) {
+        for (int i = 0; i < icName.length; ++i) {
             if (icNameInts[i] == 0) {
                 icName[i] = null;
             } else {
@@ -174,7 +174,7 @@ public class IcBands extends BandSet {
         // Construct IC tuples
         icAll = new IcTuple[icThisClass.length];
         int index = 0;
-        for (int i = 0; i < icThisClass.length; i++) {
+        for (int i = 0; i < icThisClass.length; ++i) {
             final String icTupleC = icThisClass[i];
             final int icTupleF = icFlags[i];
             String icTupleC2 = null;

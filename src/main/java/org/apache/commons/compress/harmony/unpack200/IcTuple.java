@@ -197,7 +197,7 @@ public class IcTuple {
         final int lastPosition = nameComponents.length - 1;
         cachedSimpleClassName = nameComponents[lastPosition];
         cachedOuterClassString = "";
-        for (int index = 0; index < lastPosition; index++) {
+        for (int index = 0; index < lastPosition; ++index) {
             cachedOuterClassString += nameComponents[index];
             if (isAllDigits(nameComponents[index])) {
                 member = false;
@@ -260,7 +260,7 @@ public class IcTuple {
         if (null == nameString) {
             return false;
         }
-        for (int index = 0; index < nameString.length(); index++) {
+        for (int index = 0; index < nameString.length(); ++index) {
             if (!Character.isDigit(nameString.charAt(index))) {
                 return false;
             }
