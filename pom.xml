@@ -83,6 +83,8 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
     <sonar.organization>dg266</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
+    <evosuiteVersion>1.0.6</evosuiteVersion>
+
   </properties>
 
   <issueManagement>
@@ -231,6 +233,14 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <artifactId>pitest-parent</artifactId>
       <version>1.14.1</version>
       <type>pom</type>
+    </dependency>
+
+    <!-- EvoSuite -->
+    <dependency>
+      <groupId>org.evosuite</groupId>
+      <artifactId>evosuite-standalone-runtime</artifactId>
+      <version>${evosuiteVersion}</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
