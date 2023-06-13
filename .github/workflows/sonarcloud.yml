@@ -20,6 +20,7 @@ on:
       - master
       - microbenchmark
       - refactoring
+      - evosuite-randoop
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
