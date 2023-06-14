@@ -24,7 +24,6 @@ import static org.evosuite.runtime.EvoAssertions.*;
 import java.io.File;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.util.Date;
 import org.evosuite.runtime.mock.java.io.MockFile;
 
 public class ArArchiveEntryEvoTest {

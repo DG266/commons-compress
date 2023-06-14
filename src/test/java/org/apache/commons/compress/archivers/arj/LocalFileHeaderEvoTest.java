@@ -24,102 +24,6 @@ import static org.junit.Assert.*;
 public class LocalFileHeaderEvoTest {
 
     @Test(timeout = 4000)
-    public void test00()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.fileType = (-11);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=-11, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test01()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.reserved = (-204);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=-204, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test02()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.dateTimeModified = 1294;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=1294, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test03()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.lastChapter = 340;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=340, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test04()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.dateTimeAccessed = 2;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=2, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test05()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.firstChapter = 192;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=192, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test06()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.fileAccessMode = (-1);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=-1, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test07()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.arjFlags = 16;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=16, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test08()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.hostOS = (-1204);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=-1204, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test09()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.minVersionToExtract = 1;
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=1, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test10()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.archiverVersionNumber = (-1328);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=-1328, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=0, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
-    public void test11()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.fileSpecPosition = (-176);
-        String string0 = localFileHeader0.toString();
-        assertEquals("LocalFileHeader [archiverVersionNumber=0, minVersionToExtract=0, hostOS=0, arjFlags=0, method=0, fileType=0, reserved=0, dateTimeModified=0, compressedSize=0, originalSize=0, originalCrc32=0, fileSpecPosition=-176, fileAccessMode=0, firstChapter=0, lastChapter=0, extendedFilePosition=0, dateTimeAccessed=0, dateTimeCreated=0, originalSizeEvenForVolumes=0, name=null, comment=null, extendedHeaders=null]", string0);
-    }
-
-    @Test(timeout = 4000)
     public void test12()  throws Throwable  {
         LocalFileHeader localFileHeader0 = new LocalFileHeader();
         LocalFileHeader localFileHeader1 = new LocalFileHeader();
@@ -233,18 +137,6 @@ public class LocalFileHeaderEvoTest {
     }
 
     @Test(timeout = 4000)
-    public void test22()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        LocalFileHeader localFileHeader1 = new LocalFileHeader();
-        assertTrue(localFileHeader1.equals((Object)localFileHeader0));
-
-        localFileHeader1.dateTimeModified = 32;
-        boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(localFileHeader1.equals((Object)localFileHeader0));
-        assertFalse(boolean0);
-    }
-
-    @Test(timeout = 4000)
     public void test23()  throws Throwable  {
         LocalFileHeader localFileHeader0 = new LocalFileHeader();
         LocalFileHeader localFileHeader1 = new LocalFileHeader();
@@ -314,16 +206,6 @@ public class LocalFileHeaderEvoTest {
     }
 
     @Test(timeout = 4000)
-    public void test29()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.dateTimeAccessed = (-11);
-        LocalFileHeader localFileHeader1 = new LocalFileHeader();
-        boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(boolean0);
-        assertFalse(localFileHeader1.equals((Object)localFileHeader0));
-    }
-
-    @Test(timeout = 4000)
     public void test30()  throws Throwable  {
         LocalFileHeader localFileHeader0 = new LocalFileHeader();
         localFileHeader0.hashCode();
@@ -370,27 +252,6 @@ public class LocalFileHeaderEvoTest {
         LocalFileHeader localFileHeader1 = new LocalFileHeader();
         localFileHeader1.originalSizeEvenForVolumes = (-883);
         boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(boolean0);
-    }
-
-    @Test(timeout = 4000)
-    public void test36()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        localFileHeader0.dateTimeCreated = (-1204);
-        LocalFileHeader localFileHeader1 = new LocalFileHeader();
-        boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(boolean0);
-    }
-
-    @Test(timeout = 4000)
-    public void test37()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        LocalFileHeader localFileHeader1 = new LocalFileHeader();
-        assertTrue(localFileHeader1.equals((Object)localFileHeader0));
-
-        localFileHeader1.dateTimeAccessed = (-1);
-        boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(localFileHeader1.equals((Object)localFileHeader0));
         assertFalse(boolean0);
     }
 
@@ -464,18 +325,6 @@ public class LocalFileHeaderEvoTest {
         boolean boolean0 = localFileHeader0.equals(localFileHeader1);
         assertFalse(boolean0);
         assertFalse(localFileHeader1.equals((Object)localFileHeader0));
-    }
-
-    @Test(timeout = 4000)
-    public void test45()  throws Throwable  {
-        LocalFileHeader localFileHeader0 = new LocalFileHeader();
-        LocalFileHeader localFileHeader1 = new LocalFileHeader();
-        assertTrue(localFileHeader1.equals((Object)localFileHeader0));
-
-        localFileHeader0.dateTimeModified = 1294;
-        boolean boolean0 = localFileHeader0.equals(localFileHeader1);
-        assertFalse(localFileHeader1.equals((Object)localFileHeader0));
-        assertFalse(boolean0);
     }
 
     @Test(timeout = 4000)
