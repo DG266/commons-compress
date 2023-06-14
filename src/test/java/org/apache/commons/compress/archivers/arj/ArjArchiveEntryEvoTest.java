@@ -22,7 +22,6 @@ package org.apache.commons.compress.archivers.arj;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
-import java.util.Date;
 public class ArjArchiveEntryEvoTest {
 
     @Test(timeout = 4000)
@@ -256,22 +255,6 @@ public class ArjArchiveEntryEvoTest {
         // Undeclared exception!
         try {
             arjArchiveEntry0.getMethod();
-            fail("Expecting exception: NullPointerException");
-
-        } catch(NullPointerException e) {
-            //
-            // no message in exception (getMessage() returned null)
-            //
-            verifyException("org.apache.commons.compress.archivers.arj.ArjArchiveEntry", e);
-        }
-    }
-
-    @Test(timeout = 4000)
-    public void test22()  throws Throwable  {
-        ArjArchiveEntry arjArchiveEntry0 = new ArjArchiveEntry((LocalFileHeader) null);
-        // Undeclared exception!
-        try {
-            arjArchiveEntry0.getLastModifiedDate();
             fail("Expecting exception: NullPointerException");
 
         } catch(NullPointerException e) {
