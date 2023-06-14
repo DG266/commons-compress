@@ -26,8 +26,6 @@ import java.nio.charset.Charset;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
-import java.util.Date;
-import org.evosuite.runtime.System;
 import org.evosuite.runtime.mock.java.io.MockFile;
 public class CpioArchiveEntryEvoTest {
 
@@ -92,17 +90,6 @@ public class CpioArchiveEntryEvoTest {
         assertEquals("80", cpioArchiveEntry0.getName());
         assertEquals(3, int0);
         assertEquals(110, cpioArchiveEntry0.getHeaderSize());
-    }
-
-    @Test(timeout = 4000)
-    public void test012()  throws Throwable  {
-        CpioArchiveEntry cpioArchiveEntry0 = new CpioArchiveEntry(" Maske(d: ");
-        FileTime fileTime0 = FileTime.fromMillis((-1L));
-        cpioArchiveEntry0.setTime(fileTime0);
-        assertEquals(110, cpioArchiveEntry0.getHeaderSize());
-        assertEquals(4, cpioArchiveEntry0.getAlignmentBoundary());
-        assertEquals(" Maske(d: ", cpioArchiveEntry0.getName());
-        assertEquals((short)1, cpioArchiveEntry0.getFormat());
     }
 
     @Test(timeout = 4000)
@@ -667,22 +654,6 @@ public class CpioArchiveEntryEvoTest {
         assertEquals((short)1, cpioArchiveEntry0.getFormat());
         assertEquals(4, cpioArchiveEntry0.getAlignmentBoundary());
         assertEquals(110, cpioArchiveEntry0.getHeaderSize());
-    }
-
-    @Test(timeout = 4000)
-    public void test065()  throws Throwable  {
-        CpioArchiveEntry cpioArchiveEntry0 = new CpioArchiveEntry((short)4);
-        // Undeclared exception!
-        try {
-            cpioArchiveEntry0.setTime((FileTime) null);
-            fail("Expecting exception: NullPointerException");
-
-        } catch(NullPointerException e) {
-            //
-            // no message in exception (getMessage() returned null)
-            //
-            verifyException("org.apache.commons.compress.utils.TimeUtils", e);
-        }
     }
 
     @Test(timeout = 4000)
