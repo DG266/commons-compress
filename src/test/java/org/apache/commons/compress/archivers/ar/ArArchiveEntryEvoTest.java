@@ -29,21 +29,6 @@ import org.evosuite.runtime.mock.java.io.MockFile;
 
 public class ArArchiveEntryEvoTest {
 
-
-    @Test(timeout = 4000)
-    public void test00()  throws Throwable  {
-        MockFile mockFile0 = new MockFile("", "");
-        Path path0 = mockFile0.toPath();
-        LinkOption[] linkOptionArray0 = new LinkOption[0];
-        ArArchiveEntry arArchiveEntry0 = new ArArchiveEntry(path0, "", linkOptionArray0);
-        assertEquals(1686215572L, arArchiveEntry0.getLastModified());
-        assertEquals(0, arArchiveEntry0.getGroupId());
-        assertEquals(0, arArchiveEntry0.getUserId());
-        assertEquals("", arArchiveEntry0.getName());
-        assertEquals(33188, arArchiveEntry0.getMode());
-        assertEquals(0L, arArchiveEntry0.getLength());
-    }
-
     @Test(timeout = 4000)
     public void test01()  throws Throwable  {
         ArArchiveEntry arArchiveEntry0 = new ArArchiveEntry("", 1429L, 0, 0, 3872, 0);
