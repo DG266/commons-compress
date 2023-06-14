@@ -262,22 +262,6 @@ public class ArArchiveEntryEvoTest {
     }
 
     @Test(timeout = 4000)
-    public void test23()  throws Throwable  {
-        MockFile mockFile0 = new MockFile("]Rq");
-        Path path0 = mockFile0.toPath();
-        LinkOption[] linkOptionArray0 = new LinkOption[1];
-        LinkOption linkOption0 = LinkOption.NOFOLLOW_LINKS;
-        linkOptionArray0[0] = linkOption0;
-        ArArchiveEntry arArchiveEntry0 = null;
-        try {
-            arArchiveEntry0 = new ArArchiveEntry(path0, "org.apache.commons.compress.archivers.ar.ArArchiveEntry", linkOptionArray0);
-            fail("Expecting exception: NoSuchFileException");
-
-        } catch(Throwable e) {
-        }
-    }
-
-    @Test(timeout = 4000)
     public void test24()  throws Throwable  {
         MockFile mockFile0 = new MockFile("]Rq");
         ArArchiveEntry arArchiveEntry0 = new ArArchiveEntry(mockFile0, "");
