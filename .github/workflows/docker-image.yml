@@ -18,6 +18,8 @@ name: Docker Image CI
 on:
   push:
     branches:
+      - "master"
+      - "microbenchmark"
       - "refactoring"
       
 jobs:

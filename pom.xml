@@ -64,6 +64,12 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       com.github.luben.zstd;resolution:=optional,
       org.objectweb.asm;resolution:=optional,
       javax.crypto.*;resolution:=optional,
+      org.openjdk.jmh.annotations;resolution:=optional,
+      org.openjdk.jmh.infra;resolution:=optional,
+      org.openjdk.jmh.results;resolution:=optional,
+      org.openjdk.jmh.runner;resolution:=optional,
+      org.openjdk.jmh.runner.options;resolution:=optional,
+      org.openjdk.jmh.util;resolution:=optional,
       *
     </commons.osgi.import>
 
@@ -83,6 +89,8 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
     <sonar.organization>dg266</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
+    <jmh.version>1.36</jmh.version>
+
   </properties>
 
   <issueManagement>
@@ -91,6 +99,14 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
   </issueManagement>
 
   <dependencies>
+
+    <!-- Necessary for Pitest! -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
@@ -216,6 +232,28 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <version>6.0.0</version>
       <scope>provided</scope>
     </dependency>
+
+    <!-- JMH -->
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>${jmh.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>${jmh.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Pitest -->
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-parent</artifactId>
+      <version>1.14.1</version>
+      <type>pom</type>
+    </dependency>
+
   </dependencies>
 
   <developers>
@@ -379,6 +417,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
               <exclude>.projectile</exclude>
               <exclude>.mvn/**</exclude>
               <exclude>.gitattributes</exclude>
+              <exclude>spotbugs-security-include-filter.xml</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -466,9 +505,17 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
-          <threshold>Normal</threshold>
+          <threshold>Low</threshold>
           <effort>Default</effort>
+          <includeFilterFile>${basedir}/src/conf/spotbugs-security-include-filter.xml</includeFilterFile>
           <excludeFilterFile>${basedir}/src/conf/spotbugs-exclude-filter.xml</excludeFilterFile>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.12.0</version>
+            </plugin>
+          </plugins>
        </configuration>
       </plugin>
       <plugin>
@@ -497,7 +544,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
           </systemPropertyVariables>
         </configuration>
       </plugin>
-	    
+
       <!-- XML JaCoCo report for SonarCloud -->
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -524,7 +571,95 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
           </execution>
         </executions>
       </plugin>
-	    
+      <!-- JMH benchmarks jar-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <compilerVersion>1.8</compilerVersion>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>benchmarks</finalName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>org.openjdk.jmh.Main</mainClass>
+                </transformer>
+              </transformers>
+              <filters>
+                <filter>
+                  <!--
+                      Shading signed JARs will fail without this.
+                      http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar
+                  -->
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+        
+      <!-- Pitest configuration stuff -->
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.14.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.2.0</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <verbose>false</verbose>
+          <threads>1</threads>
+          <!-- Exclude Integration Tests -->
+          <excludedTestClasses>
+            <!-- This is a HEAVY test class -->
+            <param>org.apache.commons.compress.archivers.tar.BigFilesIT</param>
+            <!-- These test classes need to be fixed -->
+            <param>org.apache.commons.compress.archivers.tar.FileTimesIT</param>
+            <param>org.apache.commons.compress.archivers.zip.Zip64SupportIT</param>
+          </excludedTestClasses>
+        </configuration>
+      </plugin>
+
+      <!-- OWASP Dependency-Check -->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>8.3.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
