@@ -244,6 +244,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <artifactId>jmh-generator-annprocess</artifactId>
       <version>${jmh.version}</version>
       <scope>provided</scope>
+    </dependency>
 
     <!-- Pitest -->
     <dependency>
@@ -251,7 +252,6 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <artifactId>pitest-parent</artifactId>
       <version>1.14.1</version>
       <type>pom</type>
-
     </dependency>
 
   </dependencies>
@@ -572,6 +572,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
         </executions>
       </plugin>
 
+      <!-- JMH benchmarks jar-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -658,7 +659,6 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
         <configuration>
           <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
         </configuration>
-        
       </plugin>
 
     </plugins>
