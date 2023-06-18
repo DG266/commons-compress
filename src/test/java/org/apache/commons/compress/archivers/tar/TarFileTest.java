@@ -110,8 +110,9 @@ public class TarFileTest extends AbstractTestCase {
     }
 
     @Test
-    public void rejectsArchivesWithNegativeSizes() throws Exception {
-        assertThrows(IOException.class, () -> new TarFile(getFile("COMPRESS-569.tar")));
+    public void rejectsArchivesWithNegativeSizes() throws IOException {
+        File file = getFile("COMPRESS-569.tar");
+        assertThrows(IOException.class, () -> new TarFile(file));
     }
 
     @Test
@@ -149,9 +150,10 @@ public class TarFileTest extends AbstractTestCase {
     }
 
     @Test
-    public void shouldThrowAnExceptionOnTruncatedEntries() throws Exception {
+    public void shouldThrowAnExceptionOnTruncatedEntries() throws IOException {
         final File dir = mkdir("COMPRESS-279");
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-279.tar")));
+        Path path = getPath("COMPRESS-279.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
         rmdir(dir);
     }
 
@@ -314,33 +316,39 @@ public class TarFileTest extends AbstractTestCase {
     }
 
     @Test
-    public void testParseTarTruncatedInContent() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-544_truncated_in_content.tar")));
+    public void testParseTarTruncatedInContent() throws IOException {
+        Path path = getPath("COMPRESS-544_truncated_in_content.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
-    public void testParseTarTruncatedInPadding() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-544_truncated_in_padding.tar")));
+    public void testParseTarTruncatedInPadding() throws IOException {
+        Path path = getPath("COMPRESS-544_truncated_in_padding.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
-    public void testParseTarWithNonNumberPaxHeaders() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-529.tar")));
+    public void testParseTarWithNonNumberPaxHeaders() throws IOException {
+        Path path = getPath("COMPRESS-529.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
-    public void testParseTarWithSpecialPaxHeaders() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-530.tar")));
+    public void testParseTarWithSpecialPaxHeaders() throws IOException {
+        Path path = getPath("COMPRESS-530.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
-    public void testThrowException() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-553.tar")));
+    public void testThrowException() throws IOException {
+        Path path = getPath("COMPRESS-553.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
-    public void testThrowExceptionWithNullEntry() {
-        assertThrows(IOException.class, () -> new TarFile(getPath("COMPRESS-554.tar")));
+    public void testThrowExceptionWithNullEntry() throws IOException {
+        Path path = getPath("COMPRESS-554.tar");
+        assertThrows(IOException.class, () -> new TarFile(path));
     }
 
     @Test
