@@ -196,6 +196,8 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
 
     private static final int CFH_FILENAME_OFFSET = 46;
 
+    private static final String STREAM_FINISHED = "Stream has already been finished";
+
     /**
      * Compression method for deflated entries.
      */
@@ -717,7 +719,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
     public ArchiveEntry createArchiveEntry(final File inputFile, final String entryName)
         throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
         return new ZipArchiveEntry(inputFile, entryName);
     }
@@ -743,7 +745,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
     public ArchiveEntry createArchiveEntry(final Path inputPath, final String entryName, final LinkOption... options)
         throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
         return new ZipArchiveEntry(inputPath, entryName);
     }
@@ -1150,12 +1152,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
         Zip64ExtendedInformationExtraField z64 = extra instanceof Zip64ExtendedInformationExtraField
             ? (Zip64ExtendedInformationExtraField) extra : null;
         if (z64 == null) {
-            /*
-              System.err.println("Adding z64 for " + ze.getName()
-              + ", method: " + ze.getMethod()
-              + " (" + (ze.getMethod() == STORED) + ")"
-              + ", channel: " + (channel != null));
-            */
+
             z64 = new Zip64ExtendedInformationExtraField();
         }
 
@@ -1175,10 +1172,6 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
                                       final Zip64Mode effectiveMode)
         throws ZipException {
         if (entry.entry.getMethod() == DEFLATED) {
-            /* It turns out def.getBytesRead() returns wrong values if
-             * the size exceeds 4 GB on Java < Java7
-            entry.entry.setSize(def.getBytesRead());
-            */
             entry.entry.setSize(entry.bytesRead);
             entry.entry.setCompressedSize(bytesWritten);
             entry.entry.setCrc(crc);
@@ -1278,7 +1271,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
 
     private void preClose() throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
 
         if (entry == null) {
@@ -1315,7 +1308,7 @@ public class ZipArchiveOutputStream extends ArchiveOutputStream {
      */
     private void putArchiveEntry(final ZipArchiveEntry archiveEntry, final boolean phased) throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_FINISHED);
         }
 
         if (entry != null) {

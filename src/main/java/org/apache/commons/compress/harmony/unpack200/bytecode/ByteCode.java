@@ -27,6 +27,8 @@ import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ByteCodeForm
  */
 public class ByteCode extends ClassFileEntry {
 
+    private static final String ERROR_TEXT_2 = " that has no rewrite";
+    private static final String ERROR_TEXT_1 = "Trying to rewrite ";
     private static ByteCode[] noArgByteCodes = new ByteCode[255];
 
     public static ByteCode getByteCode(final int opcode) {
@@ -173,7 +175,7 @@ public class ByteCode extends ClassFileEntry {
         if (nested.length > 0) {
             // Update the bytecode rewrite array so that it points
             // to the elements of the nested array.
-            for (int index = 0; index < nested.length; index++) {
+            for (int index = 0; index < nested.length; ++index) {
                 final int argLength = getNestedPosition(index)[1];
                 switch (argLength) {
 
@@ -248,11 +250,11 @@ public class ByteCode extends ClassFileEntry {
         final int byteCodeFormLength = getByteCodeForm().getRewrite().length;
         if (firstOperandIndex < 1) {
             // No operand rewriting permitted for this bytecode
-            throw new Error("Trying to rewrite " + this + " that has no rewrite");
+            throw new Error(ERROR_TEXT_1 + this + ERROR_TEXT_2);
         }
 
         if (firstOperandIndex + position + 1 > byteCodeFormLength) {
-            throw new Error("Trying to rewrite " + this + " with an int at position " + position
+            throw new Error(ERROR_TEXT_1 + this + " with an int at position " + position
                 + " but this won't fit in the rewrite array");
         }
 
@@ -273,11 +275,11 @@ public class ByteCode extends ClassFileEntry {
         final int byteCodeFormLength = getByteCodeForm().operandLength();
         if (firstOperandIndex < 1) {
             // No operand rewriting permitted for this bytecode
-            throw new Error("Trying to rewrite " + this + " that has no rewrite");
+            throw new Error(ERROR_TEXT_1 + this + ERROR_TEXT_2);
         }
 
         if (firstOperandIndex + position > byteCodeFormLength) {
-            throw new Error("Trying to rewrite " + this + " with an byte at position " + position
+            throw new Error(ERROR_TEXT_1 + this + " with an byte at position " + position
                 + " but this won't fit in the rewrite array");
         }
 
@@ -295,15 +297,15 @@ public class ByteCode extends ClassFileEntry {
         final int byteCodeFormLength = getByteCodeForm().operandLength();
         if (firstOperandIndex < 1) {
             // No operand rewriting permitted for this bytecode
-            throw new Error("Trying to rewrite " + this + " that has no rewrite");
+            throw new Error(ERROR_TEXT_1 + this + ERROR_TEXT_2);
         }
 
         if (byteCodeFormLength != operands.length) {
-            throw new Error("Trying to rewrite " + this + " with " + operands.length + " but bytecode has length "
+            throw new Error(ERROR_TEXT_1 + this + " with " + operands.length + " but bytecode has length "
                 + byteCodeForm.operandLength());
         }
 
-        for (int index = 0; index < byteCodeFormLength; index++) {
+        for (int index = 0; index < byteCodeFormLength; ++index) {
             rewrite[index + firstOperandIndex] = operands[index] & 0xFF;
         }
     }

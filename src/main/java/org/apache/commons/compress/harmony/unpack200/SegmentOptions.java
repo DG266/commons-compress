@@ -32,8 +32,6 @@ public class SegmentOptions {
 
     private static final int HAVE_CLASS_FLAGS_HI = 1 << 9;
 
-    // private static final int UNUSED_3 = 2^3;
-
     private static final int HAVE_CODE_FLAGS_HI = 1 << 10;
 
     private static final int HAVE_CP_NUMBERS = 1 << 1;

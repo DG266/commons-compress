@@ -215,10 +215,10 @@ public class BcBands extends BandSet {
 
         final List<Boolean> switchIsTableSwitch = new ArrayList<>();
         wideByteCodes = new ArrayList<>();
-        for (int c = 0; c < classCount; c++) {
+        for (int c = 0; c < classCount; ++c) {
             final int numberOfMethods = methodFlags[c].length;
             methodByteCodePacked[c] = new byte[numberOfMethods][];
-            for (int m = 0; m < numberOfMethods; m++) {
+            for (int m = 0; m < numberOfMethods; ++m) {
                 final long methodFlag = methodFlags[c][m];
                 if (!abstractModifier.matches(methodFlag) && !nativeModifier.matches(methodFlag)) {
                     final ByteArrayOutputStream codeBytes = new ByteArrayOutputStream();
@@ -229,10 +229,10 @@ public class BcBands extends BandSet {
                     methodByteCodePacked[c][m] = codeBytes.toByteArray();
                     bcParsed += methodByteCodePacked[c][m].length;
                     final int[] codes = new int[methodByteCodePacked[c][m].length];
-                    for (int i = 0; i < codes.length; i++) {
+                    for (int i = 0; i < codes.length; ++i) {
                         codes[i] = methodByteCodePacked[c][m][i] & 0xff;
                     }
-                    for (int i = 0; i < methodByteCodePacked[c][m].length; i++) {
+                    for (int i = 0; i < methodByteCodePacked[c][m].length; ++i) {
                         final int codePacked = 0xff & methodByteCodePacked[c][m][i];
                         switch (codePacked) {
                         case 16: // bipush
@@ -384,7 +384,7 @@ public class BcBands extends BandSet {
         // other bytecode bands
         bcCaseCount = decodeBandInt("bc_case_count", in, Codec.UNSIGNED5, bcCaseCountCount);
         int bcCaseValueCount = 0;
-        for (int i = 0; i < bcCaseCount.length; i++) {
+        for (int i = 0; i < bcCaseCount.length; ++i) {
             final boolean isTableSwitch = switchIsTableSwitch.get(i).booleanValue();
             if (isTableSwitch) {
                 bcCaseValueCount += 1;
@@ -396,7 +396,7 @@ public class BcBands extends BandSet {
         // Every case value needs a label. We weren't able to count these
         // above, because we didn't know how many cases there were.
         // Have to correct it now.
-        for (int index = 0; index < bcCaseCountCount; index++) {
+        for (int index = 0; index < bcCaseCountCount; ++index) {
             bcLabelCount += bcCaseCount[index];
         }
         bcByte = decodeBandInt("bc_byte", in, Codec.BYTE1, bcByteCount);
@@ -446,7 +446,7 @@ public class BcBands extends BandSet {
             AttributeLayout.CONTEXT_METHOD);
 
         final int[] wideByteCodeArray = new int[wideByteCodes.size()];
-        for (int index = 0; index < wideByteCodeArray.length; index++) {
+        for (int index = 0; index < wideByteCodeArray.length; ++index) {
             wideByteCodeArray[index] = wideByteCodes.get(index).intValue();
         }
         final OperandManager operandManager = new OperandManager(bcCaseCount, bcCaseValue, bcByte, bcShort, bcLocal,
@@ -468,9 +468,9 @@ public class BcBands extends BandSet {
         final boolean allCodeHasFlags = segment.getSegmentHeader().getOptions().hasAllCodeFlags();
         final boolean[] codeHasFlags = segment.getClassBands().getCodeHasAttributes();
 
-        for (int c = 0; c < classCount; c++) {
+        for (int c = 0; c < classCount; ++c) {
             final int numberOfMethods = methodFlags[c].length;
-            for (int m = 0; m < numberOfMethods; m++) {
+            for (int m = 0; m < numberOfMethods; ++m) {
                 final long methodFlag = methodFlags[c][m];
                 if (!abstractModifier.matches(methodFlag) && !nativeModifier.matches(methodFlag)) {
                     final int maxStack = codeMaxStack[i];
@@ -485,7 +485,7 @@ public class BcBands extends BandSet {
                     operandManager.setSuperClass(cpClass[segment.getClassBands().getClassSuperInts()[c]]);
                     final List<ExceptionTableEntry> exceptionTable = new ArrayList<>();
                     if (handlerCount != null) {
-                        for (int j = 0; j < handlerCount[i]; j++) {
+                        for (int j = 0; j < handlerCount[i]; ++j) {
                             final int handlerClass = handlerClassTypes[i][j] - 1;
                             CPClass cpHandlerClass = null;
                             if (handlerClass != -1) {

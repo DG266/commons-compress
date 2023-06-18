@@ -38,6 +38,8 @@ public class SevenZArchiveEntry implements ArchiveEntry {
 
     static final SevenZArchiveEntry[] EMPTY_SEVEN_Z_ARCHIVE_ENTRY_ARRAY = {};
 
+    private static final String TIMESTAMP_EXCEPTION = "The entry doesn't have this timestamp";
+
     /**
      * Converts Java time to NTFS time.
      * @param date the Java time
@@ -159,7 +161,7 @@ public class SevenZArchiveEntry implements ArchiveEntry {
             return accessDate;
         }
         throw new UnsupportedOperationException(
-                "The entry doesn't have this timestamp");
+                TIMESTAMP_EXCEPTION);
     }
 
     /**
@@ -254,7 +256,7 @@ public class SevenZArchiveEntry implements ArchiveEntry {
             return creationDate;
         }
         throw new UnsupportedOperationException(
-                "The entry doesn't have this timestamp");
+                TIMESTAMP_EXCEPTION);
     }
 
     /**
@@ -324,7 +326,7 @@ public class SevenZArchiveEntry implements ArchiveEntry {
             return lastModifiedDate;
         }
         throw new UnsupportedOperationException(
-                "The entry doesn't have this timestamp");
+                TIMESTAMP_EXCEPTION);
     }
 
     /**

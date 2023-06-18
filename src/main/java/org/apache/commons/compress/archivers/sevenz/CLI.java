@@ -19,11 +19,17 @@ package org.apache.commons.compress.archivers.sevenz;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.logging.Logger;
+import java.util.logging.Level;
 /**
  * Usage: archive-name [list]
  */
 public class CLI {
+
+    private static final Logger LOGGER = Logger.getLogger(CLI.class.getName());
+    private static final Level LEVEL = Level.SEVERE;
+
+    private static final String FILE_EXCEPTION = "This file doesn't exist or is a directory: ";
 
     private enum Mode {
         LIST("Analysing") {
@@ -57,9 +63,9 @@ public class CLI {
                     System.out.print(" no last modified date");
                 }
                 if (!entry.isDirectory()) {
-                    System.out.println(" " + getContentMethods(entry));
+                    System.out.print(" " + getContentMethods(entry));
                 } else {
-                    System.out.println();
+                    System.out.print("");
                 }
             }
         };
@@ -90,10 +96,10 @@ public class CLI {
             return;
         }
         final Mode mode = grabMode(args);
-        System.out.println(mode.getMessage() + " " + args[0]);
+        System.out.println(mode.getMessage() + " "  + args[0]);
         final File f = new File(args[0]);
         if (!f.isFile()) {
-            System.err.println(f + " doesn't exist or is a directory");
+            System.err.println(FILE_EXCEPTION + f);
         }
         try (final SevenZFile archive = new SevenZFile(f)) {
             SevenZArchiveEntry ae;

@@ -54,6 +54,8 @@ public class FramedSnappyCompressorInputStream extends CompressorInputStream
     private static final int MAX_UNSKIPPABLE_TYPE = 0x7f;
     private static final int MAX_SKIPPABLE_TYPE = 0xfd;
 
+    private static final String SIZE_EXCEPTION = "Found illegal chunk with negative size";
+
     // used by FramedSnappyCompressorOutputStream as well
     static final byte[] SZ_SIGNATURE = { //NOSONAR
         (byte) STREAM_IDENTIFIER_TYPE, // tag
@@ -256,14 +258,14 @@ public class FramedSnappyCompressorInputStream extends CompressorInputStream
             inUncompressedChunk = true;
             uncompressedBytesRemaining = readSize() - 4 /* CRC */;
             if (uncompressedBytesRemaining < 0) {
-                throw new IOException("Found illegal chunk with negative size");
+                throw new IOException(SIZE_EXCEPTION);
             }
             expectedChecksum = unmask(readCrc());
         } else if (type == COMPRESSED_CHUNK_TYPE) {
             final boolean expectChecksum = dialect.usesChecksumWithCompressedChunks();
             final long size = readSize() - (expectChecksum ? 4L : 0L);
             if (size < 0) {
-                throw new IOException("Found illegal chunk with negative size");
+                throw new IOException(SIZE_EXCEPTION);
             }
             if (expectChecksum) {
                 expectedChecksum = unmask(readCrc());
@@ -341,7 +343,7 @@ public class FramedSnappyCompressorInputStream extends CompressorInputStream
     private void skipBlock() throws IOException {
         final int size = readSize();
         if (size < 0) {
-            throw new IOException("Found illegal chunk with negative size");
+            throw new IOException(SIZE_EXCEPTION);
         }
         final long read = IOUtils.skip(inputStream, size);
         count(read);

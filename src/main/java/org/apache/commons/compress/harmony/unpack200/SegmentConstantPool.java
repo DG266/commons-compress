@@ -156,11 +156,8 @@ public class SegmentConstantPool {
             return bands.cpClassValue(index);
         case SIGNATURE:
             throw new Error("I don't know what to do with signatures yet");
-            // return null /* new CPSignature(bands.getCpSignature()[index]) */;
         case CP_DESCR:
             throw new Error("I don't know what to do with descriptors yet");
-            // return null /* new CPDescriptor(bands.getCpDescriptor()[index])
-            // */;
         case CP_FIELD:
             return bands.cpFieldValue(index);
         case CP_METHOD:

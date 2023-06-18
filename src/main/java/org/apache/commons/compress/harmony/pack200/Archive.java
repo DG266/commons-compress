@@ -228,7 +228,7 @@ public class Archive {
 
 		final int segmentSize = segmentUnitList.size();
 		SegmentUnit segmentUnit;
-		for (int index = 0; index < segmentSize; index++) {
+		for (int index = 0; index < segmentSize; ++index) {
 			segmentUnit = segmentUnitList.get(index);
 			new Segment().pack(segmentUnit, outputStream, options);
 			previousByteAmount += segmentUnit.getByteAmount();
@@ -286,7 +286,7 @@ public class Archive {
 
         final int size = packingFileList.size();
         PackingFile packingFile;
-        for (int index = 0; index < size; index++) {
+        for (int index = 0; index < size; ++index) {
             packingFile = packingFileList.get(index);
             if (!addJarEntry(packingFile, classes, files)) {
                 // not added because segment has reached maximum size
@@ -306,7 +306,6 @@ public class Archive {
             }
         }
         // Change for Apache Commons Compress based on Apache Harmony.
-        // if (classes.size() > 0 && files.size() > 0) {
         if (classes.size() > 0 || files.size() > 0) {
             segmentUnitList.add(new SegmentUnit(classes, files));
         }

@@ -143,7 +143,7 @@ public class Segment {
                 .getAttributeLayout(AttributeLayout.ATTRIBUTE_SOURCE_FILE, AttributeLayout.CONTEXT_CLASS);
             if (SOURCE_FILE.matches(classBands.getRawClassFlags()[classNum])) {
                 int firstDollar = -1;
-                for (int index = 0; index < fullName.length(); index++) {
+                for (int index = 0; index < fullName.length(); ++index) {
                     if (fullName.charAt(index) <= '$') {
                         firstDollar = index;
                     }
@@ -169,7 +169,7 @@ public class Segment {
         // be written out. Keep SourceFileAttributes out since we just
         // did them above.
         final List<Attribute> classAttributesWithoutSourceFileAttribute = new ArrayList<>(classAttributes.size());
-        for (int index = 0; index < classAttributes.size(); index++) {
+        for (int index = 0; index < classAttributes.size(); ++index) {
             final Attribute attrib = classAttributes.get(index);
             if (!attrib.isSourceFileAttribute()) {
                 classAttributesWithoutSourceFileAttribute.add(attrib);
@@ -179,7 +179,7 @@ public class Segment {
         classFile.attributes = new Attribute[originalAttributes.length
             + classAttributesWithoutSourceFileAttribute.size()];
         System.arraycopy(originalAttributes, 0, classFile.attributes, 0, originalAttributes.length);
-        for (int index = 0; index < classAttributesWithoutSourceFileAttribute.size(); index++) {
+        for (int index = 0; index < classAttributesWithoutSourceFileAttribute.size(); ++index) {
             final Attribute attrib = (classAttributesWithoutSourceFileAttribute.get(index));
             cp.add(attrib);
             classFile.attributes[originalAttributes.length + index] = attrib;
@@ -190,13 +190,13 @@ public class Segment {
         final ClassFileEntry cfSuper = cp.add(cpBands.cpClassValue(classBands.getClassSuperInts()[classNum]));
         // add interfaces
         final ClassFileEntry[] cfInterfaces = new ClassFileEntry[classBands.getClassInterfacesInts()[classNum].length];
-        for (i = 0; i < cfInterfaces.length; i++) {
+        for (i = 0; i < cfInterfaces.length; ++i) {
             cfInterfaces[i] = cp.add(cpBands.cpClassValue(classBands.getClassInterfacesInts()[classNum][i]));
         }
         // add fields
         final ClassFileEntry[] cfFields = new ClassFileEntry[classBands.getClassFieldCount()[classNum]];
         // fieldDescr and fieldFlags used to create this
-        for (i = 0; i < cfFields.length; i++) {
+        for (i = 0; i < cfFields.length; ++i) {
             final int descriptorIndex = classBands.getFieldDescrInts()[classNum][i];
             final int nameIndex = cpBands.getCpDescriptorNameInts()[descriptorIndex];
             final int typeIndex = cpBands.getCpDescriptorTypeInts()[descriptorIndex];
@@ -208,7 +208,7 @@ public class Segment {
         // add methods
         final ClassFileEntry[] cfMethods = new ClassFileEntry[classBands.getClassMethodCount()[classNum]];
         // methodDescr and methodFlags used to create this
-        for (i = 0; i < cfMethods.length; i++) {
+        for (i = 0; i < cfMethods.length; ++i) {
             final int descriptorIndex = classBands.getMethodDescrInts()[classNum][i];
             final int nameIndex = cpBands.getCpDescriptorNameInts()[descriptorIndex];
             final int typeIndex = cpBands.getCpDescriptorTypeInts()[descriptorIndex];
@@ -285,7 +285,7 @@ public class Segment {
         classFile.superClass = cp.indexOf(cfSuper);
         // TODO placate format of file for writing purposes
         classFile.interfaces = new int[cfInterfaces.length];
-        for (i = 0; i < cfInterfaces.length; i++) {
+        for (i = 0; i < cfInterfaces.length; ++i) {
             classFile.interfaces[i] = cp.indexOf(cfInterfaces[i]);
         }
         classFile.fields = cfFields;
@@ -403,7 +403,7 @@ public class Segment {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         final DataOutputStream dos = new DataOutputStream(bos);
 
-        for (int i = 0; i < numberOfFiles; i++) {
+        for (int i = 0; i < numberOfFiles; ++i) {
             String name = fileName[i];
 
             final boolean nameIsEmpty = (name == null) || name.equals("");
@@ -542,7 +542,7 @@ public class Segment {
         final int numberOfFiles = header.getNumberOfFiles();
         final long archiveModtime = header.getArchiveModtime();
 
-        for (int i = 0; i < numberOfFiles; i++) {
+        for (int i = 0; i < numberOfFiles; ++i) {
             final String name = fileName[i];
             // For Pack200 archives, modtime is in seconds
             // from the epoch. JarEntries need it to be in

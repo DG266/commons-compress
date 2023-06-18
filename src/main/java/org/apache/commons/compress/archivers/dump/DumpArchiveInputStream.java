@@ -517,13 +517,6 @@ public class DumpArchiveInputStream extends ArchiveInputStream {
 
                 final Dirent d = new Dirent(ino, entry.getIno(), type, name);
 
-                /*
-                if ((type == 4) && names.containsKey(ino)) {
-                    System.out.println("we already have ino: " +
-                                       names.get(ino));
-                }
-                */
-
                 names.put(ino, d);
 
                 // check whether this allows us to fill anything in the pending list.

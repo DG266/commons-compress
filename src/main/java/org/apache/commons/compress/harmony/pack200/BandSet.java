@@ -81,7 +81,7 @@ public abstract class BandSet {
         public BandData(final int[] band) {
             this.band = band;
             final Integer one = Integer.valueOf(1);
-            for (int i = 0; i < band.length; i++) {
+            for (int i = 0; i < band.length; ++i) {
                 if (band[i] < smallest) {
                     smallest = band[i];
                 }
@@ -176,7 +176,7 @@ public abstract class BandSet {
         }
 
     }
-
+    private static final String TEXT_EXCEPTION = "POPULATION";
     // Minimum size of band for each effort level where we consider alternative codecs
     // Note: these values have been tuned - please test carefully if changing them
     private static final int[] effortThresholds = {0, 0, 1000, 500, 100, 100, 100, 100, 100, 0};
@@ -207,7 +207,7 @@ public abstract class BandSet {
         if (canonicalLargest == null) {
             canonicalLargest = new long[116];
             canonicalSmallest = new long[116];
-            for (int i = 1; i < canonicalLargest.length; i++) {
+            for (int i = 1; i < canonicalLargest.length; ++i) {
                 canonicalLargest[i] = CodecEncoding.getCanonicalCodec(i).largest();
                 canonicalSmallest[i] = CodecEncoding.getCanonicalCodec(i).smallest();
             }
@@ -231,7 +231,7 @@ public abstract class BandSet {
         }
 
         // Consider a population codec (but can't be nested)
-        if (effort > 3 && !name.equals("POPULATION")) {
+        if (effort > 3 && !name.equals(TEXT_EXCEPTION)) {
             final int numDistinctValues = bandData.numDistinctValues();
             final float distinctValuesAsProportion = (float) numDistinctValues / (float) band.length;
 
@@ -313,7 +313,7 @@ public abstract class BandSet {
      */
     protected int[] cpEntryListToArray(final List<? extends ConstantPoolEntry> list) {
         final int[] array = new int[list.size()];
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length; ++i) {
             array[i] = list.get(i).getIndex();
             if (array[i] < 0) {
                 throw new IllegalArgumentException("Index should be > 0");
@@ -330,7 +330,7 @@ public abstract class BandSet {
      */
     protected int[] cpEntryOrNullListToArray(final List<? extends ConstantPoolEntry> list) {
         final int[] array = new int[list.size()];
-        for (int j = 0; j < array.length; j++) {
+        for (int j = 0; j < array.length; ++j) {
             final ConstantPoolEntry cpEntry = list.get(j);
             array[j] = cpEntry == null ? 0 : cpEntry.getIndex() + 1;
             if (cpEntry != null && cpEntry.getIndex() < 0) {
@@ -366,7 +366,7 @@ public abstract class BandSet {
                     final int[] specifierBand = CodecEncoding.getSpecifier(betterCodec, defaultCodec);
                     int specifier = specifierBand[0];
                     if (specifierBand.length > 1) {
-                        for (int i = 1; i < specifierBand.length; i++) {
+                        for (int i = 1; i < specifierBand.length; ++i) {
                             segmentHeader.appendBandCodingSpecifier(specifierBand[i]);
                         }
                     }
@@ -440,7 +440,7 @@ public abstract class BandSet {
         }
         final int[] hiBits = new int[flags.length];
         final int[] loBits = new int[flags.length];
-        for (int i = 0; i < flags.length; i++) {
+        for (int i = 0; i < flags.length; ++i) {
             final long l = flags[i];
             hiBits[i] = (int) (l >> 32);
             loBits[i] = (int) l;
@@ -526,13 +526,13 @@ public abstract class BandSet {
         }
 
         final Map<Integer, Integer> favoredToIndex = new HashMap<>();
-        for (int i = 0; i < favored.size(); i++) {
+        for (int i = 0; i < favored.size(); ++i) {
             favoredToIndex.put(favored.get(i), Integer.valueOf(i));
         }
 
         final IntList unfavoured = new IntList();
         final int[] tokens = new int[band.length];
-        for (int i = 0; i < band.length; i++) {
+        for (int i = 0; i < band.length; ++i) {
             final Integer favouredIndex = favoredToIndex.get(Integer.valueOf(band[i]));
             if (favouredIndex == null) {
                 tokens[i] = 0;
@@ -546,8 +546,8 @@ public abstract class BandSet {
         final int[] unfavouredBand = unfavoured.toArray();
 
         // Analyse the three bands to get the best codec
-        final BandAnalysisResults favouredResults = analyseBand("POPULATION", favouredBand, defaultCodec);
-        final BandAnalysisResults unfavouredResults = analyseBand("POPULATION", unfavouredBand, defaultCodec);
+        final BandAnalysisResults favouredResults = analyseBand(TEXT_EXCEPTION, favouredBand, defaultCodec);
+        final BandAnalysisResults unfavouredResults = analyseBand(TEXT_EXCEPTION, unfavouredBand, defaultCodec);
 
         int tdefL = 0;
         int l = 0;
@@ -558,7 +558,7 @@ public abstract class BandSet {
             tdefL = 1;
             tokensEncoded = Codec.BYTE1.encode(tokens);
         } else {
-            final BandAnalysisResults tokenResults = analyseBand("POPULATION", tokens, defaultCodec);
+            final BandAnalysisResults tokenResults = analyseBand(TEXT_EXCEPTION, tokens, defaultCodec);
             tokenCodec = tokenResults.betterCodec;
             tokensEncoded = tokenResults.encodedBand;
             if (tokenCodec == null) {
@@ -611,6 +611,8 @@ public abstract class BandSet {
                         break;
                     case 252:
                         tdefL = 11;
+                        break;
+                    default:
                         break;
                     }
                 }
@@ -719,7 +721,6 @@ public abstract class BandSet {
         }
         return results.numCodecsTried >= effort;
         // May want to also check how much we've saved if performance needs improving, e.g. saved more than effort*2 %
-        // || (float)results.saved/(float)results.encodedBand.length > (float)effort * 2/100;
     }
 
     private void tryCodecs(final String name, final int[] band, final BHSDCodec defaultCodec, final BandData bandData,

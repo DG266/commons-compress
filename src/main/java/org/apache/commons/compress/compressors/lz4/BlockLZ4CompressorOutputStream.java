@@ -259,7 +259,7 @@ public class BlockLZ4CompressorOutputStream extends CompressorOutputStream {
             }
         }
         final int size = expandedBlocks.size();
-        for (int i = blocksToKeep; i < size; i++) {
+        for (int i = blocksToKeep; i < size; ++i) {
             expandedBlocks.removeLast();
         }
     }
@@ -281,7 +281,7 @@ public class BlockLZ4CompressorOutputStream extends CompressorOutputStream {
             }
         }
         final int size = pairs.size();
-        for (int i = pairsToKeep; i < size; i++) {
+        for (int i = pairsToKeep; i < size; ++i) {
             final Pair p = pairs.peekFirst();
             if (!p.hasBeenWritten()) {
                 break;
@@ -431,7 +431,7 @@ public class BlockLZ4CompressorOutputStream extends CompressorOutputStream {
 
         final int lastPairsSize = lastPairs.size();
         int toExpand = 0;
-        for (int i = 1; i < lastPairsSize; i++) {
+        for (int i = 1; i < lastPairsSize; ++i) {
             toExpand += pairLength.get(i);
         }
         final Pair replacement = new Pair();

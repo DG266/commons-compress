@@ -159,10 +159,15 @@ public final class BHSDCodec extends Codec {
         this.s = s;
         this.d = d;
         this.l = 256 - h;
-        if (h == 1) {
-            cardinality = b * 255 + 1;
-        } else {
-            cardinality = (long) ((long) (l * (1 - Math.pow(h, b)) / (1 - h)) + Math.pow(h, b));
+        switch (h) {
+            case 1: {
+                cardinality = b * 255 + 1;
+                break;
+            }
+            default: {
+                cardinality = (long) ((long) (l * (1 - Math.pow(h, b)) / (1 - h)) + Math.pow(h, b));
+                break;
+            }
         }
         smallest = calculateSmallest();
         largest = calculateLargest();
@@ -251,39 +256,18 @@ public final class BHSDCodec extends Codec {
                 z = z - (z >>> s);
             }
         }
-        // This algorithm does the same thing, but is probably slower. Leaving
-        // in for now for readability
-        // if (isSigned()) {
-        // long u = z;
-        // long twoPowS = (long)Math.pow(2, s);
-        // double twoPowSMinusOne = twoPowS-1;
-        // if (u % twoPowS < twoPowSMinusOne) {
-        // if (cardinality < Math.pow(2, 32)) {
-        // z = (long) (u - (Math.floor(u/ twoPowS)));
-        // } else {
-        // z = cast32((long) (u - (Math.floor(u/ twoPowS))));
-        // }
-        // } else {
-        // z = (long) (-Math.floor(u/ twoPowS) - 1);
-        // }
-        // }
+        // There is another algorithm that does the same thing, but is probably slower. Removed to improve readability
         if (isDelta()) {
             z += last;
         }
         return (int) z;
     }
 
-    // private long cast32(long u) {
-    // u = (long) ((long) ((u + Math.pow(2, 31)) % Math.pow(2, 32)) -
-    // Math.pow(2, 31));
-    // return u;
-    // }
-
     @Override
     public int[] decodeInts(final int n, final InputStream in) throws IOException, Pack200Exception {
         final int[] band = super.decodeInts(n, in);
         if (isDelta()) {
-            for (int i = 0; i < band.length; i++) {
+            for (int i = 0; i < band.length; ++i) {
                 while (band[i] > largest) {
                     band[i] -= cardinality;
                 }
@@ -300,7 +284,7 @@ public final class BHSDCodec extends Codec {
         throws IOException, Pack200Exception {
         final int[] band = super.decodeInts(n, in, firstValue);
         if (isDelta()) {
-            for (int i = 0; i < band.length; i++) {
+            for (int i = 0; i < band.length; ++i) {
                 while (band[i] > largest) {
                     band[i] -= cardinality;
                 }
@@ -350,7 +334,7 @@ public final class BHSDCodec extends Codec {
         }
 
         final List<Byte> byteList = new ArrayList<>();
-        for (int n = 0; n < b; n++) {
+        for (int n = 0; n < b; ++n) {
             long byteN;
             if (z < l) {
                 byteN = z;
@@ -368,7 +352,7 @@ public final class BHSDCodec extends Codec {
             z /= h;
         }
         final byte[] bytes = new byte[byteList.size()];
-        for (int i = 0; i < bytes.length; i++) {
+        for (int i = 0; i < bytes.length; ++i) {
             bytes[i] = byteList.get(i).byteValue();
         }
         return bytes;

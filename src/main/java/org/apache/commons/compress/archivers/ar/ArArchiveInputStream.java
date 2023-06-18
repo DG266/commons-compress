@@ -230,7 +230,7 @@ public class ArArchiveInputStream extends ArchiveInputStream {
         if (namebuffer == null) {
             throw new IOException("Cannot process GNU long filename as no // record was found");
         }
-        for (int i = offset; i < namebuffer.length; i++) {
+        for (int i = offset; i < namebuffer.length; ++i) {
             if (namebuffer[i] == '\012' || namebuffer[i] == 0) {
                 if (namebuffer[i - 1] == '/') {
                     i--; // drop trailing /
@@ -280,8 +280,11 @@ public class ArArchiveInputStream extends ArchiveInputStream {
         {
             final int read = IOUtils.readFully(input, metaData);
             trackReadBytes(read);
-            if (read == 0) {
-                return null;
+            switch (read){
+                case 0: {
+                    return null;
+                }
+                default: break;
             }
             if (read < metaData.length) {
                 throw new IOException("Truncated ar archive");

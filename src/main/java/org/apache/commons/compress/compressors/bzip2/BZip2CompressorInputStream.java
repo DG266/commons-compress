@@ -104,6 +104,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
     }
 
+    private static final String POS_STRING = "su_tPos";
     private static final int EOF = 0;
 
     private static final int START_BLOCK_STATE = 1;
@@ -156,8 +157,8 @@ public class BZip2CompressorInputStream extends CompressorInputStream
                                              final int[] base, final int[] perm, final char[] length,
                                              final int minLen, final int maxLen, final int alphaSize)
         throws IOException {
-        for (int i = minLen, pp = 0; i <= maxLen; i++) {
-            for (int j = 0; j < alphaSize; j++) {
+        for (int i = minLen, pp = 0; i <= maxLen; ++i) {
+            for (int j = 0; j < alphaSize; ++j) {
                 if (length[j] == i) {
                     perm[pp++] = j;
                 }
@@ -169,7 +170,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             limit[i] = 0;
         }
 
-        for (int i = 0; i < alphaSize; i++) {
+        for (int i = 0; i < alphaSize; ++i) {
             final int l = length[i];
             checkBounds(l, MAX_ALPHA_SIZE, "length");
             base[l + 1]++;
@@ -180,7 +181,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             base[i] = b;
         }
 
-        for (int i = minLen, vec = 0, b = base[i]; i <= maxLen; i++) {
+        for (int i = minLen, vec = 0, b = base[i]; i <= maxLen; ++i) {
             final int nb = base[i + 1];
             vec += nb - b;
             b = nb;
@@ -188,7 +189,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             vec <<= 1;
         }
 
-        for (int i = minLen + 1; i <= maxLen; i++) {
+        for (int i = minLen + 1; i <= maxLen; ++i) {
             base[i] = ((limit[i - 1] + 1) << 1) - base[i];
         }
     }
@@ -333,7 +334,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         final int[][] base = dataShadow.base;
         final int[][] perm = dataShadow.perm;
 
-        for (int t = 0; t < nGroups; t++) {
+        for (int t = 0; t < nGroups; ++t) {
             int minLen = 32;
             int maxLen = 0;
             final char[] len_t = len[t];
@@ -490,17 +491,22 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
                 yy[0] = tmp;
 
-                if (groupPos == 0) {
-                    groupPos = G_SIZE - 1;
-                    checkBounds(++groupNo, MAX_SELECTORS, "groupNo");
-                    zt = selector[groupNo] & 0xff;
-                    checkBounds(zt, N_GROUPS, "zt");
-                    base_zt = base[zt];
-                    limit_zt = limit[zt];
-                    perm_zt = perm[zt];
-                    minLens_zt = minLens[zt];
-                } else {
-                    groupPos--;
+                switch(groupPos) {
+                    case 0: {
+                        groupPos = G_SIZE - 1;
+                        checkBounds(++groupNo, MAX_SELECTORS, "groupNo");
+                        zt = selector[groupNo] & 0xff;
+                        checkBounds(zt, N_GROUPS, "zt");
+                        base_zt = base[zt];
+                        limit_zt = limit[zt];
+                        perm_zt = perm[zt];
+                        minLens_zt = minLens[zt];
+                        break;
+                    }
+                    default: {
+                        groupPos--;
+                        break;
+                    }
                 }
 
                 int zn = minLens_zt;
@@ -645,7 +651,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
 
         int nInUseShadow = 0;
 
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < 256; ++i) {
             if (inUse[i]) {
                 seqToUnseq[nInUseShadow++] = (byte) i;
             }
@@ -747,17 +753,17 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         int inUse16 = 0;
 
         /* Receive the mapping table */
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; ++i) {
             if (bsGetBit(bin)) {
                 inUse16 |= 1 << i;
             }
         }
 
         Arrays.fill(inUse, false);
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; ++i) {
             if ((inUse16 & (1 << i)) != 0) {
                 final int i16 = i << 4;
-                for (int j = 0; j < 16; j++) {
+                for (int j = 0; j < 16; ++j) {
                     if (bsGetBit(bin)) {
                         inUse[i16 + j] = true;
                     }
@@ -780,7 +786,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         // See https://gnu.wildebeest.org/blog/mjw/2019/08/02/bzip2-and-the-cve-that-wasnt/
         // and https://sourceware.org/ml/bzip2-devel/2019-q3/msg00007.html
 
-        for (int i = 0; i < selectors; i++) {
+        for (int i = 0; i < selectors; ++i) {
             int j = 0;
             while (bsGetBit(bin)) {
                 j++;
@@ -796,7 +802,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             pos[v] = (byte) v;
         }
 
-        for (int i = 0; i < nSelectors; i++) {
+        for (int i = 0; i < nSelectors; ++i) {
             int v = selectorMtf[i] & 0xff;
             checkBounds(v, N_GROUPS, "selectorMtf");
             final byte tmp = pos[v];
@@ -812,10 +818,10 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         final char[][] len = dataShadow.temp_charArray2d;
 
         /* Now the coding tables */
-        for (int t = 0; t < nGroups; t++) {
+        for (int t = 0; t < nGroups; ++t) {
             int curr = bsR(bin, 5);
             final char[] len_t = len[t];
-            for (int i = 0; i < alphaSize; i++) {
+            for (int i = 0; i < alphaSize; ++i) {
                 while (bsGetBit(bin)) {
                     curr += bsGetBit(bin) ? -1 : 1;
                 }
@@ -839,12 +845,12 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         cftab[0] = 0;
         System.arraycopy(this.data.unzftab, 0, cftab, 1, 256);
 
-        for (int i = 1, c = cftab[0]; i <= 256; i++) {
+        for (int i = 1, c = cftab[0]; i <= 256; ++i) {
             c += cftab[i];
             cftab[i] = c;
         }
 
-        for (int i = 0, lastShadow = this.last; i <= lastShadow; i++) {
+        for (int i = 0, lastShadow = this.last; i <= lastShadow; ++i) {
             final int tmp = cftab[ll8[i] & 0xff]++;
             checkBounds(tmp, ttLen, "tt index");
             tt[tmp] = i;
@@ -872,7 +878,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             this.su_chPrev = this.su_ch2;
             final int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
             this.su_ch2 = su_ch2Shadow;
-            checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
             this.su_tPos = this.data.tt[this.su_tPos];
             this.su_i2++;
             this.currentState = NO_RAND_PART_B_STATE;
@@ -891,7 +897,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             return setupNoRandPartA();
         }
         if (++this.su_count >= 4) {
-            checkBounds(this.su_tPos, this.data.ll8.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.ll8.length, POS_STRING);
             this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
             this.su_tPos = this.data.tt[this.su_tPos];
             this.su_j2 = 0;
@@ -917,7 +923,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
         if (this.su_i2 <= this.last) {
             this.su_chPrev = this.su_ch2;
             int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
-            checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+            checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
             this.su_tPos = this.data.tt[this.su_tPos];
             if (this.su_rNToGo == 0) {
                 this.su_rNToGo = Rand.rNums(this.su_rTPos) - 1;
@@ -949,7 +955,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream
             return setupRandPartA();
         }
         this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-        checkBounds(this.su_tPos, this.data.tt.length, "su_tPos");
+        checkBounds(this.su_tPos, this.data.tt.length, POS_STRING);
         this.su_tPos = this.data.tt[this.su_tPos];
         if (this.su_rNToGo == 0) {
             this.su_rNToGo = Rand.rNums(this.su_rTPos) - 1;

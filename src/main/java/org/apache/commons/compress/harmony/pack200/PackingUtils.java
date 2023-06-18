@@ -61,6 +61,7 @@ public class PackingUtils {
         }
     }
 
+    private static final String LOG_TEXT = "Packed ";
     private static PackingLogger packingLogger;
 
     static {
@@ -101,7 +102,7 @@ public class PackingUtils {
 						jarOutputStream.write(bytes, 0, bytesRead);
 					}
 					jarOutputStream.closeEntry();
-					log("Packed " + jarEntry.getName());
+					log(LOG_TEXT + jarEntry.getName());
 				}
 			}
 			jarFile.close();
@@ -120,7 +121,7 @@ public class PackingUtils {
 		final Manifest manifest = jarInputStream.getManifest();
 		try (final JarOutputStream jarOutputStream = new JarOutputStream(outputStream, manifest)) {
 			jarOutputStream.setComment("PACK200");
-			log("Packed " + JarFile.MANIFEST_NAME);
+			log(LOG_TEXT + JarFile.MANIFEST_NAME);
 
 			final byte[] bytes = new byte[16384];
 			JarEntry jarEntry;
@@ -130,7 +131,7 @@ public class PackingUtils {
 				while ((bytesRead = jarInputStream.read(bytes)) != -1) {
 					jarOutputStream.write(bytes, 0, bytesRead);
 				}
-				log("Packed " + jarEntry.getName());
+				log(LOG_TEXT + jarEntry.getName());
 			}
 			jarInputStream.close();
 		}

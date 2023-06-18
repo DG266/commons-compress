@@ -36,6 +36,8 @@ import org.apache.commons.compress.utils.ArchiveUtils;
  * @NotThreadSafe
  */
 public class ArArchiveOutputStream extends ArchiveOutputStream {
+
+    private static final String STREAM_EXCEPTION ="Stream has already been finished";
     /** Fail if a long file name is required in the archive. */
     public static final int LONGFILE_ERROR = 0;
 
@@ -73,7 +75,7 @@ public class ArArchiveOutputStream extends ArchiveOutputStream {
     @Override
     public void closeArchiveEntry() throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
         if (prevEntry == null || !haveUnclosedEntry){
             throw new IOException("No current entry to close");
@@ -88,7 +90,7 @@ public class ArArchiveOutputStream extends ArchiveOutputStream {
     public ArchiveEntry createArchiveEntry(final File inputFile, final String entryName)
         throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
         return new ArArchiveEntry(inputFile, entryName);
     }
@@ -101,7 +103,7 @@ public class ArArchiveOutputStream extends ArchiveOutputStream {
     @Override
     public ArchiveEntry createArchiveEntry(final Path inputPath, final String entryName, final LinkOption... options) throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
         return new ArArchiveEntry(inputPath, entryName, options);
     }
@@ -132,7 +134,7 @@ public class ArArchiveOutputStream extends ArchiveOutputStream {
     @Override
     public void putArchiveEntry(final ArchiveEntry pEntry) throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
 
         final ArArchiveEntry pArEntry = (ArArchiveEntry)pEntry;

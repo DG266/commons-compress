@@ -82,7 +82,7 @@ public class ClassConstantPool {
 
             // get the parents' children and add them to buffer
             // concurrently add parents to target storage
-            for (int indexParents = 0; indexParents < parents.size(); indexParents++) {
+            for (int indexParents = 0; indexParents < parents.size(); ++indexParents) {
                 final ClassFileEntry entry = parents.get(indexParents);
 
                 // traverse children

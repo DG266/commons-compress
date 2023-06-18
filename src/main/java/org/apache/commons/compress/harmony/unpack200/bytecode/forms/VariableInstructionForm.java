@@ -93,7 +93,7 @@ public abstract class VariableInstructionForm extends ByteCodeForm {
         int firstOperandPosition = -1;
 
         // Find the first -1 in the rewrite array
-        for (int index = 0; index < rewrite.length - 3; index++) {
+        for (int index = 0; index < rewrite.length - 3; ++index) {
             if ((rewrite[index] == -1) && (rewrite[index + 1] == -1) && (rewrite[index + 2] == -1)
                 && (rewrite[index + 3] == -1)) {
                 firstOperandPosition = index;

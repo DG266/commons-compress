@@ -58,8 +58,6 @@ public class DumpArchiveSummary {
         flags = DumpArchiveUtil.convert32(buffer, 888);
         firstrec = DumpArchiveUtil.convert32(buffer, 892);
         ntrec = DumpArchiveUtil.convert32(buffer, 896);
-
-        //extAttributes = DumpArchiveUtil.convert32(buffer, 900);
     }
 
     @Override

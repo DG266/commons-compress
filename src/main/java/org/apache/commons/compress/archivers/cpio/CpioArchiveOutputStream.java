@@ -68,7 +68,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
         CpioConstants {
 
     private CpioArchiveEntry entry;
-
+    private static final String STREAM_EXCEPTION = "Stream has already been finished";
     private boolean closed;
 
     /** indicates if this archive is finished */
@@ -223,7 +223,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
     @Override
     public void closeArchiveEntry() throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
 
         ensureOpen();
@@ -256,7 +256,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
     public ArchiveEntry createArchiveEntry(final File inputFile, final String entryName)
             throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
         return new CpioArchiveEntry(inputFile, entryName);
     }
@@ -270,7 +270,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
     public ArchiveEntry createArchiveEntry(final Path inputPath, final String entryName, final LinkOption... options)
             throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
         return new CpioArchiveEntry(inputPath, entryName, options);
     }
@@ -358,7 +358,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
     @Override
     public void putArchiveEntry(final ArchiveEntry entry) throws IOException {
         if (finished) {
-            throw new IOException("Stream has already been finished");
+            throw new IOException(STREAM_EXCEPTION);
         }
 
         final CpioArchiveEntry e = (CpioArchiveEntry) entry;
@@ -418,7 +418,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
         out.write(b, off, len);
         this.written += len;
         if (this.entry.getFormat() == FORMAT_NEW_CRC) {
-            for (int pos = 0; pos < len; pos++) {
+            for (int pos = 0; pos < len; ++pos) {
                 this.crc += b[pos] & 0xFF;
                 this.crc &= 0xFFFFFFFFL;
             }
@@ -430,17 +430,24 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
             final int radix) throws IOException {
         final StringBuilder tmp = new StringBuilder();
         final String tmpStr;
-        if (radix == 16) {
-            tmp.append(Long.toHexString(number));
-        } else if (radix == 8) {
-            tmp.append(Long.toOctalString(number));
-        } else {
-            tmp.append(number);
+        switch (radix){
+            case 16: {
+                tmp.append(Long.toHexString(number));
+                break;
+            }
+            case 8: {
+                tmp.append(Long.toOctalString(number));
+                break;
+            }
+            default: {
+                tmp.append(number);
+                break;
+            }
         }
 
         if (tmp.length() <= length) {
             final int insertLength = length - tmp.length();
-            for (int pos = 0; pos < insertLength; pos++) {
+            for (int pos = 0; pos < insertLength; ++pos) {
                 tmp.insert(0, "0");
             }
             tmpStr = tmp.toString();
@@ -504,7 +511,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
             inode = devMin = 0;
         } else if (inode == 0 && devMin == 0) {
             inode = nextArtificalDeviceAndInode & 0xFFFFFFFF;
-            devMin = (nextArtificalDeviceAndInode++ >> 32) & 0xFFFFFFFF;
+            devMin = (++nextArtificalDeviceAndInode >> 32) & 0xFFFFFFFF;
         } else {
             nextArtificalDeviceAndInode =
                 Math.max(nextArtificalDeviceAndInode,
@@ -537,7 +544,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
             inode = device = 0;
         } else if (inode == 0 && device == 0) {
             inode = nextArtificalDeviceAndInode & 0777777;
-            device = (nextArtificalDeviceAndInode++ >> 18) & 0777777;
+            device = (++nextArtificalDeviceAndInode >> 18) & 0777777;
         } else {
             nextArtificalDeviceAndInode =
                 Math.max(nextArtificalDeviceAndInode,
@@ -566,7 +573,7 @@ public class CpioArchiveOutputStream extends ArchiveOutputStream implements
             inode = device = 0;
         } else if (inode == 0 && device == 0) {
             inode = nextArtificalDeviceAndInode & 0xFFFF;
-            device = (nextArtificalDeviceAndInode++ >> 16) & 0xFFFF;
+            device = (++nextArtificalDeviceAndInode >> 16) & 0xFFFF;
         } else {
             nextArtificalDeviceAndInode =
                 Math.max(nextArtificalDeviceAndInode,

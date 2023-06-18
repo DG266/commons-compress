@@ -42,14 +42,14 @@ public abstract class SwitchForm extends VariableInstructionForm {
 
         final int sourceIndex = byteCode.getByteCodeIndex();
         final int sourceValue = codeAttribute.byteCodeOffsets.get(sourceIndex).intValue();
-        for (int index = 0; index < numberOfLabels; index++) {
+        for (int index = 0; index < numberOfLabels; ++index) {
             final int absoluteInstructionTargetIndex = sourceIndex + originalTargets[index];
             final int targetValue = codeAttribute.byteCodeOffsets.get(absoluteInstructionTargetIndex)
                 .intValue();
             replacementTargets[index] = targetValue - sourceValue;
         }
         final int[] rewriteArray = byteCode.getRewrite();
-        for (int index = 0; index < numberOfLabels; index++) {
+        for (int index = 0; index < numberOfLabels; ++index) {
             setRewrite4Bytes(replacementTargets[index], rewriteArray);
         }
     }
