@@ -120,9 +120,9 @@ public class SevenZFile implements Closeable {
         }
 
         private long coderSize() {
-            return 2 /* methodId is between 1 and four bytes currently, COPY and LZMA2 are the most common with 1 */
-                + 16
-                + 4 /* properties, guess */
+            return 2L /* methodId is between 1 and four bytes currently, COPY and LZMA2 are the most common with 1 */
+                + 16L
+                + 4L /* properties, guess */
                 ;
         }
 
@@ -149,9 +149,9 @@ public class SevenZFile implements Closeable {
         }
 
         private long streamMapSize() {
-            return 8 * numberOfFolders /* folderFirstPackStreamIndex, folderFirstFileIndex */
-                + 8 * numberOfPackedStreams /* packStreamOffsets */
-                + 4 * numberOfEntries /* fileFolderIndex */
+            return 8L * numberOfFolders /* folderFirstPackStreamIndex, folderFirstFileIndex */
+                + 8L * numberOfPackedStreams /* packStreamOffsets */
+                + 4L * numberOfEntries /* fileFolderIndex */
                 ;
         }
 
@@ -1694,7 +1694,7 @@ public class SevenZFile implements Closeable {
                     if (external != 0) {
                         throw new IOException("Not implemented");
                     }
-                    if (skipBytesFully(header, 8 * timesDefined) < 8 * timesDefined) {
+                    if (skipBytesFully(header, 8L * timesDefined) < 8L * timesDefined) {
                         throw new IOException("invalid creation dates size");
                     }
                     break;
@@ -1706,7 +1706,7 @@ public class SevenZFile implements Closeable {
                     if (external != 0) {
                         throw new IOException("Not implemented");
                     }
-                    if (skipBytesFully(header, 8 * timesDefined) < 8 * timesDefined) {
+                    if (skipBytesFully(header, 8L * timesDefined) < 8L * timesDefined) {
                         throw new IOException("invalid access dates size");
                     }
                     break;
@@ -1718,7 +1718,7 @@ public class SevenZFile implements Closeable {
                     if (external != 0) {
                         throw new IOException("Not implemented");
                     }
-                    if (skipBytesFully(header, 8 * timesDefined) < 8 * timesDefined) {
+                    if (skipBytesFully(header, 8L * timesDefined) < 8L * timesDefined) {
                         throw new IOException("invalid modification dates size");
                     }
                     break;
@@ -1730,7 +1730,7 @@ public class SevenZFile implements Closeable {
                     if (external != 0) {
                         throw new IOException("Not implemented");
                     }
-                    if (skipBytesFully(header, 4 * attributesDefined) < 4 * attributesDefined) {
+                    if (skipBytesFully(header, 4L * attributesDefined) < 4L * attributesDefined) {
                         throw new IOException("invalid windows attributes size");
                     }
                     break;
@@ -1876,7 +1876,7 @@ public class SevenZFile implements Closeable {
         if (nid == NID.kCRC) {
             final int crcsDefined = readAllOrBits(header, stats.numberOfPackedStreams)
                 .cardinality();
-            if (skipBytesFully(header, 4 * crcsDefined) < 4 * crcsDefined) {
+            if (skipBytesFully(header, 4L * crcsDefined) < 4L * crcsDefined) {
                 throw new IOException("invalid number of CRCs in PackInfo");
             }
             nid = getUnsignedByte(header);
@@ -1960,7 +1960,7 @@ public class SevenZFile implements Closeable {
             assertFitsIntoNonNegativeInt("numDigests", numDigests);
             final int missingCrcs = readAllOrBits(header, numDigests)
                 .cardinality();
-            if (skipBytesFully(header, 4 * missingCrcs) < 4 * missingCrcs) {
+            if (skipBytesFully(header, 4L * missingCrcs) < 4L * missingCrcs) {
                 throw new IOException("invalid number of missing CRCs in SubStreamInfo");
             }
             nid = getUnsignedByte(header);
@@ -2013,7 +2013,7 @@ public class SevenZFile implements Closeable {
         if (nid == NID.kCRC) {
             stats.folderHasCrc = readAllOrBits(header, stats.numberOfFolders);
             final int crcsDefined = stats.folderHasCrc.cardinality();
-            if (skipBytesFully(header, 4 * crcsDefined) < 4 * crcsDefined) {
+            if (skipBytesFully(header, 4L * crcsDefined) < 4L * crcsDefined) {
                 throw new IOException("invalid number of CRCs in UnpackInfo");
             }
             nid = getUnsignedByte(header);
