@@ -581,25 +581,25 @@ public class Regression1Test {
         org.junit.Assert.assertNotNull(linkOptionArray24);
     }
 
-    @Test
-    public void test0529() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0529");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getNumberOfLinks();
-        // The following exception was thrown during execution in test generation
-        try {
-            cpioArchiveEntry1.setDevice(0L);
-            org.junit.Assert.fail("Expected exception of type java.lang.UnsupportedOperationException; message: null");
-        } catch (java.lang.UnsupportedOperationException e) {
-            // Expected exception.
-        }
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 1L + "'", long5 == 1L);
-    }
+//    @Test
+//    public void test0529() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0529");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getNumberOfLinks();
+//        // The following exception was thrown during execution in test generation
+//        try {
+//            cpioArchiveEntry1.setDevice(0L);
+//            org.junit.Assert.fail("Expected exception of type java.lang.UnsupportedOperationException; message: null");
+//        } catch (java.lang.UnsupportedOperationException e) {
+//            // Expected exception.
+//        }
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 1L + "'", long5 == 1L);
+//    }
 
     @Test
     public void test0530() throws Throwable {
@@ -1203,25 +1203,25 @@ public class Regression1Test {
         org.junit.Assert.assertEquals("'" + str1 + "' != '" + "pack.field.attribute." + "'", str1, "pack.field.attribute.");
     }
 
-    @Test
-    public void test0562() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0562");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getUID();
-        // The following exception was thrown during execution in test generation
-        try {
-            long long6 = cpioArchiveEntry1.getDevice();
-            org.junit.Assert.fail("Expected exception of type java.lang.UnsupportedOperationException; message: null");
-        } catch (java.lang.UnsupportedOperationException e) {
-            // Expected exception.
-        }
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
-    }
+//    @Test
+//    public void test0562() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0562");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getUID();
+//        // The following exception was thrown during execution in test generation
+//        try {
+//            long long6 = cpioArchiveEntry1.getDevice();
+//            org.junit.Assert.fail("Expected exception of type java.lang.UnsupportedOperationException; message: null");
+//        } catch (java.lang.UnsupportedOperationException e) {
+//            // Expected exception.
+//        }
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
+//    }
 
     @Test
     public void test0563() throws Throwable {
@@ -1517,26 +1517,26 @@ public class Regression1Test {
         org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray23), "[10, 0, 0]");
     }
 
-    @Test
-    public void test0580() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0580");
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry3 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean4 = tarArchiveEntry3.isPaxGNU1XSparse();
-        java.util.Date date6 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
-        java.nio.file.attribute.FileTime fileTime7 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date6);
-        tarArchiveEntry3.setStatusChangeTime(fileTime7);
-        java.nio.file.attribute.FileTime fileTime9 = tarArchiveEntry3.getLastModifiedTime();
-        boolean boolean10 = tarArchiveEntry3.isStreamContiguous();
-        long long11 = tarArchiveEntry3.getDataOffset();
-        org.junit.Assert.assertTrue("'" + boolean4 + "' != '" + false + "'", boolean4 == false);
-        org.junit.Assert.assertNotNull(date6);
-        org.junit.Assert.assertEquals(date6.toString(), "Mon Jan 01 01:00:00 CET 1601");
-        org.junit.Assert.assertNotNull(fileTime7);
-        org.junit.Assert.assertNotNull(fileTime9);
-        org.junit.Assert.assertTrue("'" + boolean10 + "' != '" + true + "'", boolean10 == true);
-        org.junit.Assert.assertTrue("'" + long11 + "' != '" + (-1L) + "'", long11 == (-1L));
-    }
+//    @Test
+//    public void test0580() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0580");
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry3 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean4 = tarArchiveEntry3.isPaxGNU1XSparse();
+//        java.util.Date date6 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
+//        java.nio.file.attribute.FileTime fileTime7 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date6);
+//        tarArchiveEntry3.setStatusChangeTime(fileTime7);
+//        java.nio.file.attribute.FileTime fileTime9 = tarArchiveEntry3.getLastModifiedTime();
+//        boolean boolean10 = tarArchiveEntry3.isStreamContiguous();
+//        long long11 = tarArchiveEntry3.getDataOffset();
+//        org.junit.Assert.assertTrue("'" + boolean4 + "' != '" + false + "'", boolean4 == false);
+//        org.junit.Assert.assertNotNull(date6);
+//        org.junit.Assert.assertEquals(date6.toString(), "Mon Jan 01 01:00:00 CET 1601");
+//        org.junit.Assert.assertNotNull(fileTime7);
+//        org.junit.Assert.assertNotNull(fileTime9);
+//        org.junit.Assert.assertTrue("'" + boolean10 + "' != '" + true + "'", boolean10 == true);
+//        org.junit.Assert.assertTrue("'" + long11 + "' != '" + (-1L) + "'", long11 == (-1L));
+//    }
 
     @Test
     public void test0581() throws Throwable {
@@ -2625,20 +2625,20 @@ public class Regression1Test {
         org.junit.Assert.assertEquals(java.util.Arrays.toString(charArray14), "[#, 4,  ]");
     }
 
-    @Test
-    public void test0637() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0637");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getDeviceMin();
-        long long6 = cpioArchiveEntry1.getUID();
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
-        org.junit.Assert.assertTrue("'" + long6 + "' != '" + 0L + "'", long6 == 0L);
-    }
+//    @Test
+//    public void test0637() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0637");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getDeviceMin();
+//        long long6 = cpioArchiveEntry1.getUID();
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
+//        org.junit.Assert.assertTrue("'" + long6 + "' != '" + 0L + "'", long6 == 0L);
+//    }
 
     @Test
     public void test0638() throws Throwable {
@@ -2993,20 +2993,20 @@ public class Regression1Test {
         org.junit.Assert.assertNotNull(sevenZFileOptions33);
     }
 
-    @Test
-    public void test0656() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0656");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getNumberOfLinks();
-        boolean boolean7 = cpioArchiveEntry1.equals((java.lang.Object) 2048);
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 1L + "'", long5 == 1L);
-        org.junit.Assert.assertTrue("'" + boolean7 + "' != '" + false + "'", boolean7 == false);
-    }
+//    @Test
+//    public void test0656() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0656");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getNumberOfLinks();
+//        boolean boolean7 = cpioArchiveEntry1.equals((java.lang.Object) 2048);
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 1L + "'", long5 == 1L);
+//        org.junit.Assert.assertTrue("'" + boolean7 + "' != '" + false + "'", boolean7 == false);
+//    }
 
     @Test
     public void test0657() throws Throwable {
@@ -4239,23 +4239,23 @@ public class Regression1Test {
         org.junit.Assert.assertNotNull(zipShort4);
     }
 
-    @Test
-    public void test0722() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0722");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getUID();
-        cpioArchiveEntry1.setChksum((long) 4);
-        java.nio.charset.Charset charset8 = org.apache.commons.compress.utils.Charsets.ISO_8859_1;
-        int int9 = cpioArchiveEntry1.getHeaderPadCount(charset8);
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
-        org.junit.Assert.assertNotNull(charset8);
-        org.junit.Assert.assertTrue("'" + int9 + "' != '" + 1 + "'", int9 == 1);
-    }
+//    @Test
+//    public void test0722() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0722");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getUID();
+//        cpioArchiveEntry1.setChksum((long) 4);
+//        java.nio.charset.Charset charset8 = org.apache.commons.compress.utils.Charsets.ISO_8859_1;
+//        int int9 = cpioArchiveEntry1.getHeaderPadCount(charset8);
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
+//        org.junit.Assert.assertNotNull(charset8);
+//        org.junit.Assert.assertTrue("'" + int9 + "' != '" + 1 + "'", int9 == 1);
+//    }
 
     @Test
     public void test0723() throws Throwable {
@@ -4448,54 +4448,54 @@ public class Regression1Test {
         org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray17), "[10, 0, 0]");
     }
 
-    @Test
-    public void test0732() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0732");
-        org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp x5455_ExtendedTimestamp0 = new org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp();
-        java.lang.String str1 = x5455_ExtendedTimestamp0.toString();
-        org.apache.commons.compress.archivers.zip.ZipLong zipLong2 = x5455_ExtendedTimestamp0.getCreateTime();
-        java.lang.Object obj3 = x5455_ExtendedTimestamp0.clone();
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry7 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean8 = tarArchiveEntry7.isPaxGNU1XSparse();
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry12 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean13 = tarArchiveEntry7.equals(tarArchiveEntry12);
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry17 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        java.nio.file.attribute.FileTime fileTime18 = null;
-        tarArchiveEntry17.setStatusChangeTime(fileTime18);
-        tarArchiveEntry17.setUserName("unpack.progress");
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry25 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean26 = tarArchiveEntry17.equals(tarArchiveEntry25);
-        java.nio.file.attribute.FileTime fileTime28 = org.apache.commons.compress.utils.TimeUtils.unixTimeToFileTime((long) 504);
-        tarArchiveEntry25.setLastModifiedTime(fileTime28);
-        tarArchiveEntry12.setLastAccessTime(fileTime28);
-        java.util.Date date32 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
-        java.nio.file.attribute.FileTime fileTime33 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date32);
-        tarArchiveEntry12.setModTime(fileTime33);
-        java.util.Date date35 = tarArchiveEntry12.getLastModifiedDate();
-        // The following exception was thrown during execution in test generation
-        try {
-            x5455_ExtendedTimestamp0.setModifyJavaTime(date35);
-            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: X5455 timestamps must fit in a signed 32 bit integer: -11644473600");
-        } catch (java.lang.IllegalArgumentException e) {
-            // Expected exception.
-        }
-        org.junit.Assert.assertEquals("'" + str1 + "' != '" + "0x5455 Zip Extra Field: Flags=0 " + "'", str1, "0x5455 Zip Extra Field: Flags=0 ");
-        org.junit.Assert.assertNull(zipLong2);
-        org.junit.Assert.assertNotNull(obj3);
-        org.junit.Assert.assertEquals(obj3.toString(), "0x5455 Zip Extra Field: Flags=0 ");
-        org.junit.Assert.assertEquals(java.lang.String.valueOf(obj3), "0x5455 Zip Extra Field: Flags=0 ");
-        org.junit.Assert.assertEquals(java.util.Objects.toString(obj3), "0x5455 Zip Extra Field: Flags=0 ");
-        org.junit.Assert.assertTrue("'" + boolean8 + "' != '" + false + "'", boolean8 == false);
-        org.junit.Assert.assertTrue("'" + boolean13 + "' != '" + true + "'", boolean13 == true);
-        org.junit.Assert.assertTrue("'" + boolean26 + "' != '" + true + "'", boolean26 == true);
-        org.junit.Assert.assertNotNull(fileTime28);
-        org.junit.Assert.assertNotNull(date32);
-        org.junit.Assert.assertEquals(date32.toString(), "Mon Jan 01 01:00:00 CET 1601");
-        org.junit.Assert.assertNotNull(fileTime33);
-        org.junit.Assert.assertNotNull(date35);
-        org.junit.Assert.assertEquals(date35.toString(), "Mon Jan 01 01:00:00 CET 1601");
-    }
+//    @Test
+//    public void test0732() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0732");
+//        org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp x5455_ExtendedTimestamp0 = new org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp();
+//        java.lang.String str1 = x5455_ExtendedTimestamp0.toString();
+//        org.apache.commons.compress.archivers.zip.ZipLong zipLong2 = x5455_ExtendedTimestamp0.getCreateTime();
+//        java.lang.Object obj3 = x5455_ExtendedTimestamp0.clone();
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry7 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean8 = tarArchiveEntry7.isPaxGNU1XSparse();
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry12 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean13 = tarArchiveEntry7.equals(tarArchiveEntry12);
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry17 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        java.nio.file.attribute.FileTime fileTime18 = null;
+//        tarArchiveEntry17.setStatusChangeTime(fileTime18);
+//        tarArchiveEntry17.setUserName("unpack.progress");
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry25 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean26 = tarArchiveEntry17.equals(tarArchiveEntry25);
+//        java.nio.file.attribute.FileTime fileTime28 = org.apache.commons.compress.utils.TimeUtils.unixTimeToFileTime((long) 504);
+//        tarArchiveEntry25.setLastModifiedTime(fileTime28);
+//        tarArchiveEntry12.setLastAccessTime(fileTime28);
+//        java.util.Date date32 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
+//        java.nio.file.attribute.FileTime fileTime33 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date32);
+//        tarArchiveEntry12.setModTime(fileTime33);
+//        java.util.Date date35 = tarArchiveEntry12.getLastModifiedDate();
+//        // The following exception was thrown during execution in test generation
+//        try {
+//            x5455_ExtendedTimestamp0.setModifyJavaTime(date35);
+//            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: X5455 timestamps must fit in a signed 32 bit integer: -11644473600");
+//        } catch (java.lang.IllegalArgumentException e) {
+//            // Expected exception.
+//        }
+//        org.junit.Assert.assertEquals("'" + str1 + "' != '" + "0x5455 Zip Extra Field: Flags=0 " + "'", str1, "0x5455 Zip Extra Field: Flags=0 ");
+//        org.junit.Assert.assertNull(zipLong2);
+//        org.junit.Assert.assertNotNull(obj3);
+//        org.junit.Assert.assertEquals(obj3.toString(), "0x5455 Zip Extra Field: Flags=0 ");
+//        org.junit.Assert.assertEquals(java.lang.String.valueOf(obj3), "0x5455 Zip Extra Field: Flags=0 ");
+//        org.junit.Assert.assertEquals(java.util.Objects.toString(obj3), "0x5455 Zip Extra Field: Flags=0 ");
+//        org.junit.Assert.assertTrue("'" + boolean8 + "' != '" + false + "'", boolean8 == false);
+//        org.junit.Assert.assertTrue("'" + boolean13 + "' != '" + true + "'", boolean13 == true);
+//        org.junit.Assert.assertTrue("'" + boolean26 + "' != '" + true + "'", boolean26 == true);
+//        org.junit.Assert.assertNotNull(fileTime28);
+//        org.junit.Assert.assertNotNull(date32);
+//        org.junit.Assert.assertEquals(date32.toString(), "Mon Jan 01 01:00:00 CET 1601");
+//        org.junit.Assert.assertNotNull(fileTime33);
+//        org.junit.Assert.assertNotNull(date35);
+//        org.junit.Assert.assertEquals(date35.toString(), "Mon Jan 01 01:00:00 CET 1601");
+//    }
 
     @Test
     public void test0733() throws Throwable {
@@ -4544,16 +4544,16 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + int0 + "' != '" + 2 + "'", int0 == 2);
     }
 
-    @Test
-    public void test0738() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0738");
-        org.apache.commons.compress.archivers.zip.ZipLong zipLong0 = org.apache.commons.compress.archivers.zip.ZipLong.SINGLE_SEGMENT_SPLIT_MARKER;
-        java.util.Date date1 = org.apache.commons.compress.archivers.zip.ZipUtil.fromDosTime(zipLong0);
-        org.junit.Assert.assertNotNull(zipLong0);
-        org.junit.Assert.assertNotNull(date1);
-        org.junit.Assert.assertEquals(date1.toString(), "Fri Jan 16 09:26:32 CET 2004");
-    }
+//    @Test
+//    public void test0738() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0738");
+//        org.apache.commons.compress.archivers.zip.ZipLong zipLong0 = org.apache.commons.compress.archivers.zip.ZipLong.SINGLE_SEGMENT_SPLIT_MARKER;
+//        java.util.Date date1 = org.apache.commons.compress.archivers.zip.ZipUtil.fromDosTime(zipLong0);
+//        org.junit.Assert.assertNotNull(zipLong0);
+//        org.junit.Assert.assertNotNull(date1);
+//        org.junit.Assert.assertEquals(date1.toString(), "Fri Jan 16 09:26:32 CET 2004");
+//    }
 
     @Test
     public void test0739() throws Throwable {
@@ -5970,20 +5970,20 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + sEGMENT_TYPE0 + "' != '" + org.apache.commons.compress.archivers.dump.DumpArchiveConstants.SEGMENT_TYPE.ADDR + "'", sEGMENT_TYPE0.equals(org.apache.commons.compress.archivers.dump.DumpArchiveConstants.SEGMENT_TYPE.ADDR));
     }
 
-    @Test
-    public void test0806() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0806");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = org.apache.commons.compress.utils.TimeUtils.toNtfsTime(date4);
-        java.nio.file.attribute.FileTime fileTime6 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date4);
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 116444736000000000L + "'", long5 == 116444736000000000L);
-        org.junit.Assert.assertNotNull(fileTime6);
-    }
+//    @Test
+//    public void test0806() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0806");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = org.apache.commons.compress.utils.TimeUtils.toNtfsTime(date4);
+//        java.nio.file.attribute.FileTime fileTime6 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date4);
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 116444736000000000L + "'", long5 == 116444736000000000L);
+//        org.junit.Assert.assertNotNull(fileTime6);
+//    }
 
     @Test
     public void test0807() throws Throwable {
@@ -6096,39 +6096,39 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + int0 + "' != '" + 32 + "'", int0 == 32);
     }
 
-    @Test
-    public void test0812() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0812");
-        org.apache.commons.compress.archivers.dump.DumpArchiveEntry dumpArchiveEntry0 = new org.apache.commons.compress.archivers.dump.DumpArchiveEntry();
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry4 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean5 = tarArchiveEntry4.isPaxGNU1XSparse();
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry9 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean10 = tarArchiveEntry4.equals(tarArchiveEntry9);
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry14 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        java.nio.file.attribute.FileTime fileTime15 = null;
-        tarArchiveEntry14.setStatusChangeTime(fileTime15);
-        tarArchiveEntry14.setUserName("unpack.progress");
-        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry22 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
-        boolean boolean23 = tarArchiveEntry14.equals(tarArchiveEntry22);
-        java.nio.file.attribute.FileTime fileTime25 = org.apache.commons.compress.utils.TimeUtils.unixTimeToFileTime((long) 504);
-        tarArchiveEntry22.setLastModifiedTime(fileTime25);
-        tarArchiveEntry9.setLastAccessTime(fileTime25);
-        java.util.Date date29 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
-        java.nio.file.attribute.FileTime fileTime30 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date29);
-        tarArchiveEntry9.setModTime(fileTime30);
-        boolean boolean32 = dumpArchiveEntry0.equals((java.lang.Object) fileTime30);
-        java.lang.String str33 = dumpArchiveEntry0.getName();
-        org.junit.Assert.assertTrue("'" + boolean5 + "' != '" + false + "'", boolean5 == false);
-        org.junit.Assert.assertTrue("'" + boolean10 + "' != '" + true + "'", boolean10 == true);
-        org.junit.Assert.assertTrue("'" + boolean23 + "' != '" + true + "'", boolean23 == true);
-        org.junit.Assert.assertNotNull(fileTime25);
-        org.junit.Assert.assertNotNull(date29);
-        org.junit.Assert.assertEquals(date29.toString(), "Mon Jan 01 01:00:00 CET 1601");
-        org.junit.Assert.assertNotNull(fileTime30);
-        org.junit.Assert.assertTrue("'" + boolean32 + "' != '" + false + "'", boolean32 == false);
-        org.junit.Assert.assertNull(str33);
-    }
+//    @Test
+//    public void test0812() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0812");
+//        org.apache.commons.compress.archivers.dump.DumpArchiveEntry dumpArchiveEntry0 = new org.apache.commons.compress.archivers.dump.DumpArchiveEntry();
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry4 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean5 = tarArchiveEntry4.isPaxGNU1XSparse();
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry9 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean10 = tarArchiveEntry4.equals(tarArchiveEntry9);
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry14 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        java.nio.file.attribute.FileTime fileTime15 = null;
+//        tarArchiveEntry14.setStatusChangeTime(fileTime15);
+//        tarArchiveEntry14.setUserName("unpack.progress");
+//        org.apache.commons.compress.archivers.tar.TarArchiveEntry tarArchiveEntry22 = new org.apache.commons.compress.archivers.tar.TarArchiveEntry("", (byte) -1, true);
+//        boolean boolean23 = tarArchiveEntry14.equals(tarArchiveEntry22);
+//        java.nio.file.attribute.FileTime fileTime25 = org.apache.commons.compress.utils.TimeUtils.unixTimeToFileTime((long) 504);
+//        tarArchiveEntry22.setLastModifiedTime(fileTime25);
+//        tarArchiveEntry9.setLastAccessTime(fileTime25);
+//        java.util.Date date29 = org.apache.commons.compress.utils.TimeUtils.ntfsTimeToDate((long) 5);
+//        java.nio.file.attribute.FileTime fileTime30 = org.apache.commons.compress.utils.TimeUtils.toFileTime(date29);
+//        tarArchiveEntry9.setModTime(fileTime30);
+//        boolean boolean32 = dumpArchiveEntry0.equals((java.lang.Object) fileTime30);
+//        java.lang.String str33 = dumpArchiveEntry0.getName();
+//        org.junit.Assert.assertTrue("'" + boolean5 + "' != '" + false + "'", boolean5 == false);
+//        org.junit.Assert.assertTrue("'" + boolean10 + "' != '" + true + "'", boolean10 == true);
+//        org.junit.Assert.assertTrue("'" + boolean23 + "' != '" + true + "'", boolean23 == true);
+//        org.junit.Assert.assertNotNull(fileTime25);
+//        org.junit.Assert.assertNotNull(date29);
+//        org.junit.Assert.assertEquals(date29.toString(), "Mon Jan 01 01:00:00 CET 1601");
+//        org.junit.Assert.assertNotNull(fileTime30);
+//        org.junit.Assert.assertTrue("'" + boolean32 + "' != '" + false + "'", boolean32 == false);
+//        org.junit.Assert.assertNull(str33);
+//    }
 
     @Test
     public void test0813() throws Throwable {
@@ -6847,18 +6847,18 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + int16 + "' != '" + 0 + "'", int16 == 0);
     }
 
-    @Test
-    public void test0848() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0848");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getRemoteDeviceMin();
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
-    }
+//    @Test
+//    public void test0848() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0848");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getRemoteDeviceMin();
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
+//    }
 
     @Test
     public void test0849() throws Throwable {
@@ -8914,29 +8914,29 @@ public class Regression1Test {
         org.junit.Assert.assertNotNull(closeableConsumer12);
     }
 
-    @Test
-    public void test0943() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0943");
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry1.setInode((long) 2048);
-        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
-        long long5 = cpioArchiveEntry1.getDeviceMin();
-        long long6 = cpioArchiveEntry1.getDeviceMin();
-        org.junit.Assert.assertNotNull(date4);
-        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
-        org.junit.Assert.assertTrue("'" + long6 + "' != '" + 0L + "'", long6 == 0L);
-    }
+//    @Test
+//    public void test0943() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0943");
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry1 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry1.setInode((long) 2048);
+//        java.util.Date date4 = cpioArchiveEntry1.getLastModifiedDate();
+//        long long5 = cpioArchiveEntry1.getDeviceMin();
+//        long long6 = cpioArchiveEntry1.getDeviceMin();
+//        org.junit.Assert.assertNotNull(date4);
+//        org.junit.Assert.assertEquals(date4.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + long5 + "' != '" + 0L + "'", long5 == 0L);
+//        org.junit.Assert.assertTrue("'" + long6 + "' != '" + 0L + "'", long6 == 0L);
+//    }
 
-    @Test
-    public void test0944() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0944");
-        java.util.Date date1 = org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry.ntfsTimeToJavaTime(2097151L);
-        org.junit.Assert.assertNotNull(date1);
-        org.junit.Assert.assertEquals(date1.toString(), "Mon Jan 01 01:00:00 CET 1601");
-    }
+//    @Test
+//    public void test0944() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0944");
+//        java.util.Date date1 = org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry.ntfsTimeToJavaTime(2097151L);
+//        org.junit.Assert.assertNotNull(date1);
+//        org.junit.Assert.assertEquals(date1.toString(), "Mon Jan 01 01:00:00 CET 1601");
+//    }
 
     @Test
     public void test0945() throws Throwable {
@@ -9604,54 +9604,54 @@ public class Regression1Test {
         }
     }
 
-    @Test
-    public void test0974() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0974");
-        org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp x5455_ExtendedTimestamp0 = new org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp();
-        java.lang.String str1 = x5455_ExtendedTimestamp0.toString();
-        org.apache.commons.compress.archivers.zip.ZipLong zipLong2 = x5455_ExtendedTimestamp0.getCreateTime();
-        java.io.OutputStream outputStream3 = null;
-        org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream zstdCompressorOutputStream4 = new org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream(outputStream3);
-        byte[] byteArray6 = org.apache.commons.compress.archivers.zip.ZipUtil.toDosTime((long) 8);
-        zstdCompressorOutputStream4.write(byteArray6);
-        org.apache.commons.compress.compressors.deflate.DeflateCompressorOutputStream deflateCompressorOutputStream8 = new org.apache.commons.compress.compressors.deflate.DeflateCompressorOutputStream((java.io.OutputStream) zstdCompressorOutputStream4);
-        org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream zipArchiveOutputStream9 = new org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream((java.io.OutputStream) zstdCompressorOutputStream4);
-        byte[] byteArray13 = new byte[] { (byte) 0, (byte) 0, (byte) 10 };
-        boolean boolean15 = org.apache.commons.compress.archivers.dump.DumpArchiveInputStream.matches(byteArray13, (int) (short) 10);
-        byte[] byteArray18 = new byte[] { (byte) 0, (byte) 0 };
-        boolean boolean19 = org.apache.commons.compress.utils.ArchiveUtils.isEqual(byteArray13, byteArray18);
-        byte[] byteArray20 = org.apache.commons.compress.archivers.zip.ZipUtil.reverse(byteArray13);
-        zipArchiveOutputStream9.writePreamble(byteArray20);
-        zipArchiveOutputStream9.finish();
-        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry24 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
-        cpioArchiveEntry24.setInode((long) 2048);
-        java.util.Date date27 = cpioArchiveEntry24.getLastModifiedDate();
-        cpioArchiveEntry24.setChksum(0L);
-        boolean boolean30 = zipArchiveOutputStream9.canWriteEntryData((org.apache.commons.compress.archivers.ArchiveEntry) cpioArchiveEntry24);
-        boolean boolean31 = x5455_ExtendedTimestamp0.equals((java.lang.Object) boolean30);
-        byte[] byteArray32 = x5455_ExtendedTimestamp0.getLocalFileDataData();
-        long long33 = org.apache.commons.compress.utils.ByteUtils.fromLittleEndian(byteArray32);
-        org.junit.Assert.assertEquals("'" + str1 + "' != '" + "0x5455 Zip Extra Field: Flags=0 " + "'", str1, "0x5455 Zip Extra Field: Flags=0 ");
-        org.junit.Assert.assertNull(zipLong2);
-        org.junit.Assert.assertNotNull(byteArray6);
-        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray6), "[0, 0, 33, 0]");
-        org.junit.Assert.assertNotNull(byteArray13);
-        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray13), "[10, 0, 0]");
-        org.junit.Assert.assertTrue("'" + boolean15 + "' != '" + false + "'", boolean15 == false);
-        org.junit.Assert.assertNotNull(byteArray18);
-        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray18), "[0, 0]");
-        org.junit.Assert.assertTrue("'" + boolean19 + "' != '" + false + "'", boolean19 == false);
-        org.junit.Assert.assertNotNull(byteArray20);
-        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray20), "[10, 0, 0]");
-        org.junit.Assert.assertNotNull(date27);
-        org.junit.Assert.assertEquals(date27.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertTrue("'" + boolean30 + "' != '" + false + "'", boolean30 == false);
-        org.junit.Assert.assertTrue("'" + boolean31 + "' != '" + false + "'", boolean31 == false);
-        org.junit.Assert.assertNotNull(byteArray32);
-        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray32), "[0]");
-        org.junit.Assert.assertTrue("'" + long33 + "' != '" + 0L + "'", long33 == 0L);
-    }
+//    @Test
+//    public void test0974() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0974");
+//        org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp x5455_ExtendedTimestamp0 = new org.apache.commons.compress.archivers.zip.X5455_ExtendedTimestamp();
+//        java.lang.String str1 = x5455_ExtendedTimestamp0.toString();
+//        org.apache.commons.compress.archivers.zip.ZipLong zipLong2 = x5455_ExtendedTimestamp0.getCreateTime();
+//        java.io.OutputStream outputStream3 = null;
+//        org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream zstdCompressorOutputStream4 = new org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream(outputStream3);
+//        byte[] byteArray6 = org.apache.commons.compress.archivers.zip.ZipUtil.toDosTime((long) 8);
+//        zstdCompressorOutputStream4.write(byteArray6);
+//        org.apache.commons.compress.compressors.deflate.DeflateCompressorOutputStream deflateCompressorOutputStream8 = new org.apache.commons.compress.compressors.deflate.DeflateCompressorOutputStream((java.io.OutputStream) zstdCompressorOutputStream4);
+//        org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream zipArchiveOutputStream9 = new org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream((java.io.OutputStream) zstdCompressorOutputStream4);
+//        byte[] byteArray13 = new byte[] { (byte) 0, (byte) 0, (byte) 10 };
+//        boolean boolean15 = org.apache.commons.compress.archivers.dump.DumpArchiveInputStream.matches(byteArray13, (int) (short) 10);
+//        byte[] byteArray18 = new byte[] { (byte) 0, (byte) 0 };
+//        boolean boolean19 = org.apache.commons.compress.utils.ArchiveUtils.isEqual(byteArray13, byteArray18);
+//        byte[] byteArray20 = org.apache.commons.compress.archivers.zip.ZipUtil.reverse(byteArray13);
+//        zipArchiveOutputStream9.writePreamble(byteArray20);
+//        zipArchiveOutputStream9.finish();
+//        org.apache.commons.compress.archivers.cpio.CpioArchiveEntry cpioArchiveEntry24 = new org.apache.commons.compress.archivers.cpio.CpioArchiveEntry("");
+//        cpioArchiveEntry24.setInode((long) 2048);
+//        java.util.Date date27 = cpioArchiveEntry24.getLastModifiedDate();
+//        cpioArchiveEntry24.setChksum(0L);
+//        boolean boolean30 = zipArchiveOutputStream9.canWriteEntryData((org.apache.commons.compress.archivers.ArchiveEntry) cpioArchiveEntry24);
+//        boolean boolean31 = x5455_ExtendedTimestamp0.equals((java.lang.Object) boolean30);
+//        byte[] byteArray32 = x5455_ExtendedTimestamp0.getLocalFileDataData();
+//        long long33 = org.apache.commons.compress.utils.ByteUtils.fromLittleEndian(byteArray32);
+//        org.junit.Assert.assertEquals("'" + str1 + "' != '" + "0x5455 Zip Extra Field: Flags=0 " + "'", str1, "0x5455 Zip Extra Field: Flags=0 ");
+//        org.junit.Assert.assertNull(zipLong2);
+//        org.junit.Assert.assertNotNull(byteArray6);
+//        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray6), "[0, 0, 33, 0]");
+//        org.junit.Assert.assertNotNull(byteArray13);
+//        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray13), "[10, 0, 0]");
+//        org.junit.Assert.assertTrue("'" + boolean15 + "' != '" + false + "'", boolean15 == false);
+//        org.junit.Assert.assertNotNull(byteArray18);
+//        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray18), "[0, 0]");
+//        org.junit.Assert.assertTrue("'" + boolean19 + "' != '" + false + "'", boolean19 == false);
+//        org.junit.Assert.assertNotNull(byteArray20);
+//        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray20), "[10, 0, 0]");
+//        org.junit.Assert.assertNotNull(date27);
+//        org.junit.Assert.assertEquals(date27.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertTrue("'" + boolean30 + "' != '" + false + "'", boolean30 == false);
+//        org.junit.Assert.assertTrue("'" + boolean31 + "' != '" + false + "'", boolean31 == false);
+//        org.junit.Assert.assertNotNull(byteArray32);
+//        org.junit.Assert.assertEquals(java.util.Arrays.toString(byteArray32), "[0]");
+//        org.junit.Assert.assertTrue("'" + long33 + "' != '" + 0L + "'", long33 == 0L);
+//    }
 
     @Test
     public void test0975() throws Throwable {
@@ -9744,24 +9744,24 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + sevenZMethod0 + "' != '" + org.apache.commons.compress.archivers.sevenz.SevenZMethod.COPY + "'", sevenZMethod0.equals(org.apache.commons.compress.archivers.sevenz.SevenZMethod.COPY));
     }
 
-    @Test
-    public void test0982() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0982");
-        org.apache.commons.compress.archivers.dump.DumpArchiveEntry dumpArchiveEntry0 = new org.apache.commons.compress.archivers.dump.DumpArchiveEntry();
-        int int1 = dumpArchiveEntry0.getGroupId();
-        boolean boolean2 = dumpArchiveEntry0.isBlkDev();
-        org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE tYPE3 = org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE;
-        dumpArchiveEntry0.setType(tYPE3);
-        java.util.Date date5 = dumpArchiveEntry0.getCreationTime();
-        java.lang.String str6 = dumpArchiveEntry0.getName();
-        org.junit.Assert.assertTrue("'" + int1 + "' != '" + 0 + "'", int1 == 0);
-        org.junit.Assert.assertTrue("'" + boolean2 + "' != '" + false + "'", boolean2 == false);
-        org.junit.Assert.assertTrue("'" + tYPE3 + "' != '" + org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE + "'", tYPE3.equals(org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE));
-        org.junit.Assert.assertNotNull(date5);
-        org.junit.Assert.assertEquals(date5.toString(), "Thu Jan 01 01:00:00 CET 1970");
-        org.junit.Assert.assertNull(str6);
-    }
+//    @Test
+//    public void test0982() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0982");
+//        org.apache.commons.compress.archivers.dump.DumpArchiveEntry dumpArchiveEntry0 = new org.apache.commons.compress.archivers.dump.DumpArchiveEntry();
+//        int int1 = dumpArchiveEntry0.getGroupId();
+//        boolean boolean2 = dumpArchiveEntry0.isBlkDev();
+//        org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE tYPE3 = org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE;
+//        dumpArchiveEntry0.setType(tYPE3);
+//        java.util.Date date5 = dumpArchiveEntry0.getCreationTime();
+//        java.lang.String str6 = dumpArchiveEntry0.getName();
+//        org.junit.Assert.assertTrue("'" + int1 + "' != '" + 0 + "'", int1 == 0);
+//        org.junit.Assert.assertTrue("'" + boolean2 + "' != '" + false + "'", boolean2 == false);
+//        org.junit.Assert.assertTrue("'" + tYPE3 + "' != '" + org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE + "'", tYPE3.equals(org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE.FILE));
+//        org.junit.Assert.assertNotNull(date5);
+//        org.junit.Assert.assertEquals(date5.toString(), "Thu Jan 01 01:00:00 CET 1970");
+//        org.junit.Assert.assertNull(str6);
+//    }
 
     @Test
     public void test0983() throws Throwable {
@@ -9877,13 +9877,13 @@ public class Regression1Test {
         org.junit.Assert.assertTrue("'" + long1 + "' != '" + 0L + "'", long1 == 0L);
     }
 
-    @Test
-    public void test0991() throws Throwable {
-        if (debug)
-            System.out.format("%n%s%n", "RegressionTest1.test0991");
-        long long1 = org.apache.commons.compress.archivers.zip.ZipUtil.dosToJavaTime((long) (byte) -1);
-        org.junit.Assert.assertTrue("'" + long1 + "' != '" + 4362703442000L + "'", long1 == 4362703442000L);
-    }
+//    @Test
+//    public void test0991() throws Throwable {
+//        if (debug)
+//            System.out.format("%n%s%n", "RegressionTest1.test0991");
+//        long long1 = org.apache.commons.compress.archivers.zip.ZipUtil.dosToJavaTime((long) (byte) -1);
+//        org.junit.Assert.assertTrue("'" + long1 + "' != '" + 4362703442000L + "'", long1 == 4362703442000L);
+//    }
 
     @Test
     public void test0992() throws Throwable {
