@@ -73,6 +73,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       org.springframework.boot;resolution:=optional,
       org.springframework.boot.autoconfigure;resolution:=optional,
       org.springframework.context;resolution:=optional,
+      org.springframework.stereotype;resolution:=optional,
       org.springframework.context.annotation;resolution:=optional,
       org.springframework.web.bind.annotation;resolution:=optional,
       *
