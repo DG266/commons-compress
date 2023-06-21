@@ -19,6 +19,6 @@ COPY src ./src
 # From "root" user to "myuser" user
 USER myuser
 
-RUN mvn install
+RUN mvn package
 
 ENTRYPOINT ["java", "-jar", "./target/commons-compress-1.23.0-SNAPSHOT.jar"]
