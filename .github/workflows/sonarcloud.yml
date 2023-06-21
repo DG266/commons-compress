@@ -18,8 +18,7 @@ on:
   push:
     branches:
       - master
-      - microbenchmark
-      - refactoring
+      - docker-web-app
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:

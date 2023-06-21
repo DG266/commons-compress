@@ -70,6 +70,11 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       org.openjdk.jmh.runner;resolution:=optional,
       org.openjdk.jmh.runner.options;resolution:=optional,
       org.openjdk.jmh.util;resolution:=optional,
+      org.springframework.boot;resolution:=optional,
+      org.springframework.boot.autoconfigure;resolution:=optional,
+      org.springframework.context;resolution:=optional,
+      org.springframework.context.annotation;resolution:=optional,
+      org.springframework.web.bind.annotation;resolution:=optional,
       *
     </commons.osgi.import>
 
@@ -91,12 +96,28 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
 
     <jmh.version>1.36</jmh.version>
 
+    <start.class>webapp.Application</start.class>
+
   </properties>
 
   <issueManagement>
     <system>jira</system>
     <url>https://issues.apache.org/jira/browse/COMPRESS</url>
   </issueManagement>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <!-- Import dependency management from Spring Boot -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>3.1.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
 
@@ -211,7 +232,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
-      <scope>test</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -253,6 +274,25 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <version>1.14.1</version>
       <type>pom</type>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!--
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+    -->
 
   </dependencies>
 
@@ -419,6 +459,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
               <exclude>.gitattributes</exclude>
               <exclude>spotbugs-security-include-filter.xml</exclude>
               <exclude>Dockerfile</exclude>
+              <exclude>src/main/java/webapp/**</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -661,6 +702,27 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
           <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>repackage</id>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <mainClass>${start.class}</mainClass>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>${start.class}</mainClass>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
