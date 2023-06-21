@@ -459,6 +459,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
               <exclude>.gitattributes</exclude>
               <exclude>spotbugs-security-include-filter.xml</exclude>
               <exclude>Dockerfile</exclude>
+              <exclude>.dockerignore</exclude>
               <exclude>src/main/java/webapp/**</exclude>
             </excludes>
           </configuration>
