@@ -3,8 +3,51 @@
     <head>
         <title>Commons Compress</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="style.css" rel = "stylesheet" type="text/css">
     </head>
-    <body>
-        <p>Here you will be able to compress files.</p>
+    <body class="body">
+    <form class="form">
+        <p>Choose a compression method:</p>
+        <div class="radio_div">
+            <label class ="radio">
+                <input type="radio" value="gzip" name="compression">
+                gzip
+                </input>
+                <span></span>
+            </label>
+            <label class ="radio">
+
+                <input type="radio" value="LZ4" name="compression">
+                LZ4
+                </input>
+                <span></span>
+            </label>
+        </div>
+
+        <!-- "Select from a folder" button -->
+        <div class="button_div">
+            <p>Select a file:</p>
+            <button type="button" class="button">
+                <span class = "button__text"> Select from a folder </span>
+                <span class = "button__icon">
+            <ion-icon name="folder-open-outline"></ion-icon>
+        </span>
+            </button>
+        </div>
+
+        <!-- "Upload & compress" button -->
+        <div class="button_div">
+            <button type="button" class="button">
+                <span class = "button__text"> Upload & compress </span>
+                <span class = "button__icon">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+        </span>
+            </button>
+        </div>
+
+    </form>
+
+    <!-- the script tag should stay at the bottom of the body -->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     </body>
 </html>
