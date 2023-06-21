@@ -96,7 +96,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
 
     <jmh.version>1.36</jmh.version>
 
-    <start.class>webapp.Application</start.class>
+    <start.class>webapp.WebApplication</start.class>
 
   </properties>
 
@@ -286,6 +286,11 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+
     <!--
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -461,6 +466,7 @@ Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.
               <exclude>Dockerfile</exclude>
               <exclude>.dockerignore</exclude>
               <exclude>src/main/java/webapp/**</exclude>
+              <exclude>src/main/resources/**</exclude>
             </excludes>
           </configuration>
         </plugin>
