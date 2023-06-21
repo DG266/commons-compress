@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-FROM maven:3.9.2-eclipse-temurin-17
-
+###################################################################
+FROM maven:3.9.2-eclipse-temurin-17 as base
 WORKDIR /app
 
 # Add a non-root user
@@ -20,5 +20,9 @@ COPY src ./src
 USER myuser
 
 RUN mvn package
+###################################################################
+FROM eclipse-temurin:17-jre-jammy as production
 
-ENTRYPOINT ["java", "-jar", "./target/commons-compress-1.23.0-SNAPSHOT.jar"]
+EXPOSE 8080/tcp
+COPY --from=base /app/target/commons-compress-1.23.0-SNAPSHOT.jar /commons-compress-webapp.jar
+CMD ["java", "-jar", "/commons-compress-webapp.jar"]
