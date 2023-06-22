@@ -57,7 +57,7 @@ public class GeneralCompressionBenchmark {
     /*** For more information, please consult: https://commons.apache.org/proper/commons-compress/examples.html ***/
     @Benchmark
     @BenchmarkMode(Mode.Throughput)
-    @Fork(value = 1, warmups = 0)
+    @Fork(value = 1, warmups = 1)
     @OutputTimeUnit(TimeUnit.SECONDS)
     public byte[] compressFileBench(CompressionState cs) throws IOException, CompressorException {
         byte[] result;
